@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from HouseSearch.models import House, HousePhoto
+from HouseSearch.models import House, HousePhoto, Rate
 from . import models
 
 
@@ -12,3 +12,4 @@ admin.site.register(models.Attachment)
 admin.site.register(models.Country)
 admin.site.register(House)
 admin.site.register(HousePhoto)
+admin.site.register(Rate)

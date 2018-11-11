@@ -68,7 +68,15 @@ class InformationForm(forms.ModelForm):
             'birthday': forms.DateInput,
             'status': forms.Select(choices=UserInfo.STATUS_TYPE),
             'phone_num': forms.TextInput,
-            'country': forms.TextInput,
+            'country': forms.TextInput(attrs={
+                'name': 'country',
+                'required': True,
+                'class': '',
+                'placeholder': 'Country',
+                'title': 'Enter country for search',
+                'maxlength': 30,
+                'list': 'countries'
+            }),
             'city': forms.TextInput,
             'info': forms.Textarea,
             'big_photo': forms.FileInput(),

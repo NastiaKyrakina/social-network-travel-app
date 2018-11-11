@@ -101,12 +101,6 @@ def note_create_page(request):
                 save_attach(request.FILES, new_note)
 
                 if request.is_ajax():
-                    dict = []
-                    for im in new_note.get_images():
-                        a = {}
-                        a['image']: im.file.url
-                        dict.append(a)
-
                     return render(request,
                                   'UserProfile/note_block.html',
                                   {'note': new_note,

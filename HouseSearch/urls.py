@@ -3,9 +3,11 @@ from HouseSearch import views
 
 urlpatterns = [
     path('', views.house_search_page, name='search_house'),
+    path('search/', views.main_search, name='main_search'),
     path('create/', views.house_add_page, name='add_house'),
     path('delete/', views.house_delete, name='delete_house'),
     path('edit/<slug:house_id>/', views.house_edit_page, name='edit_house'),
+    path('<slug:house_id>/rate/', views.rate_create, name='rate'),
     path('<slug:house_id>/', views.house_page, name='house'),
 
 ]

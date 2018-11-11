@@ -1,0 +1,23 @@
+<form method="post" action="" id="form-rate">
+    {% csrf_token %}
+    {{ form_rate.non_field_errors }}
+    <div class="SearchForm">
+
+
+        <div class="fieldWrapper">
+            {{ form_rate.value.errors }}
+            <label for="{{ form_rate.value.id_for_label }}">Value:</label>
+            {{ form_rate.value }}
+        </div>
+
+        <div class="fieldWrapper">
+            {{ form_rate.comment.errors }}
+            <label for="{{ form_rate.comment.id_for_label }}">Comment:</label>
+            {{ form_rate.comment }}
+        </div>
+
+
+    </div>
+
+    <input type="submit" value="Send"/>
+</form>

@@ -4,10 +4,12 @@
 
 {% block head %}House search{% endblock %}
 {% block external %}
+    {{ block.super }}
     {% load staticfiles %}
+    {% comment %}
     <!-- >jquery-ui для вывода ползунка </!-->
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-
+    {% endcomment %}
     <link rel="stylesheet" type="text/css" href="{% static '/css/search.css' %}">
     <script src="{% static '/js/jquery_3_3_1.min.js' %}"></script>
 
@@ -29,8 +31,9 @@
 
     {% load staticfiles %}
     <!-- >jquery-ui для вывода ползунка </!-->
+    {% comment %}
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-
+    {% endcomment %}
     <script type="text/javascript" src="{% static "js/jsearch.js" %}"></script>
 
     <!-- >Подгружает вписок стран для выбора </!-->

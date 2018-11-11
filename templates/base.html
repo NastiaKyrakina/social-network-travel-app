@@ -16,10 +16,17 @@
         <link rel="stylesheet" href="{% static 'node_modules/@fortawesome/fontawesome-free/css/all.css' %}">
         <!-- Bootstrap -->
         <link rel="stylesheet" href="{% static 'node_modules/bootstrap/dist/css/bootstrap.css' %}">
-        <script src="{% static 'node_modules/jquery/dist/jquery.min.js' %}"></script>
+        <script src="{% static 'js/jquery_3_3_1.min.js' %}"></script>
         <script src="{% static 'node_modules/popper.js/dist/umd/popper.js' %}"></script>
         <script src="{% static 'node_modules/bootstrap/dist/js/bootstrap.js' %}"></script>
 
+        <!-- TEST -->
+        <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
+        <link rel="stylesheet" type="text/css" href="{% static '/css/search.css' %}">
+
+        <!--Для пошуку-->
+        <script src="{% static 'js/main_search.js' %}"></script>
 
     {% endblock %}
 
@@ -53,6 +60,10 @@
 
                     </ul>
                 {% endif %}
+                <form id="main-form-search" method="get" action="/house/">
+                    <input type="text" name="text" id="search-text" value={{ request.GET.text }}>
+                    <input type="submit" value="Searh">
+                </form>
 
                 <ul class="navbar-nav ml-auto">
                     {% if user.is_authenticated %}

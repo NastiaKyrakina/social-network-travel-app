@@ -1,0 +1,12 @@
+<div class="rate" id="rate-{{ rate.pk }}">
+    <p>public {{ rate.date_public }}</p>
+    <p>
+        {% if is_owner %}
+            [owner]
+        {% endif %}
+        ({{ rate.user.username }})</p>
+
+    <p>Rate: {{ rate.value }}</p>
+    <p>Comment: {{ rate.comment }}</p>
+
+</div>

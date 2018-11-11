@@ -13,9 +13,10 @@ function load_countrues(status = '1') {
         data: "qc=" + status,
         success: function (data) {
 
-            for (var i in data['dict']) {
-                var option = document.createElement('option');
+            for (let i in data['dict']) {
+                let option = document.createElement('option');
                 option.value = data['dict'][i]['name'];
+                //option.text = data['dict'][i]['name'];
                 dataList.append(option)
             }
         },

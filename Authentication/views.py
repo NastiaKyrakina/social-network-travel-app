@@ -90,6 +90,7 @@ def ajax_load_countries(request):
         for country in countries:
             country_json = {}
             country_json['name'] = country.name
+            country_json['value'] = country.pk
             if qc == '2':
                 country_json['phone_code'] = country.phone_code
             dictionaries.append(country_json)

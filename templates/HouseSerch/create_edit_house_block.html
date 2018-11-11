@@ -1,37 +1,94 @@
-<div class='house-edit-create'>
-    <form class='house-form' action="" enctype="multipart/form-data" method="post">
-        {% csrf_token %}
-        {% for error in errors_type %}
-            {{ error }} <br/>
-        {% endfor %}
+<form class="house-form form-group col-lg-8 col-sm-12" enctype="multipart/form-data" method="post">
+    {% csrf_token %}
 
-        {{ form_house.as_p }}
+    <div class="house-edit-header block block-header">
+        <h4 class="pl-3 mb-1">House edit</h4>
+    </div> <!-- house-edit-header -->
 
-        {% comment %}
-        {{ form_house.non_field_errors }}
-        <div class="create-node-form">
+    <div class="house-edit-body block p-3">
 
-            <div class="fieldWrapper">
-                {{ form_note.text.errors }}
-                <label for="{{ form_note.text.id_for_label }}">Text:</label>
-                <div class="note-text-data full">
-                    {{ form_note.text }}
-                </div>
+        <label class="pl-2 mb-0" for="id_title">Title</label>
+        {{ form_house.title }}
+
+        <div class="row">
+            <div class="col-6">
+                <label class="pl-2 mb-0" id="id_country">Country</label>
+                {{ form_house.country }}
+            </div>
+            <datalist id="countries"></datalist>
+            <div class="col-6">
+                <label class="pl-2 mb-0" for="id_city">City</label>
+                {{ form_house.city }}
             </div>
         </div>
-{% endcomment %}
-        {{ form_photo.as_p }}
 
-        {% if is_creating %}
-            <input type="submit" value="Create"/>
-        {% else %}
-            <div class="house_img">
-                {% for image in house.get_images %}
-                    <img src="{{ image.image.url }}" height="200" width="300"/>
-                {% endfor %}
+        <label class="pl-2 mb-0" for="id_address">Address</label>
+        {{ form_house.address }}
+
+        <div class="row">
+            <div class="col-4">
+                <label class="pl-2 mb-0" for="id_type">Type of house</label>
+                {{ form_house.type }}
             </div>
-            <input type="submit" value="Edit"/>
-        {% endif %}
+            <div class="col-4">
+                <label class="pl-2 mb-0" for="id_rooms">Rooms</label>
+                {{ form_house.rooms }}
+            </div>
+            <div class="col-4">
+                <label class="pl- mb-0" for="id_sleeper">Sleeper place</label>
+                {{ form_house.sleeper }}
+            </div>
+        </div>
 
-    </form>
-</div>
+        <div class="row align-items-center justify-content-between">
+            <div class="col-5">
+                <label class="pl-2 mb-0" for="id_price">Price</label>
+                <div class="input-group mb-2 ">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">$</span>
+                    </div>
+                    {{ form_house.price }}
+                </div>
+            </div>
+
+            <div class="custom-checkbox col-5">
+                {{ form_house.activity }}
+                <label class="custom-control-label" for="id_activity">Active</label>
+            </div>
+
+        </div>
+
+
+        <label class="pl-2 mb-0" for="id_about">About</label>
+        {{ form_house.about }}
+        <div class="row">
+            <div class="file-upload col-3 pr-1">
+                {{ form_photo.image }}
+                {{ form_photo.image_file }}
+                <label class="btn m-0 btn-warning" for="id_image">Set images</label>
+            </div>
+
+            <div id="house-images-board" class="col-9 pl-1">
+                {% if is_creating == false %}
+                    {% for image in house.get_images %}
+                        <img src="{{ image.image.url }}" class="house-image img-fluid m-1">
+                    {% endfor %}
+                {% endif %}
+            </div>
+        </div>
+
+    </div>
+
+    <div class="house-edit-footer block block-footer d-flex justify-content-center">
+        {% if is_creating %}
+            <input type="submit" class="btn btn-primary py-1" value="Create"/>
+        {% else %}
+            <input type="submit" class="btn btn-warning py-1" value="Edit"/>
+        {% endif %}
+    </div> <!-- house-edit-footer -->
+
+    {% for error in errors_type %}
+        {{ error }} <br/>
+    {% endfor %}
+</form>
+

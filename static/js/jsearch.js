@@ -1,4 +1,5 @@
-$(function () {
+function SetSlider() {
+
     $("#slider_min_max_price").slider({
         range: true,
         min: 0.00,
@@ -21,6 +22,23 @@ $(function () {
         var val = $(this).val();
         $("#slider_min_max_price").slider("values", 1, val);
     });
+    return false;
 
+}
+
+
+$(document).ready(function () {
+
+    //SetSlider();
+
+    $('#form-multi-search').on('submit', function (e) {
+
+
+        let urlParams = new URLSearchParams(window.location.search);
+        $('#hide-text').attr('value', urlParams.get('text'));
+        return;
+
+
+    });
 
 });

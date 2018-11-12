@@ -131,7 +131,8 @@ def house_add_page(request):
                 new_house = _home_save(request, form_house, user)
                 return HttpResponseRedirect('/house/%s/' % new_house.id)
         else:
-            print(form_house.errors)
+            print(form_house.errors);
+            print(form_house.cleaned_data['country']);
     else:
         form_house = HouseForm()
         form_photo = PhotoForm()

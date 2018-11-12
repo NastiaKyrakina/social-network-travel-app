@@ -19,9 +19,12 @@ from django.conf import settings
 
 from django.conf.urls.static import static
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
+from django.conf.urls.i18n import i18n_patterns
 
 from Authentication.views import ajax_load_countries
-urlpatterns = [
+
+urlpatterns = i18n_patterns(
+
     path('admin/', admin.site.urls),
     path('user/', include('UserProfile.urls')),
     path('reg/', include('Authentication.urls')),
@@ -29,7 +32,7 @@ urlpatterns = [
     path('house/', include('HouseSearch.urls')),
 
     path('load_countries/', ajax_load_countries, name='load_countries'),
-  ]
+)
 
 
 urlpatterns = urlpatterns + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

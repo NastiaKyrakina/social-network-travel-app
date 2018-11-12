@@ -8,3 +8,12 @@
     background: chartreuse;
     cursor: pointer;
 }
+
+input.UncorrectValue {
+    border-color: red !important;
+}
+
+.ErrorMessage {
+    background-color: darksalmon;
+    font-weight: bold;
+}

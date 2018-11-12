@@ -7,7 +7,7 @@
 
 
 {% block content %}
-    <form enctype="multipart/form-data" method="post" action="">
+    <form class="info-form" enctype="multipart/form-data" method="post" action="">
         {% csrf_token %}
 
         {{ form.non_field_errors }}
@@ -30,22 +30,24 @@
                 <label for="{{ form.status.id_for_label }}">Status:</label>
                 {{ form.status }}
             </div>
-            <div class="fieldWrapper">
-                {{ form.phone_num.errors }}
-                <label for="{{ form.phone_num.id_for_label }}">Phone number:</label>
-                {{ form.phone_num }}
-            </div>
 
             <div class="fieldWrapper">
                 {{ form.country.errors }}
                 <label for="{{ form.country.id_for_label }}">Country:</label>
                 {{ form.country }}
+                <datalist id="countries"></datalist>
             </div>
 
             <div class="fieldWrapper">
                 {{ form.city.errors }}
                 <label for="{{ form.city.id_for_label }}">City:</label>
                 {{ form.city }}
+            </div>
+
+            <div class="fieldWrapper">
+                {{ form.phone_num.errors }}
+                <label for="{{ form.phone_num.id_for_label }}">Phone number:</label>
+                (<span id="phone-code">000</span>) {{ form.phone_num }}
             </div>
 
             <div class="fieldWrapper">
@@ -83,5 +85,7 @@
 
     {% load staticfiles %}
     <script type="text/javascript" src="{% static "js/load_image.js" %}"></script>
-
+    <script src="{% static 'js/ajax_load_countries.js' %}"></script>
+    <script src="{% static 'js/jcreate_info.js' %}"></script>
 {% endblock %}
+

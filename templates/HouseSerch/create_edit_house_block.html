@@ -7,34 +7,74 @@
 
     <div class="house-edit-body block p-3">
 
+        {% for error in form_search.non_field_errors %}
+            <div class="ErrorMessage">{{ error }}</div>
+        {% endfor %}
+
+        {% for error in form_house.title.errors %}
+            <div class="ErrorMessage">{{ error }}</div>
+        {% endfor %}
+
         <label class="pl-2 mb-0" for="id_title">Title</label>
         {{ form_house.title }}
 
+        <!--Error messages-->
+        {% for error in form_house.country.errors %}
+            <div class="ErrorMessage">{{ error }}</div>
+        {% endfor %}
+        {% for error in form_house.city.errors %}
+            <div class="ErrorMessage">{{ error }}</div>
+        {% endfor %}
+        <!--End-->
+
         <div class="row">
             <div class="col-6">
+                {{ form_house.country.errors }}
                 <label class="pl-2 mb-0" id="id_country">Country</label>
                 {{ form_house.country }}
             </div>
             <datalist id="countries"></datalist>
             <div class="col-6">
+                {{ form_house.city.errors }}
                 <label class="pl-2 mb-0" for="id_city">City</label>
                 {{ form_house.city }}
             </div>
         </div>
 
+        <!--Error messages-->
+        {% for error in form_house.address.errors %}
+            <div class="ErrorMessage">{{ error }}</div>
+        {% endfor %}
+        <!--End-->
+
         <label class="pl-2 mb-0" for="id_address">Address</label>
         {{ form_house.address }}
 
+        <!--Error messages-->
+        {% for error in form_house.type.errors %}
+            <div class="ErrorMessage">{{ error }}</div>
+        {% endfor %}
+        {% for error in form_house.rooms.errors %}
+            <div class="ErrorMessage">{{ error }}</div>
+        {% endfor %}
+        {% for error in form_house.sleeper.errors %}
+            <div class="ErrorMessage">{{ error }}</div>
+        {% endfor %}
+        <!--End-->
         <div class="row">
+
             <div class="col-4">
+                {{ form_house.type.errors }}
                 <label class="pl-2 mb-0" for="id_type">Type of house</label>
                 {{ form_house.type }}
             </div>
             <div class="col-4">
+
                 <label class="pl-2 mb-0" for="id_rooms">Rooms</label>
                 {{ form_house.rooms }}
             </div>
             <div class="col-4">
+                {{ form_house.sleeper.errors }}
                 <label class="pl- mb-0" for="id_sleeper">Sleeper place</label>
                 {{ form_house.sleeper }}
             </div>
@@ -42,6 +82,7 @@
 
         <div class="row align-items-center justify-content-between">
             <div class="col-5">
+                {{ form_house.price.errors }}
                 <label class="pl-2 mb-0" for="id_price">Price</label>
                 <div class="input-group mb-2 ">
                     <div class="input-group-prepend">
@@ -51,17 +92,32 @@
                 </div>
             </div>
 
+            {% if not is_creating %}
             <div class="custom-checkbox col-5">
                 {{ form_house.activity }}
                 <label class="custom-control-label" for="id_activity">Active</label>
             </div>
+            {% endif %}
 
         </div>
 
+        <!--Error messages-->
+        {% for error in form_house.about.errors %}
+            <div class="ErrorMessage">{{ error }}</div>
+        {% endfor %}
+        <!--End-->
 
         <label class="pl-2 mb-0" for="id_about">About</label>
         {{ form_house.about }}
+
+        <!--Error messages-->
+        {% for error in form_photo.image.errors %}
+            <div class="ErrorMessage">{{ error }}</div>
+        {% endfor %}
+        <!--End-->
+
         <div class="row">
+            {{ form_photo.image.errors }}
             <div class="file-upload col-3 pr-1">
                 {{ form_photo.image }}
                 {{ form_photo.image_file }}
@@ -69,7 +125,7 @@
             </div>
 
             <div id="house-images-board" class="col-9 pl-1">
-                {% if is_creating == false %}
+                {% if not is_creating %}
                     {% for image in house.get_images %}
                         <img src="{{ image.image.url }}" class="house-image img-fluid m-1">
                     {% endfor %}

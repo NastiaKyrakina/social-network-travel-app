@@ -1,5 +1,9 @@
 from django import forms
 from django.db.models import Max
+from django.utils.translation import ugettext as _
+
+import re
+
 from UserProfile.models import Country
 from HouseSearch.models import House, HousePhoto, Rate, \
     MAX_PRICE, MAX_ROOMS, MAX_SLEEPER
@@ -25,6 +29,12 @@ class HouseForm(forms.ModelForm):
 
             }),
 
+            'country': forms.TextInput(attrs={
+                'name': 'city',
+                'class': 'form-control mb-2',
+                'list': 'countries',
+            }),
+
             # pattern = "[\+]\d{1}\s[\(]\d{3}[\)]\s\d{3}[\-]\d{2}[\-]\d{2}"
             'city': forms.TextInput(attrs={
                 'name': 'city',
@@ -32,7 +42,7 @@ class HouseForm(forms.ModelForm):
                 'placeholder': 'City',
                 'title': 'Enter city: only alphabet character valid',
                 'maxlength': 40,
-                'pattern': '[A-Za-zА-ЯЙйЁёЫыъьІіЄєЇї]*[ -`][A-Za-zА-ЯЙйЁёЫыъьІіЄєЇї]*',
+                # 'pattern': '[A-Za-zА-ЯЙйЁёЫыъьІіЄєЇї]*[ -`][A-Za-zА-ЯЙйЁёЫыъьІіЄєЇї]*',
 
             }),
             'address': forms.TextInput(attrs={
@@ -41,7 +51,7 @@ class HouseForm(forms.ModelForm):
                 'placeholder': 'Street, 1, 1',
                 'title': 'Enter address: Street Name, House Number, Apartment Number',
                 'maxlength': 100,
-                'pattern': '[A-Za-zА-ЯЙйЁёЫыъьІіЄєЇї][A-Za-zА-ЯЙйЁёЫыъьІіЄєЇї`- ],'
+                #'pattern': '[A-Za-zА-ЯЙйЁёЫыъьІіЄєЇї][A-Za-zА-ЯЙйЁёЫыъьІіЄєЇї`- ],'
             }),
             'type': forms.Select(choices=House.HOUSE_TYPE,
                                  attrs={
@@ -86,6 +96,27 @@ class HouseForm(forms.ModelForm):
             }),
         }
 
+    def clean_rooms(self):
+        rooms = self.cleaned_data['rooms']
+        if rooms <= 0 or rooms > MAX_ROOMS:
+            raise forms.ValidationError(_('Uncorrected ROOMS count. Must be value from 1 to %s' % MAX_ROOMS),
+                                        code='uncorrect_diapazone')
+        return rooms
+
+    def clean_sleeper(self):
+        sleeper = self.cleaned_data['sleeper']
+        if sleeper <= 0 or sleeper > MAX_SLEEPER:
+            raise forms.ValidationError(_('Uncorrected SLEEPER count. Must be value from 1 to %s' % MAX_SLEEPER),
+                                        code='uncorrect_diapazone')
+        return sleeper
+
+    def clean_price(self):
+        price = self.cleaned_data['price']
+        if price <= 0 or price > MAX_PRICE:
+            raise forms.ValidationError(_('Uncorrected PRICE. Must be value from 1 to %s' % MAX_PRICE),
+                                        code='uncorrect_diapazone')
+        return price
+
 
     def save(self, user):
         house = super(HouseForm, self).save(commit=False)
@@ -93,6 +124,17 @@ class HouseForm(forms.ModelForm):
         house.save()
         return house
 
+
+'''  def clean_country(self):
+        country_name = self.cleaned_data['country']
+        print(country_name)
+        try:
+            country = Country.objects.get(name=country_name)
+            return country.id
+        except Country.DoesNotExist:
+            raise forms.ValidationError("Noname country")
+        return country.id
+'''
 
 class PhotoForm(forms.ModelForm):
     class Meta:

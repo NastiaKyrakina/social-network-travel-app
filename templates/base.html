@@ -39,7 +39,7 @@
         <!-- Navbar -->
         <nav class="navbar navbar-expand navbar-dark bg-primary position-fixed w-100">
             <!-- Logo -->
-            <a class="navbar-brand ml-2" href="#">
+            <a class="navbar-brand ml-2" href="">
                 <i class="fas fa-map-marked-alt"></i>
                 Travel App
             </a>
@@ -62,10 +62,14 @@
 
                     </ul>
                 {% endif %}
-                <form id="main-form-search" method="get" action="/house/">
-                    <input type="text" name="text" id="search-text" value={{ request.GET.text }}>
-                    <input type="submit" value="Searh">
+                <form id="main-form-search" class="input-group col-3" method="get" action="/house/">
+                    <input class="form-control" placeholder="{% trans 'Search house' %}" type="text" name="text"
+                           id="search-text" value={{ request.GET.text }}>
+                    <div class="input-group-append">
+                        <input class="btn btn-light" type="submit" value="{% trans 'Search' %}">
+                    </div>
                 </form>
+
 
                 <ul class="navbar-nav ml-auto">
                     {% if user.is_authenticated %}

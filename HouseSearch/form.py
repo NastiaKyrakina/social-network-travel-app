@@ -4,11 +4,9 @@ from django.utils.translation import ugettext as _
 
 import re
 
-from UserProfile.models import Country
-from HouseSearch.models import House, HousePhoto, Rate, \
-    MAX_PRICE, MAX_ROOMS, MAX_SLEEPER
+from HouseSearch.models import House, HousePhoto, Rate, MAX_PRICE, MAX_ROOMS, MAX_SLEEPER, SORT_DICT
 
-
+from Lib.convertion import from_dict_to_list
 
 
 class HouseForm(forms.ModelForm):
@@ -16,7 +14,6 @@ class HouseForm(forms.ModelForm):
         model = House
         fields = ['title', 'country', 'city', 'address', 'type',
                   'rooms', 'sleeper', 'price', 'activity', 'about']
-
 
         widgets = {
             'title': forms.TextInput(attrs={
@@ -150,6 +147,8 @@ class PhotoForm(forms.ModelForm):
         }
 
 
+SORTED_TYPE = from_dict_to_list(SORT_DICT)
+
 
 class SearchHousesForm(forms.Form):
     country = forms.CharField(
@@ -187,6 +186,9 @@ class SearchHousesForm(forms.Form):
             'title': 'Choice house-types for search',
         })
     )
+
+    req_max_price = House.objects.aggregate(Max('price'))['price__max']
+
     min_price = forms.DecimalField(
         label='From',
         required=False,
@@ -196,29 +198,29 @@ class SearchHousesForm(forms.Form):
             'required': False,
             'title': 'Enter minimum price',
             'min': 0,
-            'max': MAX_PRICE,
+            'max': req_max_price,
             'class': 'form-control'
         })
     )
     max_price = forms.DecimalField(
         label='To',
         required=False,
-        initial=MAX_PRICE,
+        initial=req_max_price,
         widget=forms.NumberInput(attrs={
             'name': 'max_price',
             'required': False,
             'title': 'Enter maximum price',
             'min': 0,
-            'max': House.objects.aggregate(Max('price'))['price__max'],
+            'max': req_max_price,
             'class': 'form-control'
         })
     )
     rooms = forms.IntegerField(
         required=False,
-        initial=1,
         widget=forms.NumberInput(attrs={
             'name': 'rooms',
             'required': False,
+            'placeholder': '1',
             'title': 'Enter rooms count',
             'min': 1,
             'max': House.objects.aggregate(Max('rooms'))['rooms__max'],
@@ -228,10 +230,10 @@ class SearchHousesForm(forms.Form):
 
     sleeper = forms.IntegerField(
         required=False,
-        initial=1,
         widget=forms.NumberInput(attrs={
             'name': 'sleeper',
             'required': False,
+            'placeholder': '1',
             'title': 'Enter sleeper count',
             'min': 1,
             'max': House.objects.aggregate(Max('sleeper'))['sleeper__max'],
@@ -268,6 +270,15 @@ class SearchHousesForm(forms.Form):
             'id': 'hide-text',
         })
 
+    )
+
+    sort = forms.ChoiceField(
+        choices=SORTED_TYPE,
+        required=False,
+        widget=forms.Select(attrs={
+            'name': 'sort',
+            'required': False,
+        })
     )
 
     def get_only_full(self):

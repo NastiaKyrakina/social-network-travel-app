@@ -2,10 +2,10 @@ function SetSlider() {
 
     $("#slider_min_max_price").slider({
         range: true,
-        min: 0.00,
+        min: 1.00,
         max: 999.99,
         step: 1.00,
-        values: [0.00, 999.00],
+        values: [0.00, 100.00],
 
         slide: function (event, ui) {
             $("#id_min_price").val(ui.values[0] + '.00');
@@ -33,7 +33,7 @@ $(document).ready(function () {
     load_countrues();
 
     $('#form-multi-search').on('submit', function (e) {
-
+        console.log('submit');
         let urlParams = new URLSearchParams(window.location.search);
         $('#hide-text').attr('value', urlParams.get('text'));
         return;

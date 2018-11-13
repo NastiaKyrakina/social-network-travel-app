@@ -10,6 +10,12 @@
 
         <datalist id="countries"></datalist>
 
+        {% comment %}
+      <--ДЛЯ сортировки/ Посмотришь, куда это поле добавлять-->
+            <label for="id_sort" class=" ml-2">Sort by</label>
+            {{ form_search.sort }}
+      {% endcomment %}
+
         <div class="col-6">
             <label for="id_country" class=" ml-2">City</label>
             {{ form_search.city.errors }}

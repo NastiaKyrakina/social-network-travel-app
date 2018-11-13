@@ -84,6 +84,11 @@ def house_search_page(request):
         print('Has result')
         message = "Result: " + str(houses.count())
 
+        if 'sort' in request.GET:
+            print(request.GET['sort'])
+            houses = House.objects.sorting(houses, request.GET['sort'])
+
+
         paginator = Paginator(houses, 2)
         page = request.GET.get('page')
 

@@ -3,8 +3,19 @@ from django.contrib.auth.models import User
 from model_utils import Choices
 from UserProfile.models import Country
 
+
 from django.urls import reverse
 from django.contrib.postgres.search import SearchQuery, SearchRank, SearchVector
+from django.utils.translation import ugettext as _
+
+# 'key' - 'for user' - 'sort type'
+SORT_DICT = {
+    '0': (_('Newest'), '-date_public'),
+    '1': (_('Highest rated'), 'rating'),
+    '2': (_('Price High-Low'), '-price'),
+    '3': (_('Price Low-High'), 'price'),
+}
+
 
 def get_sentinel_country():
     return Country.objects.get_or_create(name='deleted')[0]
@@ -43,9 +54,9 @@ class HouseManager(models.Manager):
         print(houses)
         print(kwargs)
         if 'min_price' in kwargs:
-            houses = houses.filter(price__gt=kwargs['min_price'])
+            houses = houses.filter(price__gte=kwargs['min_price'])
         if 'max_price' in kwargs:
-            houses = houses.filter(price__lt=kwargs['max_price'])
+            houses = houses.filter(price__lte=kwargs['max_price'])
         if 'country' in kwargs:
             houses = houses.filter(country__name=kwargs['country'])
         if 'type' in kwargs:
@@ -63,9 +74,16 @@ class HouseManager(models.Manager):
         if 'public' in kwargs:
             houses = houses.filter(date_public__gt=kwargs['public'])
         if 'active' in kwargs:
-            if kwargs['active']:
-                houses = houses.filter(activity=True)
+            houses = houses.filter(activity=True)
+        else:
+            houses = houses.filter(activity=False)
 
+        return houses
+
+    def sorting(self, houses, sort_option):
+        if sort_option in SORT_DICT.keys():
+            print('here')
+            houses = houses.order_by(SORT_DICT[sort_option][1])
         return houses
 
 
@@ -111,6 +129,7 @@ class House(models.Model):
 
     activity = models.BooleanField(default=True)
     date_public = models.DateField(auto_now_add=True)
+    rating = models.DecimalField(decimal_places=1, max_digits=3, null=True)
     deleted = models.DateField(null=True, blank=True, db_index=True)
 
     objects = HouseManager()
@@ -143,10 +162,17 @@ class HousePhoto(models.Model):
 class Rate(models.Model):
     user = models.ForeignKey(User, on_delete='Cascade')
     house = models.ForeignKey(House, on_delete='Cascade')
-    value = models.DecimalField(decimal_places=1, max_digits=2)
+    value = models.PositiveSmallIntegerField()
     comment = models.TextField(max_length=1000)
     date_public = models.DateField(auto_now=True)
     correct = models.BooleanField(default=False, null=True)
 
     def __str__(self):
         return self.user.username + ' | ' + self.house.title
+
+    def save(self, *args, **kwargs):
+        super(Rate, self).save(*args, **kwargs)
+        rate_val = Rate.objects.filter(house__id=self.house_id). \
+            aggregate(models.Avg('value'))
+        self.house.rating = rate_val
+        self.house.save()

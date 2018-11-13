@@ -29,3 +29,12 @@ def from_srt_to_float(value, only_positive=False, max_value=None):
         return 'invalid value'
 
     return value
+
+
+def from_dict_to_list(dict_val):
+    """из словаря в список кортежей"""
+    new_list = []
+    for key in dict_val:
+        kortege = (key, dict_val[key][0])
+        new_list.append(kortege)
+    return new_list

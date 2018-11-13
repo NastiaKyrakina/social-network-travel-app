@@ -70,6 +70,10 @@ body {
     margin-bottom: 3px !important;
 }
 
+.search-header {
+    margin-bottom: 10px !important;
+}
+
 .navbar {
     z-index: 1;
     top: 0;

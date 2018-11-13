@@ -160,7 +160,8 @@ class SearchHousesForm(forms.Form):
             'placeholder': 'Country',
             'title': 'Choice country for search',
             'maxlength': 30,
-            'list': 'countries'
+            'list': 'countries',
+            'class': 'form-control mb-2'
         })
     )
 
@@ -172,6 +173,7 @@ class SearchHousesForm(forms.Form):
             'placeholder': 'City',
             'title': 'Enter city name for search',
             'maxlength': 40,
+            'class': 'form-control mb-2'
         })
     )
 
@@ -195,6 +197,7 @@ class SearchHousesForm(forms.Form):
             'title': 'Enter minimum price',
             'min': 0,
             'max': MAX_PRICE,
+            'class': 'form-control'
         })
     )
     max_price = forms.DecimalField(
@@ -207,6 +210,7 @@ class SearchHousesForm(forms.Form):
             'title': 'Enter maximum price',
             'min': 0,
             'max': House.objects.aggregate(Max('price'))['price__max'],
+            'class': 'form-control'
         })
     )
     rooms = forms.IntegerField(
@@ -218,6 +222,7 @@ class SearchHousesForm(forms.Form):
             'title': 'Enter rooms count',
             'min': 1,
             'max': House.objects.aggregate(Max('rooms'))['rooms__max'],
+            'class': 'form-control'
         })
     )
 
@@ -230,6 +235,7 @@ class SearchHousesForm(forms.Form):
             'title': 'Enter sleeper count',
             'min': 1,
             'max': House.objects.aggregate(Max('sleeper'))['sleeper__max'],
+            'class': 'form-control'
         })
 
     )
@@ -240,7 +246,7 @@ class SearchHousesForm(forms.Form):
         widget=forms.CheckboxInput(attrs={
             'name': 'active',
             'required': False,
-            'title': 'Search only acrive advertisement',
+            'title': 'Search only acrive advertisement'
         })
     )
     public = forms.DateField(
@@ -249,6 +255,7 @@ class SearchHousesForm(forms.Form):
             'name': 'public',
             'required': False,
             'title': 'Search advertisement',
+            'class': 'custom-select col-3'
         })
 
     )
@@ -278,7 +285,7 @@ class RateForm(forms.ModelForm):
         model = Rate
         fields = ['comment', 'value']
 
-    def save(self, user, house):
+    def save(self, user, house, *args, **kwargs):
         new_rate = super(RateForm, self).save(commit=False)
         new_rate.user = user
         new_rate.house = house

@@ -39,9 +39,6 @@ class HouseManager(models.Manager):
         print(houses)
         return houses
 
-
-
-
     def multi_search(self, houses, kwargs):
         print(houses)
         print(kwargs)

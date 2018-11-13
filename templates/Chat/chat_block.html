@@ -1,0 +1,11 @@
+<div class="Chat" id="{{ chat.slug }}">
+
+
+    <div class="header">{{ chat.name }}</div>
+    <div class="content">
+        {% for message in messages %}
+            {% include 'Chat/message_block.html' %}
+        {% endfor %}
+    </div>
+    <div class="message-form"></div>
+</div>

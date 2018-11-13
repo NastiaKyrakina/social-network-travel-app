@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+
+{% block title %}{{ user.username }} | Chats{% endblock %}
+
+{% block head %}{{ user.username }} | Chats{% endblock %}
+
+{% block content %}
+
+    <div class="chat-list">
+        {% for chat in chats %}
+            <div class="chat-title" id='block-{{ chat.slug }}'>
+                {{ chat.name }}
+                {% if chat.last_message %}
+                    <p>{{ chat.last_message }}</p>
+                {% endif %}
+
+            </div>
+        {% empty %}
+            You haven't any chats
+        {% endfor %}
+
+    </div>
+
+    <div class="chat-container">
+    </div>
+
+{% endblock %}
+
+{% block script %}
+
+    {% load staticfiles %}
+    <script>
+
+        $('.chat-title').on('click', function (e) {
+            e.preventDedault;
+
+            console.log($(this).attr('id').split('-')[1]);
+            slug = $(this).attr('id').split('-')[1];
+            $(".chat-container").load('/chat/chats/' + slug + '/', function () {
+                $(".message-form").load('/chat/create_message/' + slug + '/')
+            });
+
+
+            return false;
+
+        })
+    </script>
+
+    <script>
+
+
+    </script>
+{% endblock %}

@@ -1,0 +1,15 @@
+<form method="post" action="" id="form-message">
+    {% csrf_token %}
+    {{ form_message.non_field_errors }}
+    <div class="SearchForm">
+
+        <div class="fieldWrapper">
+            {{ form_message.text.errors }}
+            <label for="{{ form_message.text.id_for_label }}">Text:</label>
+            {{ form_message.text }}
+        </div>
+
+    </div>
+
+    <input type="submit" value="Send"/>
+</form>

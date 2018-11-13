@@ -30,19 +30,23 @@ function LoadFile() {
         //отримання даних форми
         forms_1 = new FormData($(this).get(0));
         //відправляємо дані
+        console.log($(this).attr('method'));
+        console.log(forms_1);
         $.ajax({
             type: $(this).attr('method'),
-            url: '/user/note/create/',
+            url: $(this).attr('action'),
             contentType: false,
             processData: false,
             data: forms_1,
             success: function (data) {
 
                 if (typeof(data) === "object") {
+                    console.log('err');
                     alert(data['errors']);
 
                 }
                 else {
+                    console.log('data');
                     //додавання нового поста
                     $('.user-posts').prepend(data)
                     //очщення форми
@@ -61,6 +65,7 @@ function LoadFile() {
 function LoadPostCreateForm() {
     $('.create-node').load('/user/note/create/', function () {
         //робота з додаванням постів тількі після завантаження блока
+        console.log('aaaa');
         LoadFile();
     });
     return false;

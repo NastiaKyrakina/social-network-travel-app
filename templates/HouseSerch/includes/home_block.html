@@ -1,32 +1,32 @@
 <div class="house" id="house_element-{{ house.pk }}">
-    ----------------------------------------------------
 </div> <!-- house-header -->
 
-{% if house.main_image %}
-    <div class="house-image">
-        <img src="{{ house.main_image }}" class="house-image" width="200" height="200"/>
+
+<div class="row">
+    <div class="card-title col-12">
+        <h3 class="mb-0"><strong>{{ house.title }}</strong></h3>
+        <small class="text-muted">by @ {{ house.owner.username }}</small>
     </div>
 
-{% else %}
-    {% load staticfiles %}
-    <img src="{% static 'images/DefaultHouse.png' %}" class="house-image" width="200" height="200"/>
-
-{% endif %}
-
-
-<div class="house-content">
-    {% if house.activity %}
-        <div>Active</div>
+    {% if house.main_image %}
+        <img src="{{ house.main_image }}" class="house-image card-img pr-1 col-4 h-100 align-self-center"/>
     {% else %}
-        <div>Frozen</div>
+        {% load staticfiles %}
+        <img src="{% static 'images/DefaultHouse.png' %}"
+             class="house-image card-img pr-1 col-4 h-100 align-self-center"/>
     {% endif %}
-    <p class="house-title">{{ house.title }}</p>
-    <p>{{ house.country.name }}, {{ house.city }} </p>
-    <p>Rooms/sleeper place: {{ house.rooms }} / {{ house.sleeper }}</p>
 
-    <p>Price: {{ house.price }} $ / day</p>
-    <p>Owner: {{ house.owner.username }}</p>
-
-</div> <!-- house-content -->
-----------------------------------------------------
-</div> <!-- house -->
+    <div class="card-body col-8 row p-1">
+        <div class="col-9">
+            <p class="m-1"><strong>Type:</strong> {{ house.get_type_display }}</p>
+            <p class="m-1"><strong>Price:</strong> {{ house.price }} $ / day</p>
+            <p class="m-1"><strong>Address:</strong> {{ house.country.name }}, {{ house.city }}, {{ house.address }}</p>
+            <p class="m-1"><strong>Rooms:</strong> {{ house.rooms }}</p>
+            <p class="m-1"><strong>Sleeper place:</strong> {{ house.sleeper }}</p>
+            <p class="m-1"><strong>Published:</strong> {{ house.date_public| date:"d-m-Y" }}</p>
+        </div>
+        <div class="col-3 d-flex align-items-end justify-content-end">
+            <a href="/house/{{ house.pk }}" class="btn btn-primary">Open</a>
+        </div>
+    </div>
+</div>

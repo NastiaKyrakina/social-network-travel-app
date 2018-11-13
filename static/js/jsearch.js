@@ -30,14 +30,13 @@ function SetSlider() {
 $(document).ready(function () {
 
     //SetSlider();
+    load_countrues();
 
     $('#form-multi-search').on('submit', function (e) {
-
 
         let urlParams = new URLSearchParams(window.location.search);
         $('#hide-text').attr('value', urlParams.get('text'));
         return;
-
 
     });
 

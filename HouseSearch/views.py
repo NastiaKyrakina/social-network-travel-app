@@ -11,11 +11,16 @@ from Lib import FileFormats, page_revisor
 from django.db.models import Avg
 
 
-def rate_create(request, house_id):
-    house = get_object_or_404(House, id=house_id)
+def rate_create(request):
+
     user = UserExt.objects.get(pk=request.user.pk)
 
-    if request.method == 'POST':
+    print(request.POST)
+
+    if request.method == 'POST' and 'house' in request.POST:
+
+        house = get_object_or_404(House, id=request.POST['house'])
+
         form_rate = RateForm(request.POST)
         if form_rate.is_valid():
             rate = form_rate.save(user, house)

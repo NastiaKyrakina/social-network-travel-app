@@ -70,7 +70,6 @@ def note_page(request, note_id):
     data = {
         'note': note,
         'is_owner': is_owner,
-
     }
     return render(request, 'UserProfile/note_page.html', data)
 
@@ -80,17 +79,20 @@ def note_create_page(request):
     user = UserExt.objects.get(pk=request.user.pk)
     errors_file_type = []
 
+    if request.is_ajax():
+        print('ajax')
+    print(request.method)
+    print(request.POST)
+    print(request.GET)
     if request.method == 'POST':
         form_note = NoteForm(request.POST)
         form_attach = AttachmentForm(request.POST, request.FILES)
 
         if form_note.is_valid():
-
+            print('val')
             errors_file_type = (handle_uploaded_file(request.FILES))
             if not len(form_note.cleaned_data['text']) and not (len(request.FILES)):
                 errors_file_type.append('Empty post!')
-
-
 
             if not errors_file_type:
                 print('q')
@@ -101,6 +103,7 @@ def note_create_page(request):
                 save_attach(request.FILES, new_note)
 
                 if request.is_ajax():
+                    print('ajax')
                     return render(request,
                                   'UserProfile/note_block.html',
                                   {'note': new_note,
@@ -110,14 +113,14 @@ def note_create_page(request):
                 return HttpResponseRedirect('/user/%s/' % request.user.pk)
 
             else:
-
                 return JsonResponse({'errors': errors_file_type})
 
     else:
+        print('nore')
         form_note = NoteForm()
         form_attach = AttachmentForm()
 
-
+    print('render')
     return render(request,
                   'UserProfile/includes/create_note.html',
                   {'form_note': form_note,

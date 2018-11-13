@@ -7,7 +7,7 @@ urlpatterns = [
     path('create/', views.house_add_page, name='add_house'),
     path('delete/', views.house_delete, name='delete_house'),
     path('edit/<slug:house_id>/', views.house_edit_page, name='edit_house'),
-    path('<slug:house_id>/rate/', views.rate_create, name='rate'),
+    path('rate/', views.rate_create, name='house.rate'),
     path('<slug:house_id>/', views.house_page, name='house'),
 
 ]

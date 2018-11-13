@@ -2,7 +2,6 @@
 
 {% block title %}House search{% endblock %}
 
-{% block head %}House search{% endblock %}
 {% block external %}
     {{ block.super }}
     {% load staticfiles %}
@@ -16,14 +15,26 @@
 
 {% endblock %}
 
-
 {% block content %}
-    <!-- >Форма поиска</!-->
-    {% include 'HouseSerch/multi_search_form.html' %}
 
-    {% include 'HouseSerch/includes/paginatin_block.html' %}
-    <!-- >Список домов</!-->
-    {% include 'HouseSerch/includes/houses_list.html' %}
+    <div class="d-flex justify-content-center">
+        <div class="col-10">
+
+            <div class="search-header block block-header col-12">
+                {% include 'HouseSerch/multi_search_form.html' %}
+                <div class="col-12">
+                    {{ message }}
+                </div>
+            </div>
+
+            {% include 'HouseSerch/includes/houses_list.html' %}
+
+            <div class="block block-footer col-12">
+                {% include 'HouseSerch/includes/paginatin_block.html' %}
+            </div>
+        </div>
+    </div>
+
 
 {% endblock %}
 
@@ -34,9 +45,9 @@
     {% comment %}
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     {% endcomment %}
-    <script type="text/javascript" src="{% static "js/jsearch.js" %}"></script>
+
 
     <!-- >Подгружает вписок стран для выбора </!-->
     <script type="text/javascript" src="{% static "js/ajax_load_countries.js" %}"></script>
-
+    <script type="text/javascript" src="{% static "js/jsearch.js" %}"></script>
 {% endblock %}

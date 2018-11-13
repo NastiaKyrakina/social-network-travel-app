@@ -1,6 +1,7 @@
 from django.contrib import admin
 
 from HouseSearch.models import House, HousePhoto, Rate
+from Chat.models import Chat, Message, Member
 from . import models
 
 
@@ -13,3 +14,7 @@ admin.site.register(models.Country)
 admin.site.register(House)
 admin.site.register(HousePhoto)
 admin.site.register(Rate)
+
+admin.site.register(Chat)
+admin.site.register(Member)
+admin.site.register(Message)

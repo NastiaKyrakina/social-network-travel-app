@@ -1,7 +1,6 @@
 from django import forms
 from .models import Message, Chat
 
-
 class MessageForm(forms.ModelForm):
     class Meta:
         model = Message
@@ -13,3 +12,4 @@ class MessageForm(forms.ModelForm):
         message.chat = chat
         message.save()
         return message
+

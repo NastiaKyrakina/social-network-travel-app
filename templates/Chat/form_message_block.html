@@ -1,7 +1,6 @@
-<form method="post" action="" id="form-message">
+<form method="post" id="form-message" enctype='multipart/form-data' action="{% url 'create_message' %}">
     {% csrf_token %}
     {{ form_message.non_field_errors }}
-    <div class="SearchForm">
 
         <div class="fieldWrapper">
             {{ form_message.text.errors }}
@@ -9,6 +8,10 @@
             {{ form_message.text }}
         </div>
 
+    <div class="fieldWrapper">
+
+        {{ form_attach.images }}
+        {{ form_attach.images_file }}
     </div>
 
     <input type="submit" value="Send"/>

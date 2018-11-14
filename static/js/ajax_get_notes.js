@@ -65,7 +65,7 @@ function LoadFile() {
 function LoadPostCreateForm() {
     $('.create-node').load('/user/note/create/', function () {
         //робота з додаванням постів тількі після завантаження блока
-        console.log('aaaa');
+
         LoadFile();
     });
     return false;

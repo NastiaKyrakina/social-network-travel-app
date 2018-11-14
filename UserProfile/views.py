@@ -79,28 +79,22 @@ def note_create_page(request):
     user = UserExt.objects.get(pk=request.user.pk)
     errors_file_type = []
 
-    if request.is_ajax():
-        print('ajax')
-    print(request.method)
-    print(request.POST)
-    print(request.GET)
+
     if request.method == 'POST':
         form_note = NoteForm(request.POST)
         form_attach = AttachmentForm(request.POST, request.FILES)
 
         if form_note.is_valid():
-            print('val')
             errors_file_type = (handle_uploaded_file(request.FILES))
             if not len(form_note.cleaned_data['text']) and not (len(request.FILES)):
                 errors_file_type.append('Empty post!')
 
             if not errors_file_type:
-                print('q')
                 new_note = form_note.save(commit=False)
                 new_note.user = user
                 new_note.save()
 
-                save_attach(request.FILES, new_note)
+                save_attach(request.FILES, new_note, Attachment)
 
                 if request.is_ajax():
                     print('ajax')

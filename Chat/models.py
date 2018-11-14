@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from Lib import FFD
 
 
 class ChatManager(models.Manager):
@@ -70,3 +71,23 @@ class Message(models.Model):
         super(Message, self).save(*args, **kwargs)
         self.chat.date_last_mess = self.date
         self.chat.save()
+
+    def get_images(self):
+        return self.messageattachment_set.filter(type=FFD.IMAGE)
+
+    def get_video(self):
+        return self.messageattachment_set.filter(type=FFD.VIDEO)
+
+    def get_audio(self):
+        return self.messageattachment_set.filter(type=FFD.AUDIO)
+
+    def get_files(self):
+        return self.messageattachment_set.filter(type=FFD.FILES)
+
+
+class MessageAttachment(models.Model):
+    parent = models.ForeignKey(Message, on_delete='Cascade')
+    type = models.CharField(max_length=2,
+                            choices=FFD.FILE_TYPE)
+    file = models.FileField(upload_to='chat_data/files/',
+                            blank=True)

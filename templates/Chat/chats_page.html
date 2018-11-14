@@ -29,24 +29,118 @@
 {% block script %}
 
     {% load staticfiles %}
+    <script src="{% static 'js/reconnecting-websocket.min.js' %}"></script>
+
     <script>
+
+
+        var user = {{request.user.id }};
+
+        console.log(user);
+        var chatSocket = new ReconnectingWebSocket(
+            'ws://' + window.location.host +
+            '/ws/chat/chats/');
+
+        chatSocket.onmessage = function (message) {
+            console.log("Got websocket message " + message.data);
+            var data = JSON.parse(message.data);
+
+            if (data.join) {
+
+                console.log("Joining room " + data.join);
+                $(".chat-container").load('/chat/chats/' + data.join + '/', function () {
+                    $(".message-form").load('/chat/create_message/',
+                        function () {
+                            $('#form-message').on('submit', function (e) {
+                                e.preventDefault();
+
+                                data_to_send = {
+                                    "command": "send",
+                                    'chat': data.join,
+                                    'message': $(this).find('textarea').val()
+
+                                };
+
+
+                                if ($("input[type='file']").val()) {
+                                    console.log('ajax');
+                                    form_mess = new FormData($(this).get(0));
+                                    form_mess.append('chat_slug', data.join);
+                                    $.ajax({
+                                        type: $(this).attr('method'),
+                                        url: $(this).attr('action'),
+                                        contentType: false,
+                                        processData: false,
+                                        data: form_mess,
+                                        success: function (data) {
+                                            console.log('sucssess');
+                                            data_to_send['files'] = 1;
+                                            chatSocket.send(JSON.stringify(data_to_send));
+
+                                        }
+                                    });
+                                }
+                                else {
+
+                                    chatSocket.send(JSON.stringify(data_to_send));
+
+                                }
+
+                                return false;
+                            });
+                        })
+                });
+
+
+            } else {
+                if (data.leaf) {
+                    console.log("Leaving room " + data.leaf);
+                    $(".chat-container").empty();
+                }
+                else {
+                    if (data.message) {
+                        new_mess = "<div>From " + data.username + "Text: " + data.message + "</div";
+                        $('#' + data.chat + " .content").append(new_mess);
+
+                    }
+                }
+            }
+        }
+
+        inChat = function (chatSlug) {
+            return $("#" + chatSlug).length > 0;
+        };
 
         $('.chat-title').on('click', function (e) {
-            e.preventDedault;
+            e.preventDefault();
 
-            console.log($(this).attr('id').split('-')[1]);
             slug = $(this).attr('id').split('-')[1];
-            $(".chat-container").load('/chat/chats/' + slug + '/', function () {
-                $(".message-form").load('/chat/create_message/' + slug + '/')
-            });
 
+            if (inChat(slug)) {
 
+                chatSocket.send(
+                    JSON.stringify({
+                        'command': 'leave',
+                        'chat': slug,
+                    })
+                )
+            } else {
+
+                chatSocket.send(
+                    JSON.stringify({
+                        'command': 'join',
+                        'chat': slug,
+                    })
+                )
+
+            }
             return false;
 
-        })
-    </script>
+        });
 
-    <script>
+        chatSocket.onclose = function (e) {
+            console.error('Chat socket closed unexpectedly');
+        };
 
 
     </script>

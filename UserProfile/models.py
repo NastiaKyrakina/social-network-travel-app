@@ -108,31 +108,30 @@ def get_upload_file_way(ftype):
 
 
 class Attachment(models.Model):
-
-    note = models.ForeignKey(Note, on_delete='Cascade')
+    parent = models.ForeignKey(Note, on_delete='Cascade')
     type = models.CharField(max_length=2,
                             choices=FFD.FILE_TYPE)
     file = models.FileField(upload_to='user_files/all_files/',
                             blank=True)
 
 
-def save_attach(files_dict, note):
+def save_attach(files_dict, note, attachment_class):
     files = files_dict.getlist('images', None)
     for file in files:
-        new_attachment = Attachment(note=note, file=file, type='IM')
+        new_attachment = attachment_class(parent=note, file=file, type='IM')
         new_attachment.save()
 
     files = files_dict.getlist('video', None)
     for file in files:
-        new_attachment = Attachment(note=note, file=file, type='VD')
+        new_attachment = attachment_class(parent=note, file=file, type='VD')
         new_attachment.save()
 
     files = files_dict.getlist('audio', None)
     for file in files:
-        new_attachment = Attachment(note=note, file=file, type='AU')
+        new_attachment = attachment_class(parent=note, file=file, type='AU')
         new_attachment.save()
 
     files = files_dict.getlist('files', None)
     for file in files:
-        new_attachment = Attachment(note=note, file=file, type='FL')
+        new_attachment = attachment_class(parent=note, file=file, type='FL')
         new_attachment.save()

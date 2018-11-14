@@ -1,4 +1,9 @@
 <div class="message-block">
     <p>[{{ message.date }}]</p>
     <p> {{ message.text }} </p>
+    <div class="note_img">
+        {% for image in message.get_images %}
+            <img src="{{ image.file.url }}" height="200" width="300"/>
+        {% endfor %}
+    </div>
 </div>

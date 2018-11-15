@@ -17,3 +17,8 @@ input.UncorrectValue {
     background-color: darksalmon;
     font-weight: bold;
 }
+
+.owner-message {
+    background-color: #1e7e34;
+}
+

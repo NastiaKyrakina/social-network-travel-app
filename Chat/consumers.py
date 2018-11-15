@@ -1,5 +1,5 @@
 # chat/consumers.py
-
+from django.template.loader import render_to_string
 from asgiref.sync import async_to_sync
 from channels.generic.websocket import JsonWebsocketConsumer
 import json
@@ -27,8 +27,13 @@ class ChatConsumer1(JsonWebsocketConsumer):
                 self.leaf_chat(content['chat'])
 
             elif command == "send":
-
-                self.send_chat(content['chat'], content['message'])
+                print('5')
+                if 'message_id' in content:
+                    print('6')
+                    self.send_chat(content['chat'], content['message'], content['message_id'])
+                else:
+                    print('8')
+                    self.send_chat(content['chat'], content['message'])
 
     def disconnect(self, close_code):
         chats = self.chats.copy()
@@ -85,24 +90,29 @@ class ChatConsumer1(JsonWebsocketConsumer):
                 })
         )
 
-    def send_chat(self, chat_slug, message):
-
+    def send_chat(self, chat_slug, message, message_id=-1):
+        print(self.chats)
         if chat_slug in self.chats:
+            print('111')
             chat = Chat.objects.get(slug=chat_slug)
             user = self.scope['user']
-            new_message = Message(chat=chat, user=user, text=message)
-            new_message.save()
+            if message_id != -1:
+                print('to')
+                new_message = Message.objects.get(id=message_id)
+            else:
+                new_message = Message(chat=chat, user=user, text=message)
+                new_message.save()
 
-            async_to_sync(self.channel_layer.group_send)(
-                chat.slug,
-                {
-                    'type': 'chat.message',
-                    'chat': chat_slug,
-                    'username': user.username,
-                    'message': new_message.text,
-                    'date': "{:%m - %d - %Y}".format(new_message.date),
-                }
-            )
+            message_block = render_to_string('Chat/message_block.html', {'message': new_message})
+
+            print(message_block)
+            content = {
+                'type': 'chat.message',
+                'chat': chat_slug,
+                'message': message_block,
+            }
+
+            async_to_sync(self.channel_layer.group_send)(chat.slug, content)
 
     def chat_join(self, event):
         async_to_sync(self.send_json(
@@ -124,11 +134,11 @@ class ChatConsumer1(JsonWebsocketConsumer):
 
     def chat_message(self, event):
         print(event)
+
         async_to_sync(self.send_json(
             {
                 "msg_type": 0,
                 "chat": event["chat"],
-                "username": event["username"],
                 "message": event["message"],
             },
         ))

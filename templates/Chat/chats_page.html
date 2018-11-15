@@ -5,7 +5,8 @@
 {% block head %}{{ user.username }} | Chats{% endblock %}
 
 {% block content %}
-
+    {% load i18n %}
+    <h2>{% trans 'Chats list' %}</h2>
     <div class="chat-list">
         {% for chat in chats %}
             <div class="chat-title" id='block-{{ chat.slug }}'>
@@ -16,7 +17,7 @@
 
             </div>
         {% empty %}
-            You haven't any chats
+            {% trans "You haven't any chats" %}
         {% endfor %}
 
     </div>
@@ -30,40 +31,48 @@
 
     {% load staticfiles %}
     <script src="{% static 'js/reconnecting-websocket.min.js' %}"></script>
+    <!-- Load file to note -->
+    <script src="{% static '/js/load_file.js' %}" type="text/javascript"></script>
 
+    <script src="{% static '/js/jchat.js' %}" type="text/javascript"></script>
     <script>
-
 
         var user = {{request.user.id }};
 
-        console.log(user);
         var chatSocket = new ReconnectingWebSocket(
             'ws://' + window.location.host +
             '/ws/chat/chats/');
 
         chatSocket.onmessage = function (message) {
-            console.log("Got websocket message " + message.data);
             var data = JSON.parse(message.data);
 
             if (data.join) {
-
                 console.log("Joining room " + data.join);
+
                 $(".chat-container").load('/chat/chats/' + data.join + '/', function () {
+                    LoadMessages();
                     $(".message-form").load('/chat/create_message/',
                         function () {
+                            PrevievFile();
                             $('#form-message').on('submit', function (e) {
                                 e.preventDefault();
-
                                 data_to_send = {
                                     "command": "send",
                                     'chat': data.join,
                                     'message': $(this).find('textarea').val()
-
                                 };
 
+                                var has_files = false;
+                                $("input[type='file']").each(
+                                    function (index, element) {
+                                        console.log($(element).val());
+                                        if ($(element).val()) {
+                                            has_files = true;
+                                            return false;
+                                        }
+                                    });
 
-                                if ($("input[type='file']").val()) {
-                                    console.log('ajax');
+                                if (has_files) {
                                     form_mess = new FormData($(this).get(0));
                                     form_mess.append('chat_slug', data.join);
                                     $.ajax({
@@ -73,19 +82,14 @@
                                         processData: false,
                                         data: form_mess,
                                         success: function (data) {
-                                            console.log('sucssess');
-                                            data_to_send['files'] = 1;
+                                            data_to_send['message_id'] = data['message'];
                                             chatSocket.send(JSON.stringify(data_to_send));
-
                                         }
                                     });
                                 }
                                 else {
-
                                     chatSocket.send(JSON.stringify(data_to_send));
-
                                 }
-
                                 return false;
                             });
                         })
@@ -99,8 +103,10 @@
                 }
                 else {
                     if (data.message) {
-                        new_mess = "<div>From " + data.username + "Text: " + data.message + "</div";
-                        $('#' + data.chat + " .content").append(new_mess);
+
+                        $('#' + data.chat + " .content").append(data.message);
+                        $('#form-message')[0].reset();
+                        $('.file-label').empty();
 
                     }
                 }

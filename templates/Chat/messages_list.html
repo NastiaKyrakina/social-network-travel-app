@@ -1,0 +1,13 @@
+{% for message in messages reversed %}
+    {% if message.user == request.user %}
+        <div class="owner-message">
+            {% include 'Chat/message_block.html' %}
+        </div>
+    {% else %}
+        {% include 'Chat/message_block.html' %}
+    {% endif %}
+{% empty %}
+    <div>
+        Empty Chat
+    </div>
+{% endfor %}

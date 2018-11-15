@@ -1,9 +1,37 @@
 <div class="message-block">
-    <p>[{{ message.date }}]</p>
+    <p class="message-date text-muted mx-2">
+        <small>{{ message.date| date:"d-m-Y H:i" }}</small>
+    </p>
+    <p> From: {{ message.user.username }} </p>
     <p> {{ message.text }} </p>
-    <div class="note_img">
+    {% if message.has_files %}
+        <div class="message_img">
         {% for image in message.get_images %}
-            <img src="{{ image.file.url }}" height="200" width="300"/>
+            <img src="{{ image.file.url }}" class="note-image col-12 img-fluid p-0"/>
         {% endfor %}
+        </div>
+        <div class="message_video">
+            {% for video in message.get_video %}
+                <div class="embed-responsive embed-responsive-16by9">
+                    <video controls="controls" class="embed-responsive-item">
+                        <source src="{{ video.file.url }}">
+                    </video>
+                </div>
+            {% endfor %}
     </div>
+        <div class="message_audio">
+            {% for audio in message.get_audio %}
+                <audio controls="controls" class="my-2">
+                    <source src="{{ audio.file.url }}">
+                </audio>
+            {% endfor %}
+        </div>
+        <div class="message_files">
+            {% for file in message.get_files %}
+                <a download="file.file.url" class="mx-2">{{ file.file.url }}</a>
+            {% endfor %}
+        </div>
+
+    {% endif %}
+
 </div>

@@ -1,26 +1,15 @@
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponseRedirect, HttpResponse, Http404, JsonResponse, QueryDict, HttpRequest
-
+from django.contrib.auth.decorators import login_required
 from UserProfile.models import UserExt, save_attach
 from .models import Chat, Message, Member, MessageAttachment
 from UserProfile.forms import AttachmentForm
 from .forms import MessageForm
 from django.utils.safestring import mark_safe
 import json
+from datetime import datetime
 
 from Lib.FileFormats import handle_uploaded_file
-
-def chat_list_page(request):
-    """"Чат поиск"""
-    return render(request, 'Chat/chat_select')
-
-def chat_page(request, room_name):
-    """"Чат"""
-    return render(request, 'Chat/chat_room.html',
-                  {
-                      'room_name_json': mark_safe(json.dumps(room_name))
-                  }
-                  )
 
 
 def chat_list(request):
@@ -39,7 +28,15 @@ def chat_block(request, chat_slug):
         chat.members.get(id=user.id)
     except Chat.DoesNotExist:
         return None
-    messages = Message.objects.filter(chat=chat)
+
+    if 'since' in request.GET:
+        date_since = datetime.strptime(request.GET['since'], '%d-%m-%Y %H:%M')
+        messages = Message.message_object.last_10_messages(chat, date_since)
+        print(messages)
+        return render(request, 'Chat/messages_list.html', {'messages': messages})
+
+    messages = Message.objects.filter(chat=chat).order_by('-date')[0:10]
+
     context = {
         'chat': chat,
         'messages': messages
@@ -70,13 +67,7 @@ def create_message(request):
                 message = form_message.save(user, chat)
                 save_attach(request.FILES, message, MessageAttachment)
 
-                return render(request,
-                          'Chat/message_block.html',
-                          {
-                              'message': message,
-                          }
-                          )
-
+                return JsonResponse({'message': message.id})
     else:
         form_message = MessageForm()
         form_attach = AttachmentForm()

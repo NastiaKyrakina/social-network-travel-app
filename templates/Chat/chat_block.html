@@ -1,11 +1,13 @@
 <div class="Chat" id="{{ chat.slug }}">
-
+    <h3>{{ chat.name }}</h3>
 
     <div class="header">{{ chat.name }}</div>
-    <div class="content">
-        {% for message in messages %}
-            {% include 'Chat/message_block.html' %}
-        {% endfor %}
+
+    <div class="scroll-area">
+        <button type="button" class="load_href_1 btn btn-primary">Load prevision messages</button>
+        <div class="content">
+            {% include 'Chat/messages_list.html' %}
+        </div>
+        <div class="message-form"></div>
     </div>
-    <div class="message-form"></div>
 </div>

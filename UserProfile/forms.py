@@ -30,16 +30,16 @@ class AttachmentForm(forms.Form):
                                       'accept': 'image/*'})
     )
 
-    video = forms.ImageField(
+    video = forms.FileField(
         required=False,
         widget=forms.FileInput(attrs={'name': 'video',
-                                      'multiple': True,
+                                      'multiple': False,
                                       'class': 'file invisible position-absolute',
                                       'required': False,
                                       'accept': 'video/*'})
     )
 
-    audio = forms.ImageField(
+    audio = forms.FileField(
         required=False,
         widget=forms.FileInput(attrs={'name': 'audio',
                                       'multiple': True,
@@ -48,7 +48,7 @@ class AttachmentForm(forms.Form):
                                       'accept': 'audio/*'})
     )
 
-    files = forms.ImageField(
+    files = forms.FileField(
         required=False,
         widget=forms.FileInput(attrs={'name': 'files',
                                       'class': 'file invisible position-absolute',
@@ -57,3 +57,4 @@ class AttachmentForm(forms.Form):
                                       'multiple': True,
                                       })
     )
+

@@ -15,10 +15,32 @@ class ChatManager(models.Manager):
         return chats
 
 
+class MessageManager(models.Manager):
+
+    def last_10_messages(self, chat, since=None):
+        qs = self.filter(chat=chat).order_by('-date')
+        if since:
+            qs = qs.filter(date__lte=since)
+        qs = qs[0:10]
+        return qs
+
+
+
+
 class Chat(models.Model):
+    P2P = 0
+    PRIVATE = 1
+    PUBLIC = 2
+
+    TYPE_CHATS = (
+        (P2P, 'Talk'),
+        (PRIVATE, 'Private'),
+        (PUBLIC, 'Public'),
+    )
 
     name = models.CharField(max_length=25, blank=True)
     slug = models.SlugField(blank=True)
+    chat_type = models.SmallIntegerField(choices=TYPE_CHATS, default=P2P)
     date_create = models.DateField(auto_now_add=True)
     date_last_mess = models.DateTimeField(blank=True, null=True)
     members = models.ManyToManyField(User, through='Member')
@@ -64,6 +86,9 @@ class Message(models.Model):
     text = models.TextField(max_length=1000, blank=True)
     date = models.DateTimeField(auto_now_add=True)
 
+    message_object = MessageManager()
+    objects = models.Manager()
+
     def __str__(self):
         return self.text[0:100]
 
@@ -71,6 +96,9 @@ class Message(models.Model):
         super(Message, self).save(*args, **kwargs)
         self.chat.date_last_mess = self.date
         self.chat.save()
+
+    def has_files(self):
+        return self.messageattachment_set.all()
 
     def get_images(self):
         return self.messageattachment_set.filter(type=FFD.IMAGE)

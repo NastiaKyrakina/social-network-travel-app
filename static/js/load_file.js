@@ -1,4 +1,4 @@
-$(document).ready(function () {
+function PrevievFile() {
     // Отримання масиву
     var inputs = $('.file');
 
@@ -22,5 +22,6 @@ $(document).ready(function () {
 
         label[e.target.id].html(fileList);
     });
-});
+}
+
 

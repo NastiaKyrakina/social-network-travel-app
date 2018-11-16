@@ -22,3 +22,7 @@ input.UncorrectValue {
     background-color: #1e7e34;
 }
 
+.remove-el {
+    color: red;
+    font-weight: bolder;
+}

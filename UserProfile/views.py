@@ -132,7 +132,9 @@ def note_edit_page(request, note_id):
 
     if request.method == 'POST':
         form_note = NoteForm(request.POST)
+
         if form_note.is_valid():
+
             note.text = form_note.cleaned_data['text']
             note.save()
             if request.is_ajax():

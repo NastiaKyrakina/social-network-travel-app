@@ -1,0 +1,14 @@
+<form class="chat-member-form" method="post" action="{% url 'chat.add_members' %}" id="member-form">
+    {% for error in form_memder.members.errors %}
+        <div class="ErrorMessage">{{ error }}</div>
+    {% endfor %}
+
+    <div class="members-error"></div>
+    <div class="row">
+        <label class="pl-2 mb-0" for="id_members">Memder(s)</label>
+        {{ chat_form.members }}
+        <button id="add-member">Add</button>
+        <ul id="added-members"></ul>
+        <datalist id="members_list"></datalist>
+    </div>
+</form>

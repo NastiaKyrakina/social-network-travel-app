@@ -13,3 +13,15 @@ class MessageForm(forms.ModelForm):
         message.save()
         return message
 
+
+class ChatForm(forms.Form):
+    name = forms.CharField()
+    chat_type = forms.ChoiceField(choices=Chat.TYPE_CHATS,
+                                  widget=forms.RadioSelect)
+
+
+class ChatMember(forms.Form):
+    members = forms.CharField(widget=forms.TextInput(attrs={
+        'hide': True,
+        'list': 'members_list',
+    }))

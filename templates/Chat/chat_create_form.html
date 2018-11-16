@@ -1,0 +1,51 @@
+<form class="chat-form form-group col-lg-8 col-sm-12" enctype="multipart/form-data"
+      method="post" action="{% url 'chat.create_chat' %}" id="chat-form">
+
+    {% csrf_token %}
+
+    <div class="chat-edit-header block block-header">
+        <h4 class="pl-3 mb-1">New Chat</h4>
+    </div> <!-- house-edit-header -->
+
+    <div class="chat-edit-body block p-3">
+
+        {% for error in chat_form.non_field_errors %}
+            <div class="ErrorMessage">{{ error }}</div>
+        {% endfor %}
+
+        {% for error in chat_form.name.errors %}
+            <div class="ErrorMessage">{{ error }}</div>
+        {% endfor %}
+
+        <label class="pl-2 mb-0" for="id_name">Title</label>
+        {{ chat_form.name }}
+
+        {% for error in chat_form.type.errors %}
+            <div class="ErrorMessage">{{ error }}</div>
+        {% endfor %}
+        <div class="row chat-type-select">
+            <div class="col-12 d-flex justify-content-around">
+                {% for check in chat_form.chat_type %}
+                    <label for="{{ check.id_for_label }}">
+                        {{ check.choice_label }}
+                        <span class="radio">{{ check.tag }}</span>
+                    </label>
+                {% endfor %}
+            </div>
+        </div>
+
+    </div>
+
+    <div class="house-edit-footer block block-footer d-flex justify-content-center">
+        {% if is_creating %}
+            <input type="submit" class="btn btn-primary py-1" value="Create"/>
+        {% else %}
+            <input type="submit" class="btn btn-warning py-1" value="Edit"/>
+        {% endif %}
+    </div> <!-- house-edit-footer -->
+
+    {% for error in errors_type %}
+        {{ error }} <br/>
+    {% endfor %}
+</form>
+

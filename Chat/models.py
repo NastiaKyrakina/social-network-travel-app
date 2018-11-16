@@ -25,8 +25,6 @@ class MessageManager(models.Manager):
         return qs
 
 
-
-
 class Chat(models.Model):
     P2P = 0
     PRIVATE = 1
@@ -69,6 +67,9 @@ class Chat(models.Model):
         last_visit = self.member_set.get(user__id=1).last_visit
         new_message = self.objects.filter(message__date__gt=last_visit)
         return new_message
+
+    def members(self):
+        return self.member_set.all()
 
 
 class Member(models.Model):

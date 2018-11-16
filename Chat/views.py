@@ -4,12 +4,53 @@ from django.contrib.auth.decorators import login_required
 from UserProfile.models import UserExt, save_attach
 from .models import Chat, Message, Member, MessageAttachment
 from UserProfile.forms import AttachmentForm
-from .forms import MessageForm
+from .forms import MessageForm, ChatForm
 from django.utils.safestring import mark_safe
 import json
 from datetime import datetime
 
 from Lib.FileFormats import handle_uploaded_file
+
+
+def add_members():
+    pass
+
+
+def create_chat(request):
+    context = {}
+    user = UserExt.objects.get(id=request.user.id)
+    if request.method == 'POST':
+        chat_form = ChatForm(request.POST)
+    else:
+        chat_form = ChatForm()
+
+    context['chat_form'] = chat_form
+    context['is_creating'] = True
+    return render(request, 'Chat/chat_create_form.html', context)
+
+
+def get_user(request):
+    if 'q' in request.GET:
+        print(request.GET['q'])
+        try:
+            user = UserExt.objects.filter(username=request.GET['q']).values('username', 'id')[0]
+            user_data = []
+            user_data.append({'name': user['username']})
+            user_data.append({'id': user['id']})
+            return JsonResponse({'user_data': user_data})
+        except IndexError:
+            return HttpResponse('none')
+
+
+def load_users(request):
+    if 'q' in request.GET:
+        print(request.GET['q'])
+        users = UserExt.objects.filter(username__istartswith=request.GET['q']).values('username')
+        users_list = []
+        for user in users:
+            users_list.append({'name': user['username']})
+        return JsonResponse({'users_list': users_list})
+    return HttpResponse('uncorrected request')
 
 
 def chat_list(request):

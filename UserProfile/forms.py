@@ -58,3 +58,14 @@ class AttachmentForm(forms.Form):
                                       })
     )
 
+
+class DiaryForm(forms.ModelForm):
+    class Meta:
+        model = Diary
+        fields = ['title', 'about']
+
+    def save(self, user, *args, **kwargs):
+        diary = super(DiaryForm, self).save(commit=False)
+        diary.user = user
+        diary.save()
+        return diary

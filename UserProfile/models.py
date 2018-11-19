@@ -102,6 +102,20 @@ class Note(models.Model):
     def get_files(self):
         return self.attachment_set.filter(type=FFD.FILES)
 
+    def is_bound(self):
+        try:
+            marker = self.marker
+        except Marker.DoesNotExist:
+            return False
+        return marker
+
+    def get_diary(self):
+        try:
+            marker = self.marker
+        except Marker.DoesNotExist:
+            return False
+        return marker.diary
+
 
 def get_upload_file_way(ftype):
     return 'user_files/%s/' % ftype
@@ -135,3 +149,38 @@ def save_attach(files_dict, note, attachment_class):
     for file in files:
         new_attachment = attachment_class(parent=note, file=file, type='FL')
         new_attachment.save()
+
+
+class Diary(models.Model):
+    ACTIVE = 0
+    FROZEN = 1
+    FINISH = 2
+
+    STATUS_TYPE = (
+        (ACTIVE, 'active'),
+        (FROZEN, 'frozen'),
+        (FINISH, 'finish')
+    )
+
+    user = models.ForeignKey(User, on_delete='Cascade')
+    title = models.CharField(max_length=100)
+    about = models.TextField(max_length=1000)
+    date_start = models.DateField(auto_now_add=True)
+    date_finish = models.DateField(blank=True, null=True)
+    status = models.SmallIntegerField(choices=STATUS_TYPE, default=ACTIVE)
+    photo = models.ImageField(upload_to='diary_photo/', blank=True)
+
+    def is_active(self):
+        return not (self.status)
+
+    def is_frozen(self):
+        return self.status == Diary.FROZEN
+
+
+class Marker(models.Model):
+    note = models.OneToOneField(Note,
+                                unique=True,
+                                on_delete='Cascade')
+    diary = models.ForeignKey(Diary, on_delete='Cascade')
+    lat = models.DecimalField(max_digits=9, decimal_places=6)
+    lng = models.DecimalField(max_digits=9, decimal_places=6)

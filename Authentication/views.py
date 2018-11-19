@@ -39,7 +39,7 @@ def login_page(request):
 def logout_page(request):
     """выход из аккаунта"""
     logout(request)
-    return render(request, 'UserProfile/home.html')
+    return HttpResponseRedirect('/reg/login/')
 
 
 def registration_page(request):

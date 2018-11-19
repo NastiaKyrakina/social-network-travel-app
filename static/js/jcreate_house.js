@@ -1,10 +1,25 @@
 function GetIdCountry() {
+
     const inp = $("input#id_country").val();
     let opt = $("#countries option[value='" + inp + "']");
     return opt.attr('id');
 }
 
+function TrimInput() {
+
+    $('input[type=text]').on('input', function () {
+        text = $(this).val();
+        text = text.replace(/^\s*/g, "")
+        $(this).val(text.replace(/\s+/g, " "));
+
+    });
+
+}
+
+
 $(document).ready(function () {
+
+    TrimInput();
 
     var CountryCorrect;
     load_countrues();
@@ -31,5 +46,6 @@ $(document).ready(function () {
         e.preventDefault();
         return false;
     });
+
 
 });

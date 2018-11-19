@@ -3,8 +3,8 @@ from django.template.loader import render_to_string
 from asgiref.sync import async_to_sync
 from channels.generic.websocket import JsonWebsocketConsumer
 import json
-from .models import Chat, Message
-
+from .models import Chat, Message, Member
+from datetime import datetime
 
 class ChatConsumer1(JsonWebsocketConsumer):
     def connect(self):
@@ -27,12 +27,12 @@ class ChatConsumer1(JsonWebsocketConsumer):
                 self.leaf_chat(content['chat'])
 
             elif command == "send":
-                print('5')
+
                 if 'message_id' in content:
-                    print('6')
+
                     self.send_chat(content['chat'], content['message'], content['message_id'])
                 else:
-                    print('8')
+
                     self.send_chat(content['chat'], content['message'])
 
     def disconnect(self, close_code):
@@ -68,6 +68,10 @@ class ChatConsumer1(JsonWebsocketConsumer):
 
     def leaf_chat(self, slug):
         chat = Chat.objects.get(slug=slug)
+        member = chat.member_set.get(user=self.scope['user'])
+        member.last_visit = datetime.now()
+        member.save()
+
         self.chats.discard(slug)
         async_to_sync(self.channel_layer.group_send(
             chat.slug,

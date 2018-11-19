@@ -8,15 +8,17 @@
     {% load i18n %}
     <h2>{% trans 'Chats list' %}</h2>
     <button id="create-chat">New Chat</button>
+    <button id="create-conversation">New conversation with...</button>
     <div class="chat-list">
         {% for chat in chats %}
-            <div class="chat-title" id='block-{{ chat.slug }}'>
-                {{ chat.name }}
-                {% if chat.last_message %}
-                    <p>{{ chat.last_message }}</p>
-                {% endif %}
-
-            </div>
+            -----------------------------------
+            {% if chat.user_new_message %}
+                <div class="new-message">
+                    {% include 'Chat/chat_mini_block.html' %}
+                </div>
+            {% else %}
+                {% include 'Chat/chat_mini_block.html' %}
+            {% endif %}
         {% empty %}
             {% trans "You haven't any chats" %}
         {% endfor %}
@@ -36,9 +38,12 @@
     <script src="{% static '/js/load_file.js' %}" type="text/javascript"></script>
 
     <script src="{% static '/js/jchat.js' %}" type="text/javascript"></script>
+
     <script>
 
         CreateChat();
+        ShowDelete();
+
 
         var user = {{request.user.id }};
 
@@ -54,6 +59,7 @@
 
                 $(".chat-container").load('/chat/chats/' + data.join + '/', function () {
                     LoadMessages();
+                    RequaerUsers();
                     $(".message-form").load('/chat/create_message/',
                         function () {
                             PrevievFile();
@@ -120,6 +126,7 @@
 
         $('.chat-title').on('click', function (e) {
             e.preventDefault();
+            console.log('click');
 
             slug = $(this).attr('id').split('-')[1];
 
@@ -132,7 +139,7 @@
                     })
                 )
             } else {
-
+                $(this).parent().removeClass('new-message');
                 chatSocket.send(
                     JSON.stringify({
                         'command': 'join',
@@ -151,4 +158,5 @@
 
 
     </script>
+
 {% endblock %}

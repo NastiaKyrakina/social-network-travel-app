@@ -34,9 +34,15 @@
             </div>
         </div>
 
+        <div>
+            Image:
+            {{ chat_form.image_file }}
+            {{ chat_form.image }}
+        </div>
+
     </div>
 
-    <div class="house-edit-footer block block-footer d-flex justify-content-center">
+    <div class="chat-edit-footer block block-footer d-flex justify-content-center">
         {% if is_creating %}
             <input type="submit" class="btn btn-primary py-1" value="Create"/>
         {% else %}

@@ -1,14 +1,26 @@
-<form class="chat-member-form" method="post" action="{% url 'chat.add_members' %}" id="member-form">
-    {% for error in form_memder.members.errors %}
+{% if chat %}
+    Add members to chat {{ chat.name }}
+{% endif %}
+
+<form class="chat-member-form" method="post" id="member-form">
+    {% for error in members_form.members.errors %}
         <div class="ErrorMessage">{{ error }}</div>
     {% endfor %}
 
+    {% csrf_token %}
     <div class="members-error"></div>
     <div class="row">
-        <label class="pl-2 mb-0" for="id_members">Memder(s)</label>
-        {{ chat_form.members }}
+        <label class="" for="id_members">Memder(s)</label>
+        {{ members_form.members }}
+    </div>
+    {% if conversation %}
+        <button id="start-cnv" type="submit">Start conversation</button>
+    {% else %}
         <button id="add-member">Add</button>
         <ul id="added-members"></ul>
         <datalist id="members_list"></datalist>
-    </div>
+        <div>
+            <button id="send-members" type="submit">Request</button>
+        </div>
+    {% endif %}
 </form>

@@ -1,0 +1,59 @@
+{% load i18n %}
+<form class="diary-form form-group col-lg-8 col-sm-12" method="post">
+    {% csrf_token %}
+
+
+    <div class="diary-edit-header block block-header">
+        <h4 class="pl-3 mb-1">
+            {% if is_creating %}
+                {% trans 'New diary' %}
+            {% else %}
+                {% trans 'Edit diary' %}
+            {% endif %}
+        </h4>
+    </div> <!-- diary-edit-header -->
+
+    <div class="diary-edit-body block p-3">
+
+
+        {% if current_diary %}
+            <div class="warning-message">
+                {% blocktrans %}
+                    You have the active diary now.<br/>
+                    If you create new diary, status of current diary will be change on 'frozen'.
+                {% endblocktrans %}
+            </div>
+
+        {% endif %}
+
+        {% for error in form_diary.non_field_errors %}
+            <div class="ErrorMessage">{{ error }}</div>
+        {% endfor %}
+
+        {% for error in form_diary.title.errors %}
+            <div class="ErrorMessage">{{ error }}</div>
+        {% endfor %}
+
+
+        <div class="row">
+            <label class="pl-2 mb-0" for="id_title"> {% trans 'Title' %}</label>
+            {{ form_diary.title }}
+        </div>
+        <div class="row">
+            {{ form_diary.about.errors }}
+            <label class="pl-2 mb-0" for="id_about">{% trans 'Tell about this diary' %}</label>
+            {{ form_diary.about }}
+        </div>
+
+    </div>
+
+    <div class="diary-edit-footer block block-footer d-flex justify-content-center">
+        {% if is_creating %}
+            <input type="submit" class="btn btn-primary py-1" value="{% trans 'Create new diary' %}"/>
+        {% else %}
+            <input type="submit" class="btn btn-warning py-1" value="{% trans 'Save change' %}"/>
+        {% endif %}
+    </div> <!-- diary-edit-footer -->
+
+</form>
+

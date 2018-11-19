@@ -1,0 +1,4 @@
+$("#finish-diary").click(function () {
+
+
+});

@@ -114,7 +114,6 @@ class HouseForm(forms.ModelForm):
                                         code='uncorrect_diapazone')
         return price
 
-
     def save(self, user):
         house = super(HouseForm, self).save(commit=False)
         house.owner = user

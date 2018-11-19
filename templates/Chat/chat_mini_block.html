@@ -1,0 +1,17 @@
+<div class="chat-title" id='block-{{ chat.slug }}'>
+    <div class="col-4 p-0">
+        {% comment Блок фото%}
+{% if chat.image %}
+    <img src="{{ chat.image.url }}" class="img-fluid">
+{% else %}
+    {% load staticfiles %}
+    <img src="{% static 'images/DefaultChat.png' %}" class="img-fluid">
+{% endif %}
+ {% endcomment %}
+    </div>
+    {{ chat.title }}
+    {% if chat.last_message %}
+        <p>{{ chat.last_message }}</p>
+    {% endif %}
+    <button class="delete-button" id="delete-{{ chat.slug }}" hidden>Del</button>
+</div>

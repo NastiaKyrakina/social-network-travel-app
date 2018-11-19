@@ -2,6 +2,16 @@
     <p class="message-date text-muted mx-2">
         <small>{{ message.date| date:"d-m-Y H:i" }}</small>
     </p>
+    {% comment Фото пользователя%}
+    <div>
+        {% if message.user.userinfo.big_photo %}
+            <img src="{{ message.user.userinfo.big_photo.url }}" class="img-fluid">
+        {% else %}
+            {% load staticfiles %}
+        <img src="{% static 'images/DefaultAvatar.png' %}" class="img-fluid">
+        {% endif %}
+    </div>
+    {% endcomment %}
     <p> From: {{ message.user.username }} </p>
     <p> {{ message.text }} </p>
     {% if message.has_files %}

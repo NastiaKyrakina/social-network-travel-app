@@ -10,22 +10,60 @@ from datetime import datetime
 
 from Lib.FileFormats import handle_uploaded_file
 
-
-
 # Create your views here.
+
+
+def create_diary(request):
+    user = UserExt.objects.get(pk=request.user.pk)
+    try:
+        current_diary = user.diary_set.get(status=Diary.ACTIVE)
+    except Diary.DoesNotExist:
+        current_diary = None
+
+    if request.method == 'POST':
+        form_diary = DiaryForm(request.POST)
+
+        if form_diary.is_valid():
+
+            new_diary = form_diary.save(user)
+            if current_diary:
+                current_diary.status = Diary.FROZEN
+                current_diary.save()
+            return HttpResponseRedirect('/user/diary/%s/' % new_diary.id)
+
+    else:
+        form_diary = DiaryForm()
+
+    return render(request,
+                  'UserProfile/create_diary.html',
+                  {'form_diary': form_diary,
+                   'current_diary': current_diary,
+                   'is_creating': True,
+                   })
+
+
+def user_diaries(request):
+    pass
+
+
+def diary_page(request, diary_id):
+    diary = get_object_or_404(Diary, id=diary_id)
+    return render(request, 'UserProfile/diary_page.html', {'diary': diary})
+
+
+def diary_markers(request):
+    pass
 
 
 def home(request, user_id):
     user = get_object_or_404(UserExt, pk=user_id)
-
+    status = 'none'
     try:
         user_info = UserInfo.objects.get(pk=user.pk)
+        status = user.userinfo.STATUS_TYPE[request.user.userinfo.status]
     except UserInfo.DoesNotExist:
         user_info = None
 
-    status = 'none'
-    if user_info:
-        status = user.userinfo.STATUS_TYPE[request.user.userinfo.status]
 
     notes = user.get_new_note_portion()
 
@@ -79,6 +117,10 @@ def note_create_page(request):
     user = UserExt.objects.get(pk=request.user.pk)
     errors_file_type = []
 
+    try:
+        current_diary = user.diary_set.get(status=Diary.ACTIVE)
+    except Diary.DoesNotExist:
+        current_diary = None
 
     if request.method == 'POST':
         form_note = NoteForm(request.POST)
@@ -110,17 +152,16 @@ def note_create_page(request):
                 return JsonResponse({'errors': errors_file_type})
 
     else:
-        print('nore')
         form_note = NoteForm()
         form_attach = AttachmentForm()
 
-    print('render')
     return render(request,
                   'UserProfile/includes/create_note.html',
                   {'form_note': form_note,
                    'form_attach': form_attach,
                    'is_creating': True,
                    'errors_type': errors_file_type,
+                   'current_diary': current_diary
                    })
 
 

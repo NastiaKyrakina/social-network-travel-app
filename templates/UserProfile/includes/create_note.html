@@ -12,7 +12,11 @@
     <div class="col-3 pl-1">
 
         <input class="btn btn-primary mb-2 w-100" type="submit" value="Post"/>
-
+        <!--Якщо ведеться дневник-->
+        {% if current_diary %}
+            <button class="btn btn-primary mb-2 w-100" type="button" id="location-{{ current_diary.id }}">Location
+            </button>
+        {% endif %}
         <div class="btn-group w-100">
 
             <button class="btn btn-primary btn-sm dropdown-toggle w-100" type="button" data-toggle="dropdown"
@@ -27,15 +31,12 @@
                     <!--поле форми AttachmentForm-->
                     {{ form_attach.images }}
                     {{ form_attach.images_file }}
-                    <!--<input class="file invisible position-absolute" type="file" accept="image/*" id="id_images"
-                                multiple>
-                -->
+
                     <label class="m-0 pl-3 bg-primary" for="id_images">Image</label>
                 </div>
                 <!-- Video -->
                 <div class="file-upload">
-                    <!--<input class="file invisible position-absolute" type="file" accept="video/*" id="id_video" multiple>
-                    -->
+
                     <!--поле форми AttachmentForm-->
                     {{ form_attach.video }}
                     {{ form_attach.video_file }}
@@ -59,9 +60,7 @@
                     <!--поле форми AttachmentForm-->
                     {{ form_attach.files }}
                     {{ form_attach.files_file }}
-                    <!--
-                    <input class="file invisible position-absolute" type="file" id="id_files" multiple>
-                    -->
+
                     <label class="m-0 pl-3 bg-primary" for="id_files">Another file</label>
                 </div>
             </div>

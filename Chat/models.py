@@ -14,6 +14,11 @@ class ChatManager(models.Manager):
         chats = self.filter(member__user=user)
         return chats
 
+    def has_conversation(self, user, opponent):
+        user_chat = self.filter(chat_type=Chat.P2P, member__user=user)
+        conversation = user_chat.filter(member__user=opponent).first()
+        return conversation
+
 
 class MessageManager(models.Manager):
 
@@ -30,17 +35,19 @@ class Chat(models.Model):
     PRIVATE = 1
     PUBLIC = 2
 
-    TYPE_CHATS = (
+    TYPE_CHATS = [
         (P2P, 'Talk'),
         (PRIVATE, 'Private'),
         (PUBLIC, 'Public'),
-    )
+    ]
 
     name = models.CharField(max_length=25, blank=True)
     slug = models.SlugField(blank=True)
     chat_type = models.SmallIntegerField(choices=TYPE_CHATS, default=P2P)
     date_create = models.DateField(auto_now_add=True)
     date_last_mess = models.DateTimeField(blank=True, null=True)
+    image = models.ImageField(upload_to='chat_data/photo/', blank=True, null=True)
+
     members = models.ManyToManyField(User, through='Member')
 
     objects = models.Manager()
@@ -49,12 +56,39 @@ class Chat(models.Model):
     def set_slug(self):
         self.slug = '%s_chat' % self.id
 
+    def get_chat_title(self, user):
+        if self.chat_type == Chat.P2P:
+            title_set = self.name.split('|')
+            if user.username == title_set[0]:
+                title = title_set[1]
+            else:
+                title = title_set[0]
+        else:
+            title = self.name
+        return title
+
+    def get_image(self, user):
+        if self.image:
+            return self.image
+        if self.chat_type == Chat.P2P:
+            opponent = self.member_set.exclude(user=user).first()
+            if opponent and opponent.user.userinfo:
+                return opponent.user.userinfo.big_photo
+        return None
+
+
     def save(self, *args, **kwargs):
+        super(Chat, self).save(*args, **kwargs)
         self.set_slug()
         super(Chat, self).save(*args, **kwargs)
 
     def __str__(self):
         return self.name
+
+    def has_new_messages(self, user):
+        if self.date_last_mess:
+            return self.member_set.filter(user=user, last_visit__lt=self.date_last_mess).exists()
+        return False
 
     def last_message(self):
         try:
@@ -71,14 +105,30 @@ class Chat(models.Model):
     def members(self):
         return self.member_set.all()
 
+    def creator(self):
+        return self.member_set.filter(status=Member.CREATOR).values('user').first()
+
+    def is_creator(self, user):
+        return self.member_set.filter(status=Member.CREATOR, user=user).first()
+
+    def is_multi_chat(self):
+        return self.chat_type != Chat.P2P
+
 
 class Member(models.Model):
+    CREATOR = 1
+    USER = 0
+
     user = models.ForeignKey(User, on_delete='Cascade')
     chat = models.ForeignKey(Chat, on_delete='Cascade')
+    status = models.BooleanField(default=USER)
     last_visit = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         return "%s | %s" % (self.user.username, self.chat.name)
+
+    def user_chat_title(self):
+        return self.chat.get_chat_title(self.user.username)
 
 
 class Message(models.Model):

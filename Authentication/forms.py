@@ -1,6 +1,6 @@
 from django import forms
 import re
-from UserProfile.models import User, UserInfo
+from UserProfile.models import User, UserInfo, UserExt
 
 
 class AuthorizationForm(forms.Form):
@@ -45,7 +45,7 @@ class RegistrationForm(forms.Form):
 
     def save(self):
 
-        new_user = User.objects.create_user(
+        new_user = UserExt.objects.create_user(
             first_name=self.cleaned_data['first_name'],
             last_name=self.cleaned_data['last_name'],
             username=self.cleaned_data['username'],

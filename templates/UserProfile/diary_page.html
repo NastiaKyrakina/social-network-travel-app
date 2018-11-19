@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+
+{% block title %}{{ diary.title }}{% endblock %}
+
+{% block content %}
+
+    <div class="diary" id="diary-element-{{ diary.pk }}">
+        <div class="block block-header">
+            <h4 class="pl-2 mb-0">{{ diary.title }}</h4>
+            <p class="pl-2 text-muted m-0">
+                <small>by @{{ diary.user.username }}</small>
+                {% if diary.is_active or diary.is_frozen %}
+                    <button id="finish-diary" data-toggle="modal" data-target="#myModal">Finish</button>
+                {% endif %}
+
+
+            </p>
+        </div>
+
+        <div class="diary-page-body block p-3">
+            <div class="row justify-content-around">
+                <div class="shadow p-2 bg-white rounded col-4">
+                    {% if diary.is_active %}
+                        <span class="text-success">Active</span>
+                        <button>Pause</button>
+                    {% elif diary.is_frozen %}
+                        <span class="text-info">Frozen</span>
+                        <button id="frozen-diary">Activate</button>
+                    {% else %}
+                        <span class="text-info">Finished</span>
+                    {% endif %}
+
+                </div>
+                <div class="shadow p-2 bg-white rounded col-7">
+                    <h5>About</h5>
+                    <p>{{ diary.about }}</p>
+                </div>
+            </div>
+
+            <div class="map">
+                <!--Карта-->
+            </div>
+
+        </div>
+
+        <div class="block block-footer d-flex justify-content-center">
+            {% if is_owner %}
+                <form>
+                    <button type="button"
+                            class="delete-element btn btn-danger ml-2" id="delete-element-{{ diary.pk }}">
+                        Delete
+                    </button>
+                    <button type="button" formaction="/diary/edit/{{ diary.pk }}/"
+                            class="btn btn-warning ml-2" id="edit-element-{{ diary.pk }}">
+                        Edit
+                    </button>
+                </form>
+            {% endif %}
+        </div>
+
+    </div> <!-- diary-element -->
+
+    {% include 'UserProfile/includes/modal_diary_finish.html' %}
+
+{% endblock %}
+
+
+{% block script %}
+
+    {% load staticfiles %}
+    <script src="{% static '/js/js.cookie.js' %}"></script>
+    <script src="{% static '/js/ajax_csrf.js' %}"></script>
+
+
+
+{% endblock %}

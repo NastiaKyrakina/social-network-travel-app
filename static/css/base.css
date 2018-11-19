@@ -26,3 +26,9 @@ input.UncorrectValue {
     color: red;
     font-weight: bolder;
 }
+
+.new-message {
+    background-color: #007bff;
+    color: #9fcdff;
+    font-weight: bold;
+}

@@ -1,10 +1,36 @@
 <div class="Chat" id="{{ chat.slug }}">
     <h3>{{ chat.name }}</h3>
 
-    <div class="header">{{ chat.name }}</div>
+    <div class="header">
+
+        {{ chat.name }}
+        {% if creator %}
+            <button id="add-member-{{ chat.slug }}">
+                Add members
+            </button>
+            <div class="add-member-block">
+            </div>
+        {% endif %}
+
+        {% if chat.is_multi_chat %}
+            <button class="chat-users">
+                Chat users
+            </button>
+            <div hidden>
+                {% for member in chat.members %}
+                    <a href="{% url 'home' member.user.id %}">@{{ member.user.username }}</a>
+                {% endfor %}
+
+            </div>
+        {% endif %}
+
+    </div>
 
     <div class="scroll-area">
-        <button type="button" class="load_href_1 btn btn-primary">Load prevision messages</button>
+        {% if messages %}
+            <button type="button" class="load_href_1 btn btn-primary">Load prevision messages</button>
+        {% endif %}
+
         <div class="content">
             {% include 'Chat/messages_list.html' %}
         </div>

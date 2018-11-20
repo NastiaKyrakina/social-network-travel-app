@@ -9,6 +9,7 @@
             <h4 class="pl-2 mb-0">{{ house.title }}</h4>
             <p class="pl-2 text-muted m-0">
                 <small>by @{{ house.owner.username }}</small>
+                <button class="btn btn-info ml-2">Contact with owner</button>
             </p>
         </div>
 
@@ -89,6 +90,8 @@
             {% for rate in house.rate_set.all %}
                 {% include "HouseSerch/includes/rate-block.html" %}
             {% endfor %}
+
+            <div class="rate-footer block block-footer"></div>
         </div>
 
     </div> <!-- house-element -->
@@ -104,4 +107,6 @@
     <script src="{% static '/js/house.js' %}"></script>
 
     <script src="{% static '/js/jrate.js' %}"></script>
+
+    <script src="{% static '/js/rate_stars.js' %}"></script>
 {% endblock %}

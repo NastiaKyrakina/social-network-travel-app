@@ -7,3 +7,8 @@
 {% else %}
     <div class="block text-center">You have any note yet :(</div>
 {% endif %}
+
+{% block js %}
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCJPcRk7BvJ-3SzCmd_culJXrMUJJn7xBY&callback=initMap"
+            async defer></script>
+{% endblock %}

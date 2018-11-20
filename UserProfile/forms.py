@@ -62,10 +62,48 @@ class AttachmentForm(forms.Form):
 class DiaryForm(forms.ModelForm):
     class Meta:
         model = Diary
-        fields = ['title', 'about']
+        fields = ['title', 'about', 'date_finish', 'photo']
+
+        widgets = {
+            'title': forms.TextInput(attrs=
+            {
+                'class': 'form-control mb-2',
+            }),
+            'about': forms.Textarea(attrs=
+            {
+                'maxlength': 1000,
+                'class': 'form-control mb-2',
+            }),
+            'date_finish': forms.DateInput(attrs=
+            {
+                'class': 'form-control mb-2',
+                'placeholder': 'YYYY-MM-DD',
+            }),
+            'photo': forms.FileInput(attrs=
+            {
+                'class': 'invisible position-absolute',
+                'required': False,
+                'accept': 'image/*'
+            }),
+        }
 
     def save(self, user, *args, **kwargs):
         diary = super(DiaryForm, self).save(commit=False)
         diary.user = user
         diary.save()
         return diary
+
+
+class MarkerForm(forms.ModelForm):
+    class Meta:
+        model = Marker
+        fields = ['lat', 'lng']
+
+        widgets = {
+            'lat': forms.TextInput(attrs={
+                'class': 'form-control mb-2',
+            }),
+            'lng': forms.TextInput(attrs={
+                'class': 'form-control mb-2',
+            })
+        }

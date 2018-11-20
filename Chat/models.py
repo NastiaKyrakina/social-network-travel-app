@@ -106,7 +106,12 @@ class Chat(models.Model):
         return self.member_set.all()
 
     def creator(self):
-        return self.member_set.filter(status=Member.CREATOR).values('user').first()
+        creator = self.member_set.filter(status=Member.CREATOR).values('user').first()
+        if creator:
+            return creator['user']
+        return None
+
+
 
     def is_creator(self, user):
         return self.member_set.filter(status=Member.CREATOR, user=user).first()
@@ -119,8 +124,8 @@ class Member(models.Model):
     CREATOR = 1
     USER = 0
 
-    user = models.ForeignKey(User, on_delete='Cascade')
-    chat = models.ForeignKey(Chat, on_delete='Cascade')
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    chat = models.ForeignKey(Chat, on_delete=models.CASCADE)
     status = models.BooleanField(default=USER)
     last_visit = models.DateTimeField(auto_now=True)
 
@@ -132,8 +137,8 @@ class Member(models.Model):
 
 
 class Message(models.Model):
-    user = models.ForeignKey(User, on_delete='Cascade')
-    chat = models.ForeignKey(Chat, on_delete='Cascade')
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    chat = models.ForeignKey(Chat, on_delete=models.CASCADE)
     text = models.TextField(max_length=1000, blank=True)
     date = models.DateTimeField(auto_now_add=True)
 
@@ -165,7 +170,7 @@ class Message(models.Model):
 
 
 class MessageAttachment(models.Model):
-    parent = models.ForeignKey(Message, on_delete='Cascade')
+    parent = models.ForeignKey(Message, on_delete=models.CASCADE)
     type = models.CharField(max_length=2,
                             choices=FFD.FILE_TYPE)
     file = models.FileField(upload_to='chat_data/files/',

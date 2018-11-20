@@ -5,6 +5,8 @@ urlpatterns = [
     path('', views.chat_list),
     path('create/convers/', views.create_conversation, name='chat.create_conversation'),
     path('create/', views.create_chat, name='chat.create_chat'),
+    path('delete/', views.chat_delete, name='chat.chat_delete'),
+    path('edit/', views.create_chat, name='chat.edit_chat', ),
     path('add/members/<slug:chat_slug>/', views.add_members, name='chat.add_members'),
     path('load/users/', views.load_users, name='chat.load_users'),
     path('get/user/', views.get_user, name='chat.get_user'),

@@ -39,6 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.postgres',
+    'django_cleanup',
+    'modeltranslation',
     'UserProfile.apps.UserprofileConfig',
     'Authentication',
     'HouseSearch',
@@ -132,6 +134,9 @@ LANGUAGES = (
     ('en', 'English'),
     ('uk', 'Ukrainian'),
 )
+
+MODELTRANSLATION_DEFAULT_LANGUAGE = 'en'
+
 
 LOCALE_PATHS = (
     'locale',

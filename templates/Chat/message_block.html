@@ -1,7 +1,10 @@
-<div class="message-block">
+<div class="message-block" id="message-{{ message.id }}">
     <p class="message-date text-muted mx-2">
         <small>{{ message.date| date:"d-m-Y H:i" }}</small>
     </p>
+    {% if message.user == request.user or request.user.id == message.chat.creator %}
+        <button class="delete-mess-button" id="delete-mess-{{ message.id }}" hidden>Del</button>
+    {% endif %}
     {% comment Фото пользователя%}
     <div>
         {% if message.user.userinfo.big_photo %}

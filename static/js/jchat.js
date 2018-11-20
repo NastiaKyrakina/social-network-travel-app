@@ -176,8 +176,8 @@ function RequaerUsers() {
                         success: function (data) {
                             if (data['status'] == 'success') {
                                 console.log(data);
-                                //$(".chat-list").prepend(data['mini_chat']);
-                                //$(".chat-title#block-"+data['slug']).click();
+                                $(".chat-list").prepend(data['mini_chat']);
+                                $(".chat-title#block-" + data['slug']).click();
                             }
 
                         }
@@ -194,29 +194,36 @@ function RequaerUsers() {
     });
 }
 
-//створення чату
-function CreateChat() {
 
-    $("button#create-chat").click(function () {
+function SubmitCreateForm(chat_slug) {
 
-        $(".chat-container").load('create/', function () {
-
-            $(".chat-form").on('submit', function (e) {
+    $(".chat-form").on('submit', function (e) {
                 e.preventDefault();
                 var form_chat = new FormData($(this).get(0));
-
+        if (chat_slug) {
+            url_action = 'edit/?chat_slug=' + chat_slug;
+        }
+        else {
+            url_action = $(this).attr('action')
+        }
                 $.ajax(
                     {
                         type: $(this).attr('method'),
                         async: true,
                         contentType: false,
                         processData: false,
-                        url: $(this).attr('action'),
+                        url: url_action,
                         data: form_chat,
                         success: function (data) {
                             if (data['status'] == 'success') {
-                                console.log(data['slug']);
-                                $(".chat-list").prepend(data['mini_chat']);
+
+                                if (chat_slug) {
+                                    $(".chat-title#block-" + data['slug']).closest('.chat-mini-block').html(data['mini_chat']);
+                                }
+                                else {
+                                    $(".chat-list").prepend(data['mini_chat']);
+                                }
+
                                 $(".chat-container").empty();
                                 $(".chat-title#block-" + data['slug']).trigger('click');
                             }
@@ -229,6 +236,15 @@ function CreateChat() {
             });
 
 
+}
+
+//створення чату
+function CreateChat() {
+
+    $("button#create-chat").click(function () {
+
+        $(".chat-container").load('create/', function () {
+            SubmitCreateForm();
         });
 
     });
@@ -236,14 +252,87 @@ function CreateChat() {
     CreateConversation();
 }
 
-function ShowDelete() {
+function ShowEditDelete() {
 
-    $('.chat-title').hover(function () {
+    $('.chat-mini-block').hover(function () {
 
             $(this).find(".delete-button").removeAttr('hidden');
+            $(this).find(".edit-button").removeAttr('hidden');
         },
         function () {
 
             $(this).find(".delete-button").attr('hidden', true);
+            $(this).find(".edit-button").attr('hidden', true);
         });
+}
+
+function ShowDeleteMessage() {
+
+    $('.message-block').hover(function () {
+
+            $(this).find(".delete-mess-button").removeAttr('hidden');
+        },
+        function () {
+
+            $(this).find(".delete-mess-button").attr('hidden', true);
+        });
+}
+
+function OnClickDeleteChat() {
+    $(".delete-button").on('click',
+        function () {
+            var note_slug = $(this).attr('id').split('-')[1];
+            DeleteChat(note_slug);
+        });
+}
+
+function DeleteChat(note_slug) {
+    if (confirm('are you sure you want to remove this chat?') === true) {
+        $.ajax({
+            url: "delete/", // the endpoint
+            type: "POST", // http method
+            data: {
+                csrfmiddlewaretoken: Cookies.get('csrftoken'),
+                chat_slug: note_slug
+            }, // data sent with the delete request
+            success: function (json) {
+                // hide the post
+                $('#block-' + note_slug).closest('.chat-mini-block').hide(); // hide the post on success
+            },
+
+            error: function (xhr, errmsg, err) {
+                // Show an error
+                console.log(xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
+            }
+        });
+    } else {
+        return false;
+    }
+}
+
+function OnClickEditChat() {
+    $(".edit-button").on('click',
+        function () {
+            var chat_slug = $(this).attr('id').split('-')[1];
+            EditChat(chat_slug);
+        });
+}
+
+function EditChat(chat_slug) {
+    $.ajax({
+        url: "edit/?chat_slug=" + chat_slug, // the endpoint
+        type: "GET", // http method
+        success: function (data) {
+            // hide the post
+            console.log('succes');
+            $('.chat-container').html(data);
+            SubmitCreateForm(chat_slug);
+        },
+
+        error: function (xhr, errmsg, err) {
+            // Show an error
+            console.log(xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
+        }
+    });
+
 }

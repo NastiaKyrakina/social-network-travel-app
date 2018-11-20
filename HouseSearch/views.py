@@ -5,6 +5,7 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from UserProfile.models import UserExt, Country
 from .models import House, HousePhoto, MAX_USER_HOUSES
 from .form import HouseForm, PhotoForm, SearchHousesForm, RateForm
+from Chat.forms import ChatMember
 from datetime import datetime
 from Lib import FileFormats, page_revisor
 
@@ -114,12 +115,13 @@ def house_page(request, house_id):
     is_owner = (request.user == house.owner)
     type = house.HOUSE_TYPE[house.type]
     raiting = house.rate_set.aggregate(Avg('value'))
+    contact_form = ChatMember(initial={'members': house.owner.username})
     data = {
         'type': type,
         'house': house,
         'is_owner': is_owner,
-        'raiting': raiting['value__avg']
-
+        'raiting': raiting['value__avg'],
+        'contact_form': contact_form,
     }
     return render(request, 'HouseSerch/house_page.html', data)
 

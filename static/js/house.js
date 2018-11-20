@@ -41,5 +41,32 @@ $(document).ready(function () {
     }
 
 
+    function contact_with_owner() {
+
+        $.ajax({
+            url: "/chat/start-conver/", // the endpoint
+            type: "POST", // http method
+            data: {
+                csrfmiddlewaretoken: Cookies.get('csrftoken'),
+                housepk: house_primary_key
+            }, // data sent with the delete request
+            success: function (json) {
+
+                location.href = '/user/1/'
+
+            },
+
+            error: function (xhr, errmsg, err) {
+                // Show an error
+                console.log(xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
+            }
+        });
+    }
+
+else
+    {
+        return false;
+    }
+
 });
 

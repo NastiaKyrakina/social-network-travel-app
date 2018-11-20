@@ -18,3 +18,6 @@ admin.site.register(Rate)
 admin.site.register(Chat)
 admin.site.register(Member)
 admin.site.register(Message)
+
+admin.site.register(models.Diary)
+admin.site.register(models.Marker)

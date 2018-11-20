@@ -34,6 +34,8 @@ class ChatConsumer1(JsonWebsocketConsumer):
                 else:
 
                     self.send_chat(content['chat'], content['message'])
+            elif command == "delete":
+                self.delete_mess(content['chat'], content['message'])
 
     def disconnect(self, close_code):
         chats = self.chats.copy()
@@ -118,6 +120,21 @@ class ChatConsumer1(JsonWebsocketConsumer):
 
             async_to_sync(self.channel_layer.group_send)(chat.slug, content)
 
+    def delete_mess(self, slug, id):
+        message = Message.objects.get(id=id)
+        print(message)
+        message.delete()
+
+        content = {
+            'type': 'chat.delete',
+            'chat': slug,
+            'message': id,
+        }
+        print('on')
+        async_to_sync(self.channel_layer.group_send)(slug, content)
+
+
+
     def chat_join(self, event):
         async_to_sync(self.send_json(
             {
@@ -146,6 +163,18 @@ class ChatConsumer1(JsonWebsocketConsumer):
                 "message": event["message"],
             },
         ))
+
+    def chat_delete(self, event):
+        print(event)
+
+        async_to_sync(self.send_json(
+            {
+                "msg_type": 0,
+                "delete": event["message"],
+                "chat": event["chat"],
+            },
+        ))
+
 
 
 '''

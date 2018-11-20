@@ -4,31 +4,53 @@
 
 {% block content %}
 
-    <div class="diary" id="diary-element-{{ diary.pk }}">
-        <div class="block block-header">
+    <div class="d-flex justify-content-center">
+
+        <div class="diary col-10" id="diary-element-{{ diary.pk }}">
+
+            <div class="block block-header">
             <h4 class="pl-2 mb-0">{{ diary.title }}</h4>
             <p class="pl-2 text-muted m-0">
                 <small>by @{{ diary.user.username }}</small>
-                {% if diary.is_active or diary.is_frozen %}
-                    <button id="finish-diary" data-toggle="modal" data-target="#myModal">Finish</button>
-                {% endif %}
-
-
             </p>
         </div>
 
         <div class="diary-page-body block p-3">
+
+            <div class="diary-image d-flex justify-content-center">
+                <!-- Стандартная картинка дневника -->
+                {% if diary.photo %}
+                    <div class="d-flex justify-content-center">
+                        <div id="image-prev" class="p-3">
+                            <!-- Стандартная картинка дневника -->
+                            {% load staticfiles %}
+                            <img src="{{ diary.photo.url }}" class="img-fluid m-1">
+                        </div>
+                    </div>
+                {% else %}
+                    {% load staticfiles %}
+                    <div class="d-flex justify-content-center">
+                        <div id="image-prev" class="p-3">
+                            <!-- Стандартная картинка дневника -->
+                            {% load staticfiles %}
+                            <img src="{% static 'images/DefaultHouse.png' %}" class="img-fluid m-1">
+                        </div>
+                    </div>
+                {% endif %}
+            </div>
             <div class="row justify-content-around">
                 <div class="shadow p-2 bg-white rounded col-4">
-                    {% if diary.is_active %}
-                        <span class="text-success">Active</span>
-                        <button>Pause</button>
-                    {% elif diary.is_frozen %}
-                        <span class="text-info">Frozen</span>
-                        <button id="frozen-diary">Activate</button>
-                    {% else %}
-                        <span class="text-info">Finished</span>
-                    {% endif %}
+                    <p class="m-1"><strong>Date start:</strong> {{ diary.date_start }} </p>
+                    <p class="m-1"><strong>Date finish:</strong> {{ diary.date_finish }} </p>
+                    <p class="m-1"><strong>Status:</strong>
+                        {% if diary.is_active %}
+                            <span class="text-success">Active</span>
+                        {% elif diary.is_frozen %}
+                            <span class="text-info">Frozen</span>
+                        {% else %}
+                            <span class="text-secondary">Finished</span>
+                        {% endif %}
+                    </p>
 
                 </div>
                 <div class="shadow p-2 bg-white rounded col-7">
@@ -37,11 +59,11 @@
                 </div>
             </div>
 
-            <div class="map">
-                <!--Карта-->
-            </div>
-
         </div>
+
+            <div class="map-block block">
+                <div class="map"></div>
+            </div>
 
         <div class="block block-footer d-flex justify-content-center">
             {% if is_owner %}
@@ -55,10 +77,22 @@
                         Edit
                     </button>
                 </form>
+                {% if diary.is_active or diary.is_frozen %}
+                    <button id="finish-diary" class="btn btn-warning ml-2" data-toggle="modal" data-target="#myModal">
+                        Finish
+                    </button>
+                    {% if diary.is_active %}
+                        <span class="text-success">Active</span>
+                    {% elif diary.is_frozen %}
+                        <button id="frozen-diary">Activate</button>
+                    {% endif %}
+                {% endif %}
             {% endif %}
         </div>
 
     </div> <!-- diary-element -->
+
+    </div>
 
     {% include 'UserProfile/includes/modal_diary_finish.html' %}
 

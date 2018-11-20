@@ -1,12 +1,25 @@
-<div class="rate" id="rate-{{ rate.pk }}">
-    <p>public {{ rate.date_public }}</p>
-    <p>
-        {% if is_owner %}
-            [owner]
+<div class="block rate" id="rate-{{ rate.pk }}">
+    <div class="rate-user p-0">
+        {% if user.userinfo.big_photo %}
+            <img class="avatar-small" src="{{ user.userinfo.big_photo.url }}" class="img-fluid">
+        {% else %}
+            {% load staticfiles %}
+            <img class="avatar-small" src="{% static 'images/DefaultAvatar.png' %}" class="img-fluid">
         {% endif %}
-        ({{ rate.user.username }})</p>
-
-    <p>Rate: {{ rate.value }}</p>
-    <p>Comment: {{ rate.comment }}</p>
-
+        <a class='pl-2' href="">
+            <strong>{{ rate.user.first_name }} {{ rate.user.last_name }}</strong>
+            <span>
+				<small class="text-muted">@{{ rate.user.username }}</small>
+			</span>
+        </a>
+        <p class="float-right text-muted">
+            <small>{{ rate.date_public }}</small>
+        </p>
+    </div>
+    <div class="row col-12 pt-2">
+        <p class="col-12">Rate:
+            <span class="rate-stars text-primary" count="{{ rate.value }}"></span>
+        </p>
+        <p class="px-2">{{ rate.comment }}</p>
+    </div>
 </div>

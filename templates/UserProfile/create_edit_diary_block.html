@@ -15,34 +15,76 @@
 
     <div class="diary-edit-body block p-3">
 
-
         {% if current_diary %}
-            <div class="warning-message">
+            <div class="alert alert-warning pl-2 p-0">
+                <small>
                 {% blocktrans %}
-                    You have the active diary now.<br/>
-                    If you create new diary, status of current diary will be change on 'frozen'.
+                    You have the active diary now. If you create new diary, status of current diary will be change on
+                    'frozen'.
                 {% endblocktrans %}
+                </small>
             </div>
-
         {% endif %}
 
         {% for error in form_diary.non_field_errors %}
-            <div class="ErrorMessage">{{ error }}</div>
+            <div class="alert alert-danger pl-2 p-0">
+                <small>
+                    {{ error }}
+                </small>
+            </div>
         {% endfor %}
 
         {% for error in form_diary.title.errors %}
-            <div class="ErrorMessage">{{ error }}</div>
+            <div class="alert alert-danger pl-2 p-0">
+                <small>
+                    {{ error }}
+                </small>
+            </div>
         {% endfor %}
 
 
-        <div class="row">
-            <label class="pl-2 mb-0" for="id_title"> {% trans 'Title' %}</label>
-            {{ form_diary.title }}
+        <div class="row align-items-end">
+            <div class="col-12">
+                <label class="pl-2 mb-0" for="id_title"> {% trans 'Title' %}</label>
+                {{ form_diary.title }}
+            </div>
+            <div class="col-12">
+                {{ form_diary.about.errors }}
+                <label class="pl-2 mb-0" for="id_about">{% trans 'Tell about this diary' %}</label>
+                {{ form_diary.about }}
+            </div>
+
+            <div class="col-6">
+                {{ form_diary.about.errors }}
+                <label class="pl-2 mb-0" for="id_date_finish">{% trans 'Diary finish date' %}</label>
+                {{ form_diary.date_finish }}
+            </div>
+
+
+            <div class="col-5 file-upload col-3 m-2">
+                {{ form_diary.photo }}
+                {{ form_diary.photo_file }}
+                <label class="float-right btn m-0 btn-warning" for="id_photo">{% trans 'Set preview' %}</label>
+            </div>
+
+            <div class="col-12">
+                {% for error in form_diary.date_finish.errors %}
+                    <div class="alert alert-danger pl-2 p-0">
+                        <small>
+                            {{ error }}
+                        </small>
+                    </div>
+                {% endfor %}
+            </div>
+
         </div>
-        <div class="row">
-            {{ form_diary.about.errors }}
-            <label class="pl-2 mb-0" for="id_about">{% trans 'Tell about this diary' %}</label>
-            {{ form_diary.about }}
+
+        <div class="d-flex justify-content-center">
+            <div id="image-prev" class="p-3">
+                <!-- Стандартная картинка дневника -->
+                {% load staticfiles %}
+                <img src="{% static 'images/DefaultHouse.png' %}" class="img-fluid m-1">
+            </div>
         </div>
 
     </div>
@@ -56,4 +98,3 @@
     </div> <!-- diary-edit-footer -->
 
 </form>
-

@@ -88,14 +88,26 @@ def create_chat(request):
     context = {
         'status': 'success',
     }
+    exs_chat = None
+    if 'chat_slug' in request.GET:
+        try:
+            exs_chat = Chat.objects.get(slug=request.GET['chat_slug'])
+        except Chat.DoesNotExist:
+            exs_chat = None
 
     user = UserExt.objects.get(id=request.user.id)
     if request.method == 'POST':
         chat_form = ChatForm(request.POST, request.FILES)
+
         if chat_form.is_valid():
-            chat = chat_form.save()
-            member = Member(chat=chat, user=user, status=Member.CREATOR)
-            member.save()
+            if exs_chat:
+                chat = chat_form.save(exs_chat)
+            else:
+                chat = chat_form.save()
+                member = Member(chat=chat, user=user, status=Member.CREATOR)
+                member.save()
+            print(chat)
+            chat.title = chat.get_chat_title(user)
             context['mini_chat'] = render_to_string('Chat/chat_mini_block.html',
                                                     {'chat': chat})
             context['slug'] = chat.slug
@@ -103,7 +115,11 @@ def create_chat(request):
         return JsonResponse(context)
 
     else:
-        chat_form = ChatForm()
+        if exs_chat:
+            chat_form = ChatForm(initial={'name': exs_chat.name,
+                                          'chat_type': exs_chat.chat_type})
+        else:
+            chat_form = ChatForm()
 
     context['chat_form'] = chat_form
     context['is_creating'] = True
@@ -214,3 +230,16 @@ def create_message(request):
         'form_attach': form_attach,
         'errors_file_type': errors_file_type
     })
+
+
+def chat_delete(request):
+    if request.POST:
+        try:
+            chat = Chat.objects.get(slug=request.POST['chat_slug'])
+            member = chat.member_set.filter(user=request.user)
+            if member:
+                member.delete()
+        except Chat.DoesNotExist:
+            return JsonResponse({'error': "chat isn't exist"})
+
+    return JsonResponse({'deleted': "success"})

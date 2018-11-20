@@ -40,7 +40,7 @@ class UserInfo(models.Model):
 
     user = models.OneToOneField(User,
                                 unique=True,
-                                on_delete='Cascade')
+                                on_delete=models.CASCADE)
     gender = models.BooleanField(default=False)
     birthday = models.DateField(blank=True)
     status = models.CharField(max_length=2,
@@ -50,7 +50,7 @@ class UserInfo(models.Model):
 
     phone_num = models.CharField(max_length=12,
                                  blank=True)
-    country = models.ForeignKey(Country, on_delete='Cascade', null=True)
+    country = models.ForeignKey(Country, on_delete=models.CASCADE, null=True)
     city = models.CharField(max_length=30,
                             blank=True)
     info = models.TextField(max_length=256,
@@ -76,8 +76,7 @@ class NoteDeleteManager(models.Manager):
 
 
 class Note(models.Model):
-
-    user = models.ForeignKey(User, on_delete='Cascade')
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     text = models.TextField(max_length=1000, blank=True)
     date_public = models.DateTimeField(auto_now_add=True)
 
@@ -122,7 +121,7 @@ def get_upload_file_way(ftype):
 
 
 class Attachment(models.Model):
-    parent = models.ForeignKey(Note, on_delete='Cascade')
+    parent = models.ForeignKey(Note, on_delete=models.CASCADE)
     type = models.CharField(max_length=2,
                             choices=FFD.FILE_TYPE)
     file = models.FileField(upload_to='user_files/all_files/',
@@ -162,7 +161,7 @@ class Diary(models.Model):
         (FINISH, 'finish')
     )
 
-    user = models.ForeignKey(User, on_delete='Cascade')
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     title = models.CharField(max_length=100)
     about = models.TextField(max_length=1000)
     date_start = models.DateField(auto_now_add=True)
@@ -180,7 +179,7 @@ class Diary(models.Model):
 class Marker(models.Model):
     note = models.OneToOneField(Note,
                                 unique=True,
-                                on_delete='Cascade')
-    diary = models.ForeignKey(Diary, on_delete='Cascade')
+                                on_delete=models.CASCADE)
+    diary = models.ForeignKey(Diary, on_delete=models.CASCADE)
     lat = models.DecimalField(max_digits=9, decimal_places=6)
     lng = models.DecimalField(max_digits=9, decimal_places=6)

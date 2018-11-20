@@ -1,23 +1,18 @@
 <form method="post" action={% url 'house.rate' %} id="form-rate">
     {% csrf_token %}
-    {{ form_rate.non_field_errors }}
-    <div class="SearchForm">
-
-
-        <div class="fieldWrapper">
-            {{ form_rate.value.errors }}
-            <label for="{{ form_rate.value.id_for_label }}">Value:</label>
-            {{ form_rate.value }}
+    <div class="rate-header block-header block">
+        <h5 class="pl-2">Rate house</h5>
+        {{ form_rate.non_field_errors }}
+        {{ form_rate.value.errors }}
+        {{ form_rate.comment }}
+        <div class="row align-items-end justify-content-between px-2">
+            <div class="col-2">
+                {{ form_rate.comment.errors }}
+                <label class="mb-0" for="{{ form_rate.value.id_for_label }}">Rate</label>
+                {{ form_rate.value }}
+            </div>
+            <div class="col-10 d-flex justify-content-end">
+                <button class="btn btn-primary" type="submit" value="Send">Comment</button>
         </div>
-
-        <div class="fieldWrapper">
-            {{ form_rate.comment.errors }}
-            <label for="{{ form_rate.comment.id_for_label }}">Comment:</label>
-            {{ form_rate.comment }}
-        </div>
-
-
     </div>
-
-    <input type="submit" value="Send"/>
 </form>

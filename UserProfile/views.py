@@ -4,7 +4,7 @@ from django.http import HttpResponseRedirect, Http404, JsonResponse, QueryDict, 
 from django.template.loader import render_to_string
 
 from UserProfile.forms import *
-from UserProfile.models import UserExt, save_attach
+from UserProfile.models import UserExt, save_attach, Diary
 
 from datetime import datetime
 
@@ -66,13 +66,14 @@ def home(request, user_id):
 
 
     notes = user.get_new_note_portion()
-
+    diaries = user.diary_set.all()
 
     data = {
         'user': user,
         'status': status,
         'is_owner': False,
         'notes': notes,
+        'diaries': diaries,
             }
 
     if user_id == request.user.pk:
@@ -125,6 +126,7 @@ def note_create_page(request):
     if request.method == 'POST':
         form_note = NoteForm(request.POST)
         form_attach = AttachmentForm(request.POST, request.FILES)
+        form_marker = MarkerForm(request.POST)
 
         if form_note.is_valid():
             errors_file_type = (handle_uploaded_file(request.FILES))
@@ -137,6 +139,11 @@ def note_create_page(request):
                 new_note.save()
 
                 save_attach(request.FILES, new_note, Attachment)
+
+                new_marker = form_marker.save(commit=False)
+                new_marker.diary = user.diary_set.filter(status=Diary.ACTIVE).first()
+                new_marker.note = new_note
+                new_marker.save()
 
                 if request.is_ajax():
                     print('ajax')
@@ -152,13 +159,17 @@ def note_create_page(request):
                 return JsonResponse({'errors': errors_file_type})
 
     else:
+        print('nore')
         form_note = NoteForm()
         form_attach = AttachmentForm()
+        form_marker = MarkerForm()
 
+    print('render')
     return render(request,
                   'UserProfile/includes/create_note.html',
                   {'form_note': form_note,
                    'form_attach': form_attach,
+                   'form_marker': form_marker,
                    'is_creating': True,
                    'errors_type': errors_file_type,
                    'current_diary': current_diary

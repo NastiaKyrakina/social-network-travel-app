@@ -7,10 +7,10 @@
             <a href="#">
                 <!-- test -->
                 {% if user.userinfo.big_photo %}
-                    <img src="{{ user.userinfo.big_photo.url }}" class="img-fluid">
+                    <img class="avatar-small" src="{{ user.userinfo.big_photo.url }}" class="img-fluid">
                 {% else %}
                     {% load staticfiles %}
-                    <img src="{% static 'images/DefaultAvatar.png' %}" class="img-fluid">
+                    <img class="avatar-small" src="{% static 'images/DefaultAvatar.png' %}" class="img-fluid">
                 {% endif %}
                 <span class="name mx-2"><strong>{{ user.first_name }} {{ user.last_name }}</strong></span>
             </a>
@@ -22,7 +22,35 @@
                     class="fas fa-trash-alt"></i></button>
             <button type="button" class="btn btn-warning ml-2" id="edit-element-{{ note.pk }}"><i
                     class="fas fa-edit"></i></button>
-            <button type="button" class="btn btn-primary ml-2"><i class="fas fa-map-marker-alt"></i> Locate</button>
+
+
+            {% if note.is_bound %}
+
+                <button id="note-button-{{ note.pk }}" data-target="#note-modal-{{ note.pk }}" type="button"
+                        class="btn btn-primary ml-2" data-toggle="modal">
+                    <i class="fas fa-map-marker-alt"></i> Locate
+                </button>
+
+                <div class="modal" id="note-modal-{{ note.pk }}" tabindex="-1" role="dialog" style="width: 600px;">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content" style="width: 500px;">
+                            <div class="modal-header">
+                                <p class="modal-title">{{ note.text }}</p>
+                            </div>
+                            <div class="modal-body">
+                                {% include 'UserProfile/includes/note-locate.html' %}
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+            {% endif %}
         </div>
 
     </div> <!-- note-header -->

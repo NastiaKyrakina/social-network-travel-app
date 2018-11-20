@@ -20,11 +20,16 @@ class ChatForm(forms.Form):
                                   widget=forms.RadioSelect)
     image = forms.FileField()
 
-    def save(self):
+    def save(self, exs_chat=None):
         chat_name = self.cleaned_data['name']
         chat_type = self.cleaned_data['chat_type']
         image = self.cleaned_data['image']
-        chat = Chat(name=chat_name, chat_type=chat_type, image=image)
+        if exs_chat:
+            exs_chat.name = chat_name
+            exs_chat.chat_type = chat_type
+            chat = exs_chat
+        else:
+            chat = Chat(name=chat_name, chat_type=chat_type, image=image)
         chat.save()
         return chat
 

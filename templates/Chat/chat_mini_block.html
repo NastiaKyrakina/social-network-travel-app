@@ -1,3 +1,4 @@
+<div class="chat-mini-block">
 <div class="chat-title" id='block-{{ chat.slug }}'>
     <div class="col-4 p-0">
         {% comment Блок фото%}
@@ -13,5 +14,11 @@
     {% if chat.last_message %}
         <p>{{ chat.last_message }}</p>
     {% endif %}
+
+</div>
+
     <button class="delete-button" id="delete-{{ chat.slug }}" hidden>Del</button>
+    {% if request.user.id == chat.creator %}
+        <button class="edit-button" id="edit-{{ chat.slug }}" hidden>Edit</button>
+    {% endif %}
 </div>

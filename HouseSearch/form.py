@@ -114,6 +114,7 @@ class HouseForm(forms.ModelForm):
                                         code='uncorrect_diapazone')
         return price
 
+
     def save(self, user):
         house = super(HouseForm, self).save(commit=False)
         house.owner = user
@@ -294,6 +295,19 @@ class RateForm(forms.ModelForm):
     class Meta:
         model = Rate
         fields = ['comment', 'value']
+        widgets = {
+            'comment': forms.Textarea(attrs={
+                'class': 'form-control mb-1',
+                'placeholder': 'Leave your comment here',
+                'rows': '3'
+            }),
+            'value': forms.NumberInput(attrs={
+                'class': 'form-control',
+                'value': 5,
+                'min': 1,
+                'max': 5,
+            }),
+        }
 
     def save(self, user, house, *args, **kwargs):
         new_rate = super(RateForm, self).save(commit=False)

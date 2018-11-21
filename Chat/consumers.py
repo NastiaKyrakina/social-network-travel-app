@@ -15,6 +15,7 @@ class ChatConsumer1(JsonWebsocketConsumer):
             self.accept()
         self.chats = set()
 
+
     def receive_json(self, content):
 
         command = content.get('command', None)
@@ -116,6 +117,7 @@ class ChatConsumer1(JsonWebsocketConsumer):
                 'type': 'chat.message',
                 'chat': chat_slug,
                 'message': message_block,
+                'user': new_message.user.id,
             }
 
             async_to_sync(self.channel_layer.group_send)(chat.slug, content)
@@ -161,6 +163,7 @@ class ChatConsumer1(JsonWebsocketConsumer):
                 "msg_type": 0,
                 "chat": event["chat"],
                 "message": event["message"],
+                "user": event["user"],
             },
         ))
 

@@ -121,7 +121,7 @@ def house_page(request, house_id):
         'house': house,
         'is_owner': is_owner,
         'raiting': raiting['value__avg'],
-        'contact_form': contact_form,
+        'members_form': contact_form,
     }
     return render(request, 'HouseSerch/house_page.html', data)
 

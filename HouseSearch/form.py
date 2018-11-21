@@ -7,7 +7,7 @@ import re
 from HouseSearch.models import House, HousePhoto, Rate, MAX_PRICE, MAX_ROOMS, MAX_SLEEPER, SORT_DICT
 
 from Lib.convertion import from_dict_to_list
-
+from datetime import datetime, date
 
 class HouseForm(forms.ModelForm):
     class Meta:
@@ -251,9 +251,14 @@ class SearchHousesForm(forms.Form):
             'title': 'Search only acrive advertisement'
         })
     )
+    #
     public = forms.DateField(
         required=False,
-        widget=forms.SelectDateWidget(attrs={
+        initial=date(2018, 1, 1),
+        widget=forms.SelectDateWidget(
+            years=range(2017, datetime.now().year + 1),
+            attrs={
+
             'name': 'public',
             'required': False,
             'title': 'Search advertisement',
@@ -278,6 +283,7 @@ class SearchHousesForm(forms.Form):
         widget=forms.Select(attrs={
             'name': 'sort',
             'required': False,
+            'class': 'select_sort pull-right text-right'
         })
     )
 

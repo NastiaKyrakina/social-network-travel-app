@@ -1,6 +1,10 @@
 <form method="get" action="" id="form-multi-search">
 
     {{ form_search.non_field_errors }}
+    <div class="row sort-row">
+        <label for="id_sort" class="ml-2">Sort by </label>
+        {{ form_search.sort }}
+    </div>
     <div class="row">
         <div class="col-6">
             <label for="id_country" class=" ml-2">Country</label>
@@ -12,8 +16,7 @@
 
         {% comment %}
       <--ДЛЯ сортировки/ Посмотришь, куда это поле добавлять-->
-            <label for="id_sort" class=" ml-2">Sort by</label>
-            {{ form_search.sort }}
+
       {% endcomment %}
 
         <div class="col-6">

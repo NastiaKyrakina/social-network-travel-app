@@ -100,7 +100,15 @@ function CreateConversation() {
         e.preventDefault();
         $(".chat-container").load('create/convers/', function () {
             LoadUsers();
-            $("#member-form").on('submit', function (e) {
+            SendConversation();
+
+        });
+
+    });
+}
+
+function SendConversation() {
+    $("#member-form").on('submit', function (e) {
                 e.preventDefault();
 
                 var form_memb = new FormData($(this).get(0));
@@ -111,7 +119,7 @@ function CreateConversation() {
                         async: true,
                         contentType: false,
                         processData: false,
-                        url: 'create/convers/',
+                        url: $(this).attr('action'),
                         data: form_memb,
                         success: function (data) {
                             if (data['status'] == 'success') {
@@ -126,10 +134,6 @@ function CreateConversation() {
 
                 return false;
             });
-
-        });
-
-    });
 }
 
 //видалення користувача зі списку
@@ -162,7 +166,6 @@ function RequaerUsers() {
                 });
 
                 $(this).get(0)['members'].value = members_list.join();
-                console.log($(this).get(0)['members'].value);
                 var form_memb = new FormData($(this).get(0));
 
                 $.ajax(

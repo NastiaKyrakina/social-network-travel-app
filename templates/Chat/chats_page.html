@@ -42,11 +42,11 @@
 
     <script>
 
+
         CreateChat();
         ShowEditDelete();
         OnClickDeleteChat();
         OnClickEditChat();
-
 
         var user = {{request.user.id }};
 
@@ -54,15 +54,31 @@
             'ws://' + window.location.host +
             '/ws/chat/chats/');
 
+        chatSocket.onopen = function (event) {
+
+            hash = location.hash.replace("#", "");
+            location.hash = "";
+            if (hash) {
+                chatSocket.send(
+                    JSON.stringify({
+                        'command': 'join',
+                        'chat': hash,
+                    })
+                );
+            }
+        };
+
         chatSocket.onmessage = function (message) {
             var data = JSON.parse(message.data);
-            console.log(data);
+
             if (data.join) {
                 console.log("Joining room " + data.join);
 
                 $(".chat-container").load('/chat/chats/' + data.join + '/', function () {
                     LoadMessages();
                     RequaerUsers();
+                    $('.chat-title#block-' + data.join).closest('.new-message').removeClass("new-message");
+
                     $(".message-form").load('/chat/create_message/',
                         function () {
 
@@ -127,7 +143,16 @@
                 }
                 else {
                     if (data.message) {
-                        $('#' + data.chat + " .content").append(data.message);
+
+                        new_message = document.createElement('div');
+                        new_message.innerHTML = data.message;
+
+                        if (data.user =={{ request.user.id }}) {
+                            new_message.className = 'owner-message';
+                        }
+
+                        $('#' + data.chat + " .content").append(new_message);
+
                         $('#form-message')[0].reset();
                         $('.file-label').empty();
 
@@ -148,6 +173,7 @@
             return $("#" + chatSlug).length > 0;
         };
 
+
         $('.chat-title').on('click', function (e) {
             e.preventDefault();
             console.log('click');
@@ -161,7 +187,7 @@
                         'command': 'leave',
                         'chat': slug,
                     })
-                )
+                );
             } else {
                 $(this).parent().removeClass('new-message');
                 chatSocket.send(
@@ -183,5 +209,6 @@
 
 
     </script>
+
 
 {% endblock %}

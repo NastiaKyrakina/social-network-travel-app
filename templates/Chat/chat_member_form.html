@@ -2,7 +2,7 @@
     Add members to chat {{ chat.name }}
 {% endif %}
 
-<form class="chat-member-form" method="post" id="member-form">
+<form class="chat-member-form" method="post" id="member-form" action="{% url 'chat.create_conversation' %}">
     {% for error in members_form.members.errors %}
         <div class="ErrorMessage">{{ error }}</div>
     {% endfor %}

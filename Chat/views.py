@@ -1,5 +1,6 @@
 from django.shortcuts import render, get_object_or_404
 from django.template.loader import render_to_string
+from django.urls import reverse
 from django.http import HttpResponseRedirect, HttpResponse, Http404, JsonResponse, QueryDict, HttpRequest
 from django.contrib.auth.decorators import login_required
 from UserProfile.models import UserExt, save_attach
@@ -9,7 +10,6 @@ from .forms import MessageForm, ChatForm, ChatMember
 from django.utils.safestring import mark_safe
 import json
 from datetime import datetime
-
 from Lib.FileFormats import handle_uploaded_file
 
 
@@ -46,10 +46,18 @@ def create_conversation(request):
     context = {
         'status': 'success',
     }
+    path = request.META['HTTP_REFERER']
+    from_house = path.find('/house/')
+    from_user = path.find('/user/')
+
+    if from_house > 0 or from_user > 0:
+        redirect = True
+    print(redirect)
 
     if request.method == 'POST':
         members_form = ChatMember(request.POST)
         if members_form.is_valid():
+            print('created')
             try:
                 opponent = UserExt.objects.get(username=request.POST['members'])
                 user = request.user
@@ -73,7 +81,12 @@ def create_conversation(request):
 
             except UserExt.DoesNotExist:
                 context['status'] = 'user_not_exit'
+        else:
+            print(members_form.errors)
 
+        if redirect:
+            print(reverse('chat.page'))
+            return HttpResponseRedirect(reverse('chat.page') + "#" + chat.slug)
         return JsonResponse(context)
     else:
         members_form = ChatMember()
@@ -153,9 +166,10 @@ def load_users(request):
 
 @login_required
 def chat_list(request):
-    user = UserExt.objects.get(id=request.user.id)
-    chats = Chat.chat_objects.users_chats(user.id).order_by("date_last_mess")
 
+    user = UserExt.objects.get(id=request.user.id)
+    chats = Chat.chat_objects.users_chats(user.id).order_by("name")
+    print(open)
     chats_list = []
     for chat in chats:
         chat.user_new_message = chat.has_new_messages(user)

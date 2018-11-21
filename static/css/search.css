@@ -1,4 +1,15 @@
 #slider_min_max_price {
     margin-top: 10px;
-    width: 40%;
+
+}
+
+.select_sort {
+    margin-left: 20px;
+    color: white;
+    background: linear-gradient(to top, #007bff, #9fcdff);
+}
+
+.select_sort option {
+    color: blue;
+    background: #9fcdff;
 }

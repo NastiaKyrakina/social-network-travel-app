@@ -45,7 +45,6 @@ class Chat(models.Model):
     slug = models.SlugField(blank=True)
     chat_type = models.SmallIntegerField(choices=TYPE_CHATS, default=P2P)
     date_create = models.DateField(auto_now_add=True)
-    date_last_mess = models.DateTimeField(blank=True, null=True)
     image = models.ImageField(upload_to='chat_data/photo/', blank=True, null=True)
 
     members = models.ManyToManyField(User, through='Member')
@@ -86,15 +85,17 @@ class Chat(models.Model):
         return self.name
 
     def has_new_messages(self, user):
-        if self.date_last_mess:
-            return self.member_set.filter(user=user, last_visit__lt=self.date_last_mess).exists()
+        last_mess = self.last_message()
+
+        if last_mess and user != last_mess.user:
+            return self.member_set.filter(user=user, last_visit__lt=last_mess.date).exists()
         return False
 
     def last_message(self):
         try:
-            last_message = Message.objects.get(date=self.date_last_mess)
-        except Message.DoesNotExist:
-            return None
+            last_message = self.message_set.order_by('-date')[0]
+        except IndexError:
+            last_message = None
         return last_message
 
     def new_message(self, user_id):
@@ -150,8 +151,6 @@ class Message(models.Model):
 
     def save(self, *args, **kwargs):
         super(Message, self).save(*args, **kwargs)
-        self.chat.date_last_mess = self.date
-        self.chat.save()
 
     def has_files(self):
         return self.messageattachment_set.all()

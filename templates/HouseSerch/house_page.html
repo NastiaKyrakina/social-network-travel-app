@@ -9,9 +9,15 @@
             <h4 class="pl-2 mb-0">{{ house.title }}</h4>
             <p class="pl-2 text-muted m-0">
                 <small>by @{{ house.owner.username }}</small>
-                <button class="btn btn-info ml-2">Contact with owner</button>
+                {% if request.user.username != house.owner.username %}
+                    <button class="btn-contact btn btn-info ml-2">Contact with owner</button>
+                    <div hidden>
+                        {% include 'Chat/chat_member_form.html' %}
+                    </div>
+                {% endif %}
             </p>
         </div>
+
 
         <div class="house-page-body block p-3">
             <div class="row justify-content-around">
@@ -109,4 +115,10 @@
     <script src="{% static '/js/jrate.js' %}"></script>
 
     <script src="{% static '/js/rate_stars.js' %}"></script>
+
+    <script>
+        $('.btn-contact').on('click', function () {
+            $('#member-form').submit();
+        })
+    </script>
 {% endblock %}

@@ -2,7 +2,7 @@ from django.urls import path
 from Chat import views
 
 urlpatterns = [
-    path('', views.chat_list),
+    path('', views.chat_list, name='chat.page'),
     path('create/convers/', views.create_conversation, name='chat.create_conversation'),
     path('create/', views.create_chat, name='chat.create_chat'),
     path('delete/', views.chat_delete, name='chat.chat_delete'),

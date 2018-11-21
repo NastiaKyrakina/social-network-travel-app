@@ -6,7 +6,7 @@
 
         $('#note-button-{{note.pk}}').click(function () {
 
-            mark = {lat: {{note.marker.lat}}, lng: {{note.marker.lat}}}
+            mark = {lat: {{note.marker.lat|floatformat}}, lng: {{note.marker.lat|floatformat}}};
 
             map = new google.maps.Map(document.getElementById('map-{{note.pk}}'), {
                 center: mark,

@@ -1,0 +1,56 @@
+<div id="create_map" class="m-0 p-0" style="height: 400px; width: 498px;"></div>
+
+{% block js %}
+    <script type="text/javascript">
+
+        $('#select-location-btn').click(function () {
+            var centerOfMap = new google.maps.LatLng(52.357971, -6.516758);
+            map = new google.maps.Map(document.getElementById('create_map'), {
+                center: centerOfMap,
+                zoom: 7
+            });
+            var marker = new google.maps.Marker({
+                position: centerOfMap,
+                map: map,
+                draggable: true
+            });
+            if (+document.getElementById('id_lat').value) toMap();
+            google.maps.event.addListener(marker, 'dragend', function (event) {
+                markerLocation();
+            });
+            map.setCenter(marker.getPosition());
+            markerLocation();
+
+            function initMap() {
+
+                $('#id_lat').change(toMap());
+                $('#id_lng').change(toMap());
+
+                //The center location of map.
+                google.maps.event.addListener(map, 'click', function (event) {
+                    var clickedLocation = event.latLng;
+                    marker.setPosition(clickedLocation);
+                    markerLocation();
+                });
+            }
+
+            function markerLocation() {
+                //Get location.
+                var currentLocation = marker.getPosition();
+                document.getElementById('id_lat').value = parseFloat(currentLocation.lat().toFixed(6)); //latitude
+                document.getElementById('id_lng').value = parseFloat(currentLocation.lng().toFixed(6)); //longitude
+            }
+
+            function toMap() {
+                marker.setPosition({
+                    lat: +document.getElementById('id_lat').value,
+                    lng: +document.getElementById('id_lng').value
+                });
+                map.setCenter(marker.getPosition());
+            }
+
+            initMap()
+        });
+
+    </script>
+{% endblock %}

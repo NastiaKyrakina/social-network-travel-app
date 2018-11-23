@@ -99,11 +99,16 @@ class MarkerForm(forms.ModelForm):
         model = Marker
         fields = ['lat', 'lng']
 
+        # initial = {
+        #   'lat' : 52.357971,
+        #   'lng' : -6.51675
+        # }
+
         widgets = {
             'lat': forms.TextInput(attrs={
-                'class': 'form-control mb-2',
+                'class': 'form-control mb-1',
             }),
             'lng': forms.TextInput(attrs={
-                'class': 'form-control mb-2',
+                'class': 'form-control mb-1',
             })
         }

@@ -7,40 +7,67 @@
     </div> <!-- house-edit-header -->
 
     <div class="house-edit-body block p-3">
-
         {% for error in form_search.non_field_errors %}
-            <div class="ErrorMessage">{{ error }}</div>
+            <div class="alert alert-danger pl-2 p-0">
+                <small>
+                    {{ error }}
+                </small>
+            </div>
         {% endfor %}
 
         {% for error in form_house.title.errors %}
-            <div class="ErrorMessage">{{ error }}</div>
+            <div class="alert alert-danger pl-2 p-0">
+                <small>
+                    {{ error }}
+                </small>
+            </div>
         {% endfor %}
+
 
         <label class="pl-2 mb-0" for="id_title">Title</label>
         {{ form_house.title }}
 
         <!--Error messages-->
         {% for error in form_house.country.errors %}
-            <div class="ErrorMessage">{{ error }}</div>
+            <div class="alert alert-danger pl-2 p-0">
+                <small>
+                    {{ error }}
+                </small>
+            </div>
         {% endfor %}
         {% for error in form_house.city.errors %}
-            <div class="ErrorMessage">{{ error }}</div>
+            <div class="alert alert-danger pl-2 p-0">
+                <small>
+                    {{ error }}
+                </small>
+            </div>
         {% endfor %}
         <!--End-->
 
         <div class="row">
             <div class="col-6">
-                {{ form_house.country.errors }}
                 <label class="pl-2 mb-0" id="id_country">Country</label>
                 {{ form_house.country }}
             </div>
             <datalist id="countries"></datalist>
             <div class="col-6">
-                {{ form_house.city.errors }}
                 <label class="pl-2 mb-0" for="id_city">City</label>
                 {{ form_house.city }}
             </div>
         </div>
+        <div class="row">
+            <div class="col-6">
+                <div hidden class="alert alert-danger pl-2 p-0 js-country-error">
+                    <small>{% trans "Please, select a valid country" %}</small>
+                </div>
+            </div>
+            <div class="col-6">
+                <div hidden class="alert alert-danger pl-2 p-0 js-city-error">
+                    <small>{% trans "Uncorrect city name" %}</small>
+                </div>
+            </div>
+        </div>
+
 
         <!--Error messages-->
         {% for error in form_house.address.errors %}
@@ -108,8 +135,22 @@
         {% endfor %}
         <!--End-->
 
-        <label class="pl-2 mb-0" for="id_about">About</label>
+        <label class="pl-2 mb-0" for="id_about">About*</label>
         {{ form_house.about }}
+
+        <div class="mb-4 text-info">
+            <small>
+            <span class="info-about">
+                *the description must contain at least 100 characters
+            </span>
+                <span class="character-counter">
+                (<b id="counter">100</b> characrers left...)
+            </span>
+                <span class="text-success sucs-show">
+                (implemented)
+            </span>
+            </small>
+        </div>
 
         <!--Error messages-->
         {% for error in form_photo.image.errors %}

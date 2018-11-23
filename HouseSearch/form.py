@@ -48,7 +48,7 @@ class HouseForm(forms.ModelForm):
                 'placeholder': 'Street, 1, 1',
                 'title': 'Enter address: Street Name, House Number, Apartment Number',
                 'maxlength': 100,
-                #'pattern': '[A-Za-zА-ЯЙйЁёЫыъьІіЄєЇї][A-Za-zА-ЯЙйЁёЫыъьІіЄєЇї`- ],'
+
             }),
             'type': forms.Select(choices=House.HOUSE_TYPE,
                                  attrs={
@@ -68,9 +68,10 @@ class HouseForm(forms.ModelForm):
                 'name': 'price',
                 'class': 'form-control',
                 'title': 'Enter maximum price',
-                'value': 100,
+                'value': 10,
                 'min': 1,
                 'max': MAX_PRICE,
+                'step': 1,
             }),
             'sleeper': forms.NumberInput(attrs={
                 'name': 'sleeper',
@@ -78,6 +79,7 @@ class HouseForm(forms.ModelForm):
                 'required': False,
                 'title': 'Enter sleeper count',
                 'min': 1,
+                'max': MAX_SLEEPER,
 
             }),
 
@@ -92,6 +94,15 @@ class HouseForm(forms.ModelForm):
                 'class': 'custom-control-input',
             }),
         }
+
+    def clean_country(self):
+        country_id = self.cleaned_data['country']
+        try:
+            country = House.objects.get(id=country_id)
+        except House.DoesNotExist:
+            raise forms.ValidationError(_('Unvalid country'),
+                                        code='unval_country')
+        return country_id
 
     def clean_rooms(self):
         rooms = self.cleaned_data['rooms']
@@ -316,9 +327,10 @@ class RateForm(forms.ModelForm):
         }
 
     def save(self, user, house, *args, **kwargs):
-        new_rate = super(RateForm, self).save(commit=False)
+        new_rate = Rate(comment=self.cleaned_data['comment'],
+                        value=self.cleaned_data['value'])
         new_rate.user = user
         new_rate.house = house
-        print(new_rate)
+
         new_rate.save()
         return new_rate

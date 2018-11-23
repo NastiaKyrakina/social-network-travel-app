@@ -21,7 +21,7 @@ def create_diary(request):
         current_diary = None
 
     if request.method == 'POST':
-        form_diary = DiaryForm(request.POST)
+        form_diary = DiaryForm(request.POST, request.FILES)
 
         if form_diary.is_valid():
 
@@ -30,6 +30,7 @@ def create_diary(request):
                 current_diary.status = Diary.FROZEN
                 current_diary.save()
             return HttpResponseRedirect('/user/diary/%s/' % new_diary.id)
+
 
     else:
         form_diary = DiaryForm()
@@ -48,11 +49,28 @@ def user_diaries(request):
 
 def diary_page(request, diary_id):
     diary = get_object_or_404(Diary, id=diary_id)
-    return render(request, 'UserProfile/diary_page.html', {'diary': diary})
+    markers = diary.marker_set.all()
+    notes = []
+    for marker in markers:
+        notes.append(marker.note)
+    return render(request, 'UserProfile/diary_page.html', {'diary': diary,
+                                                           'notes': notes
+                                                           })
 
 
-def diary_markers(request):
-    pass
+def diary_markers(request, diary_id):
+    if 'mrkset' in request.GET:
+        diary = get_object_or_404(Diary, id=diary_id)
+        markers = diary.marker_set.all()
+        marker_set = []
+        for marker in markers:
+            marker_json = {}
+            marker_json['lat'] = marker.lat
+            marker_json['lng'] = marker.lng
+            marker_json['text'] = marker.note.text
+            marker_set.append(marker_json)
+        return JsonResponse({'marker_set': marker_set})
+    return HttpResponse('false')
 
 
 def home(request, user_id):
@@ -156,6 +174,8 @@ def note_create_page(request):
                 return HttpResponseRedirect('/user/%s/' % request.user.pk)
 
             else:
+                print(form_note.errors)
+                print(form_marker.errors)
                 return JsonResponse({'errors': errors_file_type})
 
     else:

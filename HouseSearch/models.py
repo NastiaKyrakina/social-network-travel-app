@@ -6,12 +6,13 @@ from UserProfile.models import Country
 
 from django.urls import reverse
 from django.contrib.postgres.search import SearchQuery, SearchRank, SearchVector
-from django.utils.translation import ugettext as _
+from django.utils.translation import ugettext_lazy as _
+from datetime import datetime
 
 # 'key' - 'for user' - 'sort type'
 SORT_DICT = {
     '0': (_('Newest'), '-date_public'),
-    '1': (_('Highest rated'), 'rating'),
+    '1': (_('Highest rated'), '-rating'),
     '2': (_('Price High-Low'), '-price'),
     '3': (_('Price Low-High'), 'price'),
 }
@@ -105,9 +106,9 @@ class House(models.Model):
     VILLA = 'VL'
 
     HOUSE_TYPE = Choices(
-        (PRIVATE_HOUSE, 'Private house'),
-        (APARTMENT, 'Apartment'),
-        (VILLA, 'Villa'),
+        (PRIVATE_HOUSE, _('Private house')),
+        (APARTMENT, _('Apartment')),
+        (VILLA, _('Villa')),
     )
     """Owner user"""
     owner = models.ForeignKey(User, on_delete='Cascade')
@@ -150,6 +151,12 @@ class House(models.Model):
             return main_image.image.url
         return None
 
+    def count_rating(self):
+        return self.rate_set.aggregate(models.Count('id'))['id__count']
+
+    def cant_rate(self, user):
+        now = datetime.now()
+        self.rate_set.filter(user=user).values('date_public')
 
 class HousePhoto(models.Model):
     house = models.ForeignKey(House, on_delete='Cascade')
@@ -174,5 +181,5 @@ class Rate(models.Model):
         super(Rate, self).save(*args, **kwargs)
         rate_val = Rate.objects.filter(house__id=self.house_id). \
             aggregate(models.Avg('value'))
-        self.house.rating = rate_val
+        self.house.rating = rate_val['value__avg']
         self.house.save()

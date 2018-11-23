@@ -1,0 +1,43 @@
+<div id="map-diary-page" class="col-12" style="height: 500px;"></div>
+
+{% block js %}
+    <script type="text/javascript">
+        initMap()
+
+        function initMap() {
+            var centerOfMap = new google.maps.LatLng(52.357971, -6.516758);
+            map = new google.maps.Map(document.getElementById('map-diary-page'), {
+                center: centerOfMap,
+                zoom: 5
+            });
+            var marker_set = get_marker_set();
+            var map_marker_set = [];
+            for (index in marker_set) {
+                map_marker_set += new google.maps.Marker({
+                    position: {
+                        lat: +marker_set[index].lat,
+                        lng: +marker_set[index].lng
+                    },
+                    map: map,
+                    title: marker_set[index].text
+                });
+            }
+        }
+
+        function get_marker_set() {
+            var markers_out;
+            $.ajax({
+                type: 'GET',
+                async: false, //!!!!!!!!!!!!!!!!!!!!!!
+                url: "{% url 'user_profile.diary_markers' diary.pk %}",
+                data: "mrkset",
+                success: function (data) {
+                    markers_out = data['marker_set'];
+                },
+                dataType: 'json',
+            });
+            return markers_out;
+        }
+
+    </script>
+{% endblock %}

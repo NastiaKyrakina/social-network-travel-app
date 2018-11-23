@@ -66,7 +66,7 @@ body {
 	font-size: 26px;
 }
 
-.auth-body, .house-edit-body, .house-page-body, .diary-edit-body, .diary-content {
+.auth-body, .house-edit-body, .house-page-body, .diary-edit-body, .diary-content, .info-block {
     margin-bottom: 3px !important;
 }
 
@@ -96,4 +96,8 @@ body {
 
 .house-image {
 	height: 100px !important;
+}
+
+.map-modal {
+    width: 530px;
 }

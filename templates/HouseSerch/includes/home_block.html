@@ -5,6 +5,8 @@
 <div class="row">
     <div class="card-title col-12">
         <h3 class="mb-0"><strong>{{ house.title }}</strong></h3>
+        <span class="text-right -pull-right rate-stars text-primary" count="{{ house.rating|floatformat:0 }}"></span>
+        <span>{{ house.rating|floatformat }}</span>
         <small class="text-muted">by @ {{ house.owner.username }}</small>
     </div>
 

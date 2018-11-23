@@ -1,0 +1,23 @@
+<div id="map-{{ note.pk }}" class="m-0 p-0" style="height: 400px; width: 498px;"></div>
+
+{% block js %}
+
+    <script type="text/javascript">
+
+        $('#note-button-{{note.pk}}').click(function () {
+
+            mark = new google.maps.LatLng({{note.marker.lat}}, {{note.marker.lng}});
+
+            map = new google.maps.Map(document.getElementById('map-{{note.pk}}'), {
+                center: mark,
+                zoom: 8
+            });
+            marker = new google.maps.Marker({
+                position: mark,
+                map: map
+            });
+        });
+
+    </script>
+
+{% endblock %}

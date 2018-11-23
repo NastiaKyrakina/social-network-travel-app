@@ -6,7 +6,21 @@
 
     <div class="house" id="house-element-{{ house.pk }}">
         <div class="block block-header">
-            <h4 class="pl-2 mb-0">{{ house.title }}</h4>
+
+
+            <div class="row d-flex justify-content-between">
+                <div class="col-6">
+                    <h4 class="pl-2 mb-0">{{ house.title }}</h4>
+                </div>
+                <div class="col-6 d-flex justify-content-end pr-4">
+                    <span class="text-right -pull-right rate-stars text-primary"
+                          count="{{ house.rating|floatformat:0 }}"></span>
+                    <span>{{ house.rating|floatformat }}</span>
+                    <span title="number of votes">({{ house.count_rating }})</span>
+                </div>
+            </div>
+
+
             <p class="pl-2 text-muted m-0">
                 <small>by @{{ house.owner.username }}</small>
                 {% if request.user.username != house.owner.username %}

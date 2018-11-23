@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-11-11 16:47+0000\n"
+"POT-Creation-Date: 2018-11-22 17:55+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -20,6 +20,122 @@ msgstr ""
 "100 > 14) ? 1 : n % 1 == 0 && (n % 10 ==0 || (n % 10 >=5 && n % 10 <=9) || "
 "(n % 100 >=11 && n % 100 <=14 )) ? 2: 3);\n"
 
+#: HouseSearch/form.py:103
+msgid "Unvalid country"
+msgstr ""
+
+#: HouseSearch/form.py:110
+#, python-format
+msgid "Uncorrected ROOMS count. Must be value from 1 to %s"
+msgstr ""
+
+#: HouseSearch/form.py:117
+#, python-format
+msgid "Uncorrected SLEEPER count. Must be value from 1 to %s"
+msgstr ""
+
+#: HouseSearch/form.py:124
+#, python-format
+msgid "Uncorrected PRICE. Must be value from 1 to %s"
+msgstr ""
+
+#: HouseSearch/models.py:14
+msgid "Newest"
+msgstr ""
+
+#: HouseSearch/models.py:15
+msgid "Highest rated"
+msgstr ""
+
+#: HouseSearch/models.py:16
+msgid "Price High-Low"
+msgstr ""
+
+#: HouseSearch/models.py:17
+msgid "Price Low-High"
+msgstr ""
+
+#: HouseSearch/models.py:109
+msgid "Private house"
+msgstr "Приватний будинок"
+
+#: HouseSearch/models.py:110
+msgid "Apartment"
+msgstr "Квартира"
+
+#: HouseSearch/models.py:111
+msgid "Villa"
+msgstr "Вілла"
+
+#: templates/Chat/chats_page.html:9
+msgid "Chats list"
+msgstr "Чати"
+
+#: templates/Chat/chats_page.html:23
+msgid "You haven't any chats"
+msgstr ""
+
+#: templates/HouseSerch/create_edit_house_block.html:60
+msgid "Please, select a valid country"
+msgstr ""
+
+#: templates/HouseSerch/create_edit_house_block.html:63
+msgid "Uncorrect city name"
+msgstr ""
+
+#: templates/UserProfile/create_edit_diary_block.html:9
+msgid "New diary"
+msgstr ""
+
+#: templates/UserProfile/create_edit_diary_block.html:11
+msgid "Edit diary"
+msgstr ""
+
+#: templates/UserProfile/create_edit_diary_block.html:21
+msgid ""
+"\n"
+"                    You have the active diary now. If you create new diary, "
+"status of current diary will be change on\n"
+"                    'frozen'.\n"
+"                "
+msgstr ""
+
+#: templates/UserProfile/create_edit_diary_block.html:48
+msgid "Title"
+msgstr ""
+
+#: templates/UserProfile/create_edit_diary_block.html:53
+msgid "Tell about this diary"
+msgstr ""
+
+#: templates/UserProfile/create_edit_diary_block.html:59
+msgid "Diary finish date"
+msgstr ""
+
+#: templates/UserProfile/create_edit_diary_block.html:67
+msgid "Set preview"
+msgstr ""
+
+#: templates/UserProfile/create_edit_diary_block.html:94
+msgid "Create new diary"
+msgstr ""
+
+#: templates/UserProfile/create_edit_diary_block.html:96
+msgid "Save change"
+msgstr ""
+
+#: templates/UserProfile/includes/create_note.html:21
+msgid "Latitude(Lat)"
+msgstr ""
+
+#: templates/UserProfile/includes/create_note.html:23
+msgid "Longitude(Lng)"
+msgstr ""
+
+#: templates/UserProfile/includes/diary_block.html:33
+msgid "Open"
+msgstr ""
+
 #: templates/base.html:51
 msgid "Home page"
 msgstr "Домашня сторінка"
@@ -27,6 +143,14 @@ msgstr "Домашня сторінка"
 #: templates/base.html:57
 msgid "New note"
 msgstr "Новий запис"
+
+#: templates/base.html:66
+msgid "Search house"
+msgstr ""
+
+#: templates/base.html:69
+msgid "Search"
+msgstr ""
 
 #: venv/Lib/site-packages/django/contrib/messages/apps.py:7
 msgid "Messages"

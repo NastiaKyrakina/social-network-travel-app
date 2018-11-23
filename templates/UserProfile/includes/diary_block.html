@@ -7,14 +7,17 @@
 
 
     <div class="diary-content block">
-        <div class="image">
-            {% if diary.photo %}
-                <img src="{{ diary.photo.url }}" class="img-fluid">
-            {% else %}
-                {% load staticfiles %}
-                <img src="{% static 'images/DefaultHouse.png' %}" class="img-fluid">
-            {% endif %}
+        <div class="d-flex justify-content-center">
+            <div class="image">
+                {% if diary.photo %}
+                    <img src="{{ diary.photo.url }}" class="img-fluid">
+                {% else %}
+                    {% load staticfiles %}
+                    <img src="{% static 'images/DefaultHouse.png' %}" class="img-fluid">
+                {% endif %}
+            </div>
         </div>
+
         <p class="m-1"><strong>Date: </strong>
             <small>{{ diary.date_start }} - {{ diary.date_finish }}</small>
         </p>
@@ -30,7 +33,7 @@
     </div> <!-- diary-content -->
 
     <div class="diary-footer block-footer block d-flex justify-content-center">
-        <button class="btn btn-primary py-1">{% trans 'Open' %}</button>
+        <a class="btn btn-primary py-1" href="{% url 'user_profile.diary_page' diary.id %}">{% trans 'Open' %}</a>
     </div> <!-- diary-footer -->
 
 </div> <!-- note -->

@@ -2,79 +2,98 @@
 
 {% block title %}User Information{% endblock %}
 
-{% block head %}User Information{% endblock %}
-
-
-
 {% block content %}
-    <form class="info-form" enctype="multipart/form-data" method="post" action="">
+    {% load i18n %}
+    <form class="info-form col-8" enctype="multipart/form-data" method="post" action="">
         {% csrf_token %}
 
         {{ form.non_field_errors }}
-        <div class="InfoForm">
+        <div class="info-header block block-header">
+            <h4 class="pl-3 mb-1">{% trans 'User Information' %}</h4>
+        </div> <!-- auth-header -->
 
-            <div class="fieldWrapper">
-                {{ form.gender.errors }}
-                <label for="{{ form.gender.id_for_label }}">Gender:</label>
-                {{ form.gender }}
+        <div class="info-block block">
+            <div class="row d-flex align-items-center px-2">
+                <div class="col-4 pr-1">
+                    {{ form.gender.errors }}
+                    <label class="mb-0" for="{{ form.gender.id_for_label }}">Gender</label>
+                    <div class="custom-control custom-radio">
+                        <input type="radio" id="id_gender_0" name="gender" class="custom-control-input">
+                        <label class="custom-control-label" for="id_gender_0">Male</label>
+                    </div>
+                    <div class="custom-control custom-radio">
+                        <input type="radio" id="id_gender_1" name="gender" class="custom-control-input">
+                        <label class="custom-control-label" for="id_gender_1">Female</label>
+                    </div>
+                    <!-- {{ form.gender }} -->
+                </div>
+
+                <div class="col-8 pl-1">
+                    {{ form.status.errors }}
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <label class="input-group-text" for="{{ form.status.id_for_label }}">Status</label>
+                        </div>
+                        {{ form.status }}
+                    </div>
+                </div>
             </div>
 
-            <div class="fieldWrapper">
-                {{ form.birthday.errors }}
-                <label for="{{ form.birthday.id_for_label }}">Birthday:</label>
-                {{ form.birthday }}
-            </div>
 
-            <div class="fieldWrapper">
-                {{ form.status.errors }}
-                <label for="{{ form.status.id_for_label }}">Status:</label>
-                {{ form.status }}
-            </div>
+            <div class="row px-3 d-flex justify-content-between">
+                <div class="col-4 px-1">
+                    <label for="{{ form.country.id_for_label }}">Country</label>
+                    {{ form.country }}
+                    <datalist id="countries"></datalist>
+                </div>
+                <div class="col-4 px-1">
+                    <label for="{{ form.city.id_for_label }}">City</label>
+                    {{ form.city }}
+                </div>
+                <div class="col-4 px-1">
+                    <label for="{{ form.phone_num.id_for_label }}">Phone number </label>
+                    (<span id="phone-code">000</span>) {{ form.phone_num }}
+                </div>
 
-            <div class="fieldWrapper">
                 {{ form.country.errors }}
-                <label for="{{ form.country.id_for_label }}">Country:</label>
-                {{ form.country }}
-                <datalist id="countries"></datalist>
-            </div>
-
-            <div class="fieldWrapper">
                 {{ form.city.errors }}
-                <label for="{{ form.city.id_for_label }}">City:</label>
-                {{ form.city }}
-            </div>
-
-            <div class="fieldWrapper">
                 {{ form.phone_num.errors }}
-                <label for="{{ form.phone_num.id_for_label }}">Phone number:</label>
-                (<span id="phone-code">000</span>) {{ form.phone_num }}
             </div>
 
-            <div class="fieldWrapper">
+            <div class="row px-3">
+                <div class="col-4 px-1">
+                    <label for="{{ form.birthday.id_for_label }}">Birthday</label>
+                    {{ form.birthday }}
+                </div>
+                {{ form.birthday.errors }}
+            </div>
+
+
+            <div class="col-12 px-1">
                 {{ form.info.errors }}
                 <label for="{{ form.info.id_for_label }}">Info:</label>
                 {{ form.info }}
             </div>
 
-            <div class="fieldWrapper">
-                <div class="container">
-                    <div class="row">
-                        {{ form.big_photo.errors }}
-                        <label for="{{ form.big_photo.id_for_label }}">Photo:</label>
-                        {{ form.big_photo }}
-                    </div>
-                    <div class="row">
-                        <span id="output"><img class="thumb" height="100" width="100" title="ttt"
-                                               src="{{ user.userinfo.big_photo.url }}"></span>
-                    </div>
+            <div class="row">
+                <div class="col-3 file-upload col-3">
+                    {{ form.big_photo }}
+                    {{ form.big_photo_file }}
+                    <label class="float-right btn m-0 btn-warning"
+                           for="{{ form.big_photo.id_for_label }}">{% trans 'Set preview' %}</label>
                 </div>
-
+                <div class="col-4">
+                    <span id="output"><img class="img-fluid" title="ttt"
+                                           src="{{ user.userinfo.get_photo }}"></span>
+                </div>
+                {{ form.big_photo.errors }}
             </div>
-
-
         </div>
 
-        <input type="submit" value="register" />
+        <div class="info-footer block block-footer d-flex justify-content-center">
+            <input class="btn btn-primary" type="submit" value="Submit"/>
+        </div>
+
     </form>
 
 {% endblock %}
@@ -88,4 +107,3 @@
     <script src="{% static 'js/ajax_load_countries.js' %}"></script>
     <script src="{% static 'js/jcreate_info.js' %}"></script>
 {% endblock %}
-

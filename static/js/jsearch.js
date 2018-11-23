@@ -43,71 +43,76 @@ function CorrectDate() {
     let sel_day = $("#id_public_day option:selected").val();
 
 
-    $("#id_public_month option[value=10]");
-
     function set_valid_month(month) {
+        console.log(sel_month);
         $("#id_public_month option").each(function (index) {
+
             if (index > month) {
                 $(this).attr('hidden', 'hidden');
             }
             else {
                 $(this).attr('hidden', false);
             }
+
+
         });
+        console.log(sel_month);
     }
 
     function open_all_month() {
         $("#id_public_month option").attr('hidden', false);
     }
 
-    function open_all_day() {
-        $("#id_public_day option").attr('hidden', false);
-    }
-
     function set_valid_day(day) {
         $("#id_public_day option").each(function (index) {
-            if (index > (day)) {
+            if (index > (day - 1)) {
                 $(this).attr('hidden', 'hidden');
-                console.log($(this).val());
-                console.log(day);
+
+            } else {
+                $(this).attr('hidden', false);
             }
         });
     }
-
 
     $("#id_public_year").on('click',
         function () {
+
             get_year = $(this).val();
-            console.log(get_year);
-            console.log(year);
-            console.log(month);
             if (get_year != sel_year) {
+
                 sel_year = get_year;
                 if (get_year == year) {
-                    console.log('set');
-                    set_valid_month(month);
-                    if (sel_month > month) {
-                        sel_month = month;
-                        $("#id_public_month option[value=" + sel_month + "]").attr('selected', 'selected');
+
+                    if (sel_month > (month + 1)) {
+                        $("#id_public_month option:selected").attr('selected', false);
+                        sel_month = (+month) + 1;
+
+                        $("#id_public_month option[value=" + sel_month + "]").attr('selected', true);
                     }
+
+                    set_valid_month(month);
+
+
                 } else {
                     open_all_month();
+
                 }
             }
         });
 
-    $("#id_public_month").on('change',
+    $("#id_public_month").on('click',
         function () {
             get_month = $(this).val();
+            console.log(sel_month);
             if (get_month != sel_month) {
+                let temp_month;
                 sel_month = get_month;
                 if (sel_month == month) {
-                    set_valid_day(day);
+                    temp_month = day;
+                } else {
+                    temp_month = new Date(sel_year, sel_month, 0).getDate();
                 }
-                else {
-                    max_day = new Date(sel_year, sel_month, 0);
-                    set_valid_day(max_day);
-                }
+                set_valid_day(temp_month);
             }
 
         });

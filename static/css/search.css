@@ -4,12 +4,19 @@
 }
 
 .select_sort {
-    margin-left: 20px;
+    margin-left: 10px;
+    margin-right: 5px;
     color: white;
-    background: linear-gradient(to top, #007bff, #9fcdff);
+    background: #0069d9;
 }
 
 .select_sort option {
     color: blue;
     background: #9fcdff;
 }
+
+.sort-block {
+    float: right;
+
+}
+

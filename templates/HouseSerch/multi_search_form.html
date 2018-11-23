@@ -1,9 +1,15 @@
 <form method="get" action="" id="form-multi-search">
 
     {{ form_search.non_field_errors }}
-    <div class="row sort-row">
-        <label for="id_sort" class="ml-2">Sort by </label>
-        {{ form_search.sort }}
+    <div class="row">
+        <div class="col-6">
+        </div>
+        <div class="col-6">
+           <span class="sort-block">
+                <label for="id_sort" class="ml-2">Sort by</label>
+                {{ form_search.sort }}
+           </span>
+        </div>
     </div>
     <div class="row">
         <div class="col-6">

@@ -31,14 +31,15 @@
                     <i class="fas fa-map-marker-alt"></i> Locate
                 </button>
 
-                <div class="modal" id="note-modal-{{ note.pk }}" tabindex="-1" role="dialog" style="width: 600px;">
-                    <div class="modal-dialog" role="document">
-                        <div class="modal-content" style="width: 500px;">
+                <div class="map-modal modal m-0" id="note-modal-{{ note.pk }}" tabindex="-1" role="dialog"
+                     style="width: 530px;">
+                    <div class="modal-dialog m-0" role="document">
+                        <div class="modal-content">
                             <div class="modal-header">
                                 <p class="modal-title">{{ note.text }}</p>
                             </div>
-                            <div class="modal-body">
-                                {% include 'UserProfile/includes/note-locate.html' %}
+                            <div class="modal-body p-0">
+                                {% include 'UserProfile/includes/map_note_location.html' %}
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -46,10 +47,6 @@
                         </div>
                     </div>
                 </div>
-
-
-
-
             {% endif %}
         </div>
 
@@ -92,13 +89,9 @@
         <div class="note-footer row align-items-center">
             <div class="note-time col-6 ">
                 <!-- test -->
-                <p class="note_date text-muted mx-2">
+                <p class="note_date text-muted mx-2 my-0">
                     <small>{{ note.date_public| date:"d-m-Y H:i" }}</small>
                 </p>
-            </div>
-            <div class="note-stats col-6">
-                <a href="#"><i class="far fa-heart"></i></a>
-                <a href="#"><i class="far fa-comment"></i></a>
             </div>
         </div>
     </div> <!-- note-content -->

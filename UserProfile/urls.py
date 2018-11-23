@@ -5,6 +5,7 @@ urlpatterns = [
 
     path('diary/create/', views.create_diary, name='user_profile.diary_create'),
     path('diary/<int:diary_id>/', views.diary_page, name='user_profile.diary_page'),
+    path('diary/<int:diary_id>/diary_markers', views.diary_markers, name='user_profile.diary_markers'),
     path('note/create/', views.note_create_page, name='user_profile.note_create'),
     path('note/delete/', views.delete_note, name='note_delete'),
     path('note/edit/<slug:note_id>/', views.note_edit_page, name='note_edit'),

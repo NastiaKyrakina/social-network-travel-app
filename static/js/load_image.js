@@ -13,7 +13,7 @@ function handleFileSelect(evt) {
             var r = document.getElementById('output');
             r.InherritHTML = '';
 
-            r.innerHTML = ['<img class="thumb" height="100" widht="100" title="', escape(theFile.name), '" src="', e.target.result, '" />'].join('');
+            r.innerHTML = ['<img class="img-fluid" title="', escape(theFile.name), '" src="', e.target.result, '" />'].join('');
 
 
         };
@@ -24,4 +24,3 @@ function handleFileSelect(evt) {
 
 document.getElementById('id_big_photo').addEventListener('change', handleFileSelect, false);
 document.getElementById('id_big_photo').addEventListener('load', handleFileSelect, false);
-

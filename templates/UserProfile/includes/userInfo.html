@@ -11,9 +11,8 @@
 
             {% if user.userinfo.country %}
                 <p>
-                    <!-- Такая каша для корректного вывода запятой -->
-                    <i class="fas fa-map-marker-alt"></i> {{ user.userinfo.country }}{% if user.userinfo.city %},
-                    {{ user.userinfo.city }}
+                    <i class="fas fa-map-marker-alt"></i> {{ user.userinfo.country }}{% if user.userinfo.city %}
+                    <span>, {{ user.userinfo.city }}</span>
                 {% endif %}
                 </p>
             {% endif %}

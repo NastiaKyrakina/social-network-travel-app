@@ -59,8 +59,13 @@ class UserInfo(models.Model):
     registration = models.DateField(auto_now_add=True)
     last_visit = models.DateTimeField(auto_now=True)
     big_photo = models.ImageField(upload_to='user_photo/',
-                                  blank=True,
-                                  default='def_user_photo.png')
+                                  blank=True)
+
+    def get_photo(self):
+        if self.big_photo:
+            return self.big_photo.url
+        else:
+            return '/static/images/DefaultAvatar.png'
 
 
 class NoteManager(models.Manager):

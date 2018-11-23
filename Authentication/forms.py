@@ -68,22 +68,42 @@ class InformationForm(forms.ModelForm):
         )
 
         widgets = {
-            'gender': forms.RadioSelect(choices=GENDER_SELECT),
-            'birthday': forms.DateInput,
-            'status': forms.Select(choices=UserInfo.STATUS_TYPE),
-            'phone_num': forms.TextInput,
+            'gender': forms.RadioSelect(choices=GENDER_SELECT, attrs={
+                'class': 'custom-control-input',
+            }),
+            'birthday': forms.DateInput(attrs={
+                'class': 'form-control mb-2'
+            }),
+            'status': forms.Select(choices=UserInfo.STATUS_TYPE, attrs={
+                'class': 'custom-select',
+            }),
+            'phone_num': forms.TextInput(attrs={
+                'class': 'form-control mb-2'
+            }),
             'country': forms.TextInput(attrs={
                 'name': 'country',
                 'required': True,
-                'class': '',
+                'class': 'form-control mb-2',
                 'placeholder': 'Country',
                 'title': 'Enter country for search',
                 'maxlength': 30,
                 'list': 'countries'
             }),
-            'city': forms.TextInput,
-            'info': forms.Textarea,
-            'big_photo': forms.FileInput(),
+            'city': forms.TextInput(attrs={
+                'class': 'form-control mb-2',
+            }),
+            'info': forms.Textarea(attrs=
+            {
+                'maxlength': 1000,
+                'class': 'form-control mb-2',
+                'rows': '4',
+            }),
+            'big_photo': forms.FileInput(attrs=
+            {
+                'class': 'invisible position-absolute',
+                'required': False,
+                'accept': 'image/*'
+            }),
        }
 
     def save(self, user):

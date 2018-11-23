@@ -62,35 +62,44 @@
         </div>
 
             <div class="map-block block">
-                <div class="map"></div>
+                {% include 'UserProfile/includes/map_diary_page.html' %}
             </div>
 
-        <div class="block block-footer d-flex justify-content-center">
-            {% if is_owner %}
-                <form>
-                    <button type="button"
-                            class="delete-element btn btn-danger ml-2" id="delete-element-{{ diary.pk }}">
-                        Delete
-                    </button>
-                    <button type="button" formaction="/diary/edit/{{ diary.pk }}/"
-                            class="btn btn-warning ml-2" id="edit-element-{{ diary.pk }}">
-                        Edit
-                    </button>
-                </form>
-                {% if diary.is_active or diary.is_frozen %}
-                    <button id="finish-diary" class="btn btn-warning ml-2" data-toggle="modal" data-target="#myModal">
-                        Finish
-                    </button>
-                    {% if diary.is_active %}
-                        <span class="text-success">Active</span>
-                    {% elif diary.is_frozen %}
-                        <button id="frozen-diary">Activate</button>
+            <div class="row d-flex justify-content-center p-0">
+                <div class="col-12">
+                    {% for note in notes %}
+                        {% include 'UserProfile/note_block.html' %}
+                    {% endfor %}
+            </div>
+            </div>
+            <div class="col-12 block block-footer d-flex justify-content-center">
+                {% if is_owner %}
+                    <form>
+                        <button type="button"
+                                class="delete-element btn btn-danger ml-2" id="delete-element-{{ diary.pk }}">
+                            Delete
+                        </button>
+                        <button type="button" formaction="/diary/edit/{{ diary.pk }}/"
+                                class="btn btn-warning ml-2" id="edit-element-{{ diary.pk }}">
+                            Edit
+                        </button>
+                    </form>
+                    {% if diary.is_active or diary.is_frozen %}
+                        <button id="finish-diary" class="btn btn-warning ml-2" data-toggle="modal"
+                                data-target="#myModal">
+                            Finish
+                        </button>
+                        {% if diary.is_active %}
+                            <span class="text-success">Active</span>
+                        {% elif diary.is_frozen %}
+                            <button id="frozen-diary">Activate</button>
+                        {% endif %}
                     {% endif %}
                 {% endif %}
-            {% endif %}
-        </div>
+            </div>
 
-    </div> <!-- diary-element -->
+
+        </div> <!-- diary-element -->
 
     </div>
 
@@ -104,6 +113,8 @@
     {% load staticfiles %}
     <script src="{% static '/js/js.cookie.js' %}"></script>
     <script src="{% static '/js/ajax_csrf.js' %}"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCJPcRk7BvJ-3SzCmd_culJXrMUJJn7xBY&callback=initMap"
+            async defer></script>
 
 
 

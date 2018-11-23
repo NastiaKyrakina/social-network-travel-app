@@ -16,20 +16,16 @@ def rate_create(request):
 
     user = UserExt.objects.get(pk=request.user.pk)
 
-    print(request.POST)
-
     if request.method == 'POST' and 'house' in request.POST:
-
         house = get_object_or_404(House, id=request.POST['house'])
-
         form_rate = RateForm(request.POST)
         if form_rate.is_valid():
             rate = form_rate.save(user, house)
-            print(rate)
             if request.is_ajax():
                 return render(request,
                               'HouseSerch/includes/rate-block.html',
-                              {'rate': rate,
+                              {
+                                  'rate': rate,
                                }
                               )
             return HttpResponseRedirect('house/%s/' % house.pk)

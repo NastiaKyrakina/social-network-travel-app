@@ -19,6 +19,16 @@ class UserExt(User):
     def get_absolute_url(self):
         return reverse('home', args=[str(self.id)])
 
+    def get_diary(self):
+        active_diary = self.diary_set.filter(status=Diary.ACTIVE).first()
+        if active_diary:
+            return active_diary
+        else:
+            return self.diary_set.all().first()
+
+    def has_diary(self):
+        return self.diary_set.all().exists()
+
 
 class Country(models.Model):
     name = models.CharField(max_length=30)
@@ -179,6 +189,9 @@ class Diary(models.Model):
 
     def is_frozen(self):
         return self.status == Diary.FROZEN
+
+    def get_absolute_url(self):
+        return reverse('user_profile.diary_page', args=[str(self.id)])
 
 
 class Marker(models.Model):

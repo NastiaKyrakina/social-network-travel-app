@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -51,16 +52,26 @@
                             <a class="nav-link" href="{% url 'home' request.user.id %}">{% trans 'Home page' %}</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="/reg/info/">Info</a>
+
+                            {% if request.user.has_diary %}
+                                <a class="nav-link" href="{{ user.get_diary.get_absolute_url }}">{% trans 'Diary' %}</a>
+                            {% else %}
+                                <a class="nav-link"
+                                   href="{% url 'user_profile.diary_create' %}">{% trans 'New diary' %}</a>
+                            {% endif %}
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="/user/note/create/">{% trans 'New note' %}</a>
+                            <a class="nav-link" href="{% url 'search_house' %}">{% trans 'Advert' %}</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="/house/create/">New house</a>
+                            <a class="nav-link" href="{% url 'add_house' %}">{% trans 'New advert' %}</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{% url 'chat.page' %}">Chats</a>
+                            <a class="nav-link"
+                               href="{% url 'users_house' request.user.id %}">{% trans 'My advert' %}</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'chat.page' %}">{% trans 'Chats' %}</a>
                         </li>
 
                     </ul>
@@ -87,6 +98,23 @@
                             <a class="nav-link" href="/reg/registration/">Sign in</a>
                         </li>
                     {% endif %}
+                    <li class="nav-item">
+                        {% load i18n %}
+                        <form id='change-leng' action="{% url 'set_language' %}" method="post">{% csrf_token %}
+                            <input name="next" type="hidden" value="{{ redirect_to }}"/>
+                            <select name="language" onchange="$('#change-leng').submit();">
+                                {% get_current_language as LANGUAGE_CODE %}
+                                {% get_available_languages as LANGUAGES %}
+                                {% get_language_info_list for LANGUAGES as languages %}
+                                {% for language in languages %}
+                                    <option value="{{ language.code }}"{% if language.code == LANGUAGE_CODE %}
+                                            selected="selected"{% endif %}>
+                                        {{ language.code }}
+                                    </option>
+                                {% endfor %}
+                            </select>
+                        </form>
+                    </li>
                 </ul>
             </div> <!-- navbar-collapse -->
 
@@ -100,6 +128,9 @@
         {% block content %}
         {% endblock %}
     </div> <!-- container-fluid -->
+
+{% block modal %}
+{% endblock %}
 
 </body>
 

@@ -1,6 +1,8 @@
+
 $(document).ready(function () {
 
     load_countrues('2');
+
 
     $("input#id_country").on('change', function () {
 
@@ -22,7 +24,7 @@ $(document).ready(function () {
         if (id_country !== undefined) {
             $("input#id_country").val(id_country);
             code = $('#phone-code').text();
-            $("input#id_phone_num").val(code + $("input#id_phone_num").val());
+
             return;
         }
         e.preventDefault();

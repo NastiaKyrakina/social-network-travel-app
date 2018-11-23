@@ -32,6 +32,7 @@ urlpatterns = i18n_patterns(
     path('house/', include('HouseSearch.urls')),
 
     path('load_countries/', ajax_load_countries, name='load_countries'),
+    path('i18n/', include('django.conf.urls.i18n')),
 )
 
 

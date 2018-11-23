@@ -67,7 +67,7 @@
 
             <div class="row d-flex justify-content-center p-0">
                 <div class="col-12">
-                    {% for note in notes %}
+                    {% for note in notes reversed %}
                         {% include 'UserProfile/note_block.html' %}
                     {% endfor %}
             </div>

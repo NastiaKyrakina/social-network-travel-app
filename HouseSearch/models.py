@@ -104,11 +104,15 @@ class House(models.Model):
     PRIVATE_HOUSE = 'PH'
     APARTMENT = 'AP'
     VILLA = 'VL'
+    BUNGALOW = 'BN'
+    COTTAGE = 'CT'
 
     HOUSE_TYPE = Choices(
         (PRIVATE_HOUSE, _('Private house')),
         (APARTMENT, _('Apartment')),
         (VILLA, _('Villa')),
+        (BUNGALOW, _('Bungalow')),
+        (COTTAGE, _('Cottage')),
     )
     """Owner user"""
     owner = models.ForeignKey(User, on_delete='Cascade')

@@ -68,7 +68,6 @@
             </div>
         </div>
 
-
         <!--Error messages-->
         {% for error in form_house.address.errors %}
             <div class="ErrorMessage">{{ error }}</div>
@@ -77,6 +76,9 @@
 
         <label class="pl-2 mb-0" for="id_address">Address</label>
         {{ form_house.address }}
+        <div hidden class="alert alert-danger pl-2 p-0 js-city-error">
+            <small>{% trans "Uncorrect Address" %}</small>
+        </div>
 
         <!--Error messages-->
         {% for error in form_house.type.errors %}
@@ -189,4 +191,8 @@
         {{ error }} <br/>
     {% endfor %}
 </form>
+<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
+    Launch demo modal
+</button>
+
 

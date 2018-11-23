@@ -3,7 +3,7 @@ from django.db.models import Max
 from django.utils.translation import ugettext as _
 
 import re
-
+from UserProfile.models import Country
 from HouseSearch.models import House, HousePhoto, Rate, MAX_PRICE, MAX_ROOMS, MAX_SLEEPER, SORT_DICT
 
 from Lib.convertion import from_dict_to_list
@@ -46,7 +46,9 @@ class HouseForm(forms.ModelForm):
                 'name': 'Address',
                 'class': 'form-control mb-2',
                 'placeholder': 'Street, 1, 1',
-                'title': 'Enter address: Street Name, House Number, Apartment Number',
+                'full_title': 'Enter address: Street name, House number, Apartment number',
+                'short_title': 'Enter address: Street name, House number',
+                'title': 'Enter address: Street name, House number',
                 'maxlength': 100,
 
             }),
@@ -94,15 +96,6 @@ class HouseForm(forms.ModelForm):
                 'class': 'custom-control-input',
             }),
         }
-
-    def clean_country(self):
-        country_id = self.cleaned_data['country']
-        try:
-            country = House.objects.get(id=country_id)
-        except House.DoesNotExist:
-            raise forms.ValidationError(_('Unvalid country'),
-                                        code='unval_country')
-        return country_id
 
     def clean_rooms(self):
         rooms = self.cleaned_data['rooms']

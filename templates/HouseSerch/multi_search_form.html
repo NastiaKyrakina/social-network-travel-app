@@ -44,13 +44,27 @@
                 More options
             </button>
             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+
+                {{ form_search.type.errors }}
                 <div class="col-12 d-flex justify-content-around">
-                    {{ form_search.type.errors }}
                     {% for check in form_search.type %}
-                        <label for="{{ check.id_for_label }}">
-                            {{ check.choice_label }}
-                            <span class="radio">{{ check.tag }}</span>
-                        </label>
+                        {% if forloop.counter < 4 %}
+                            <label for="{{ check.id_for_label }}">
+                                {{ check.choice_label }}
+                                <span class="radio">{{ check.tag }}</span>
+                            </label>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+
+                <div class="col-12 d-flex justify-content-around">
+                    {% for check in form_search.type %}
+                        {% if forloop.counter >= 4 %}
+                            <label for="{{ check.id_for_label }}">
+                                {{ check.choice_label }}
+                                <span class="radio">{{ check.tag }}</span>
+                            </label>
+                        {% endif %}
                     {% endfor %}
                 </div>
 

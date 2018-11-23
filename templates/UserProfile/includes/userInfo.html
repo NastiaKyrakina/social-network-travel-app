@@ -2,7 +2,13 @@
 
     <!-- Information block -->
     <div class="information-block">
-        <h5 class="block block-header">Information</h5>
+        <h5 class="block block-header">
+            {% if request.user == user %}
+                <a href="{% url 'info' %}">Information</a>
+            {% else %}
+                Information
+            {% endif %}
+        </h5>
         <div class="block block-footer">
 
             {% if user.userinfo.status %}
@@ -11,18 +17,19 @@
 
             {% if user.userinfo.country %}
                 <p>
-                    <i class="fas fa-map-marker-alt"></i> {{ user.userinfo.country }}{% if user.userinfo.city %}
-                    <span>, {{ user.userinfo.city }}</span>
+                    <i class="fas fa-map-marker-alt"></i>
+                    {{ user.userinfo.country }}{% if user.userinfo.city %}<span>, {{ user.userinfo.city }}</span>
                 {% endif %}
                 </p>
             {% endif %}
 
             {% if user.userinfo.birthday %}
-                <p><i class="fas fa-user"></i> Birthday: {{ user.userinfo.birthday }}</p>
+                <p><i class="fas fa-user"></i> Birthday: {{ user.userinfo.birthday|date:'j E' }}</p>
             {% endif %}
 
             {% if user.userinfo.phone_num %}
-                <p><i class="fas fa-phone-square"></i> {{ user.userinfo.phone_num }}</p>
+                <p><i class="fas fa-phone-square"></i>
+                    +{{ user.userinfo.country.phone_code }} {{ user.userinfo.phone_num }}</p>
             {% endif %}
 
         </div>

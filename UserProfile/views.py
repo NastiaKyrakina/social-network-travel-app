@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponseRedirect, Http404, JsonResponse, QueryDict, HttpRequest
+from django.http import HttpResponseRedirect, Http404, JsonResponse, QueryDict, HttpRequest, HttpResponse
 from django.template.loader import render_to_string
 
 from UserProfile.forms import *
@@ -56,7 +56,6 @@ def diary_page(request, diary_id):
     return render(request, 'UserProfile/diary_page.html', {'diary': diary,
                                                            'notes': notes
                                                            })
-
 
 def diary_markers(request, diary_id):
     if 'mrkset' in request.GET:
@@ -158,13 +157,14 @@ def note_create_page(request):
 
                 save_attach(request.FILES, new_note, Attachment)
 
-                new_marker = form_marker.save(commit=False)
-                new_marker.diary = user.diary_set.filter(status=Diary.ACTIVE).first()
-                new_marker.note = new_note
-                new_marker.save()
+                if current_diary:
+                    new_marker = form_marker.save(commit=False)
+                    new_marker.diary = user.diary_set.filter(status=Diary.ACTIVE).first()
+                    new_marker.note = new_note
+                    new_marker.save()
+
 
                 if request.is_ajax():
-                    print('ajax')
                     return render(request,
                                   'UserProfile/note_block.html',
                                   {'note': new_note,
@@ -223,10 +223,9 @@ def note_edit_page(request, note_id):
     data = {'form_note': form_note,
             'note': note,
             }
-    if request.is_ajax():
-        template = 'UserProfile/create_edit_note_block.html'
-    else:
-        template = 'UserProfile/edit_note.html'
+
+    template = 'UserProfile/includes/create_note.html'
+
     return render(request, template, data)
 
 

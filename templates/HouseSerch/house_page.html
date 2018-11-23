@@ -40,11 +40,13 @@
                     <p class="m-1"><strong>Price:</strong> {{ house.price }} $ / day</p>
                     <p class="m-1"><strong>Published:</strong> {{ house.date_public| date:"d-m-Y" }}</p>
                     <p class="m-1"><strong>Status:</strong>
+                        <span class="status">
                         {% if house.activity %}
                             <span class="text-success">Active</span>
                         {% else %}
                             <span class="text-info">Frozen</span>
                         {% endif %}
+                        </span>
                     </p>
                     <p class="m-1">
                         <strong>Address:</strong> {{ house.country.name }}, {{ house.city }}, {{ house.address }}</p>
@@ -87,14 +89,27 @@
         {% if is_owner %}
             <form>
                 <button type="button"
-                        class="delete-element btn btn-danger ml-2" id="delete-element-{{ house.pk }}">
+                        class="delete-element btn btn-danger ml-2" id="delete-element-{{ house.pk }}"
+                        formaction="{% url 'delete_house' %}">
                     Delete
                 </button>
-                <button type="button" formaction="/house/edit/{{ house.pk }}/"
+                <button type="button" formaction="{% url 'edit_house' house.pk %}"
                         class="btn btn-warning ml-2" id="edit-element-{{ house.pk }}">
                     Edit
                 </button>
+
+                <button type="button" formaction="{% url 'house.change_status' %}"
+                        class="btn btn-info ml-2" id="change-element-{{ house.pk }}">
+                    Change Status to <span class="button-status">{% if house.activity %} frozen
+                {% else %}
+                    active
+                {% endif %}
+                </span>
+                </button>
+
             </form>
+
+
         {% endif %}
         </div>
         <!--Блок комментариев-->

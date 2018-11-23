@@ -93,9 +93,9 @@ $(document).ready(function () {
 
     function delete_post(post_primary_key) {
         if (confirm('are you sure you want to remove this post?') == true) {
-
+            locate = location.pathname.split('/')[1];
             $.ajax({
-                url: "/user/note/delete/", // the endpoint
+                url: "/" + locate + "/user/note/delete/", // the endpoint
                 type: "POST", // http method
                 data: {
                     csrfmiddlewaretoken: Cookies.get('csrftoken'),

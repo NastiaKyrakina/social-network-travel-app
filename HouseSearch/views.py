@@ -1,6 +1,7 @@
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponseRedirect, HttpResponse, Http404, JsonResponse, QueryDict, HttpRequest
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.contrib.auth.decorators import login_required
 
 from UserProfile.models import UserExt, Country
 from .models import House, HousePhoto, MAX_USER_HOUSES
@@ -122,6 +123,7 @@ def house_page(request, house_id):
     return render(request, 'HouseSerch/house_page.html', data)
 
 
+@login_required
 def house_add_page(request):
     user = UserExt.objects.get(pk=request.user.pk)
 
@@ -203,3 +205,32 @@ def house_delete(request):
             return JsonResponse(response_data)
 
     return JsonResponse({"msg": "this isn't happening"})
+
+
+def users_house(request, user_id):
+    user = get_object_or_404(UserExt, id=user_id)
+    houses = user.house_set.all()
+    context = {
+        'houses': houses,
+        'user': user,
+    }
+
+    return render(request, 'HouseSerch/user_houses.html', context)
+
+
+def change_status(request):
+    status = 'fail'
+
+    if request.method == 'POST':
+        house_id = request.POST['housepk']
+
+        try:
+            house = House.objects.get(id=house_id)
+            if request.user == house.owner:
+                house.activity = not house.activity
+                house.save()
+                status = house.activity
+
+        except House.DoesNotExist:
+            status = 'fail'
+    return JsonResponse({'status': status})

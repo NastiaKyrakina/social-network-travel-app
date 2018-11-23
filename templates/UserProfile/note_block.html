@@ -17,12 +17,14 @@
         </div>
 
         <!-- Post locate (right) -->
+
         <div class="note-locate col-8">
+            {% if request.user == user %}
             <button type="button" class="delete-element btn btn-danger ml-2" id="delete-element-{{ note.pk }}"><i
                     class="fas fa-trash-alt"></i></button>
             <button type="button" class="btn btn-warning ml-2" id="edit-element-{{ note.pk }}"><i
                     class="fas fa-edit"></i></button>
-
+            {% endif %}
 
             {% if note.is_bound %}
 

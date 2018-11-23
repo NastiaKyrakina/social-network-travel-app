@@ -147,6 +147,23 @@ function AddressValidation() {
     });
 }
 
+function AddresTitle() {
+    var address_input = $('#id_address');
+
+    $('#id_type').on('click', function () {
+
+        let type = $(this).find('option:selected').attr('value');
+        console.log(type);
+        set_title();
+        if (type == 'AP') {
+            address_input.attr('title', address_input.attr('full_title'));
+        } else {
+            address_input.attr('title', address_input.attr('short_title'));
+        }
+
+    });
+
+}
 
 $(document).ready(function () {
 
@@ -163,6 +180,7 @@ $(document).ready(function () {
     FirstSimvolToUpper('input[name=title]');
 
     AddressValidation();
+    AddresTitle();
 
     load_countrues();
 

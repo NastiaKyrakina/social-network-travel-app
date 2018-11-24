@@ -66,8 +66,6 @@ class UserInfo(models.Model):
     info = models.TextField(max_length=256,
                             blank=True)
 
-    registration = models.DateField(auto_now_add=True)
-    last_visit = models.DateTimeField(auto_now=True)
     big_photo = models.ImageField(upload_to='user_photo/',
                                   blank=True)
 

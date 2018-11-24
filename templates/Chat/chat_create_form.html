@@ -2,12 +2,12 @@
       method="post" action="{% url 'chat.create_chat' %}" id="chat-form">
 
     {% csrf_token %}
-
-    <div class="chat-edit-header block block-header">
+    {% load i18n %}
+    <div class="chat-edit-header block block rounded">
         <h4 class="pl-3 mb-1">New Chat</h4>
     </div> <!-- house-edit-header -->
 
-    <div class="chat-edit-body block p-3">
+    <div class="chat-edit-body block rounded p-3">
 
         {% for error in chat_form.non_field_errors %}
             <div class="ErrorMessage">{{ error }}</div>
@@ -34,15 +34,24 @@
             </div>
         </div>
 
-        <div>
-            Image:
-            {{ chat_form.image_file }}
-            {{ chat_form.image }}
+        <div class="row">
+            <div class="col-12 file-upload col-6">
+                {{ chat_form.image }}
+                {{ chat_form.image_file }}
+                <label class="btn m-0 btn-warning"
+                       for="{{ chat_form.image.id_for_label }}">{% trans 'Chat image' %}</label>
+            </div>
+            <div class="col-12 p-4">
+                {% load staticfiles %}
+                <span id="output"><img class="img-fluid"
+                                       src="{% static 'images/DefaultChat.png' %}"></span>
+            </div>
+            {{ chat_form.image.errors }}
         </div>
 
     </div>
 
-    <div class="chat-edit-footer block block-footer d-flex justify-content-center">
+    <div class="chat-edit-footer block rounded d-flex justify-content-center">
         {% if is_creating %}
             <input type="submit" class="btn btn-primary py-1" value="Create"/>
         {% else %}
@@ -55,3 +64,9 @@
     {% endfor %}
 </form>
 
+{% block script %}
+
+    {% load staticfiles %}
+    <script src="{% static '/js/load_image_chat.js' %}" type="text/javascript"></script>
+
+{% endblock %}

@@ -1,6 +1,6 @@
 from django import forms
 from django.db.models import Max
-from django.utils.translation import ugettext as _
+from django.utils.translation import ugettext_lazy as _
 
 import re
 from UserProfile.models import Country
@@ -20,8 +20,8 @@ class HouseForm(forms.ModelForm):
 
                 'required': True,
                 'class': 'form-control mb-2',
-                'placeholder': 'Title',
-                'title': 'Enter title of advertisement',
+                'placeholder': _('Title'),
+                'title': _('Enter title of advertisement'),
                 'maxlength': 100,
 
             }),
@@ -29,6 +29,8 @@ class HouseForm(forms.ModelForm):
             'country': forms.TextInput(attrs={
                 'name': 'city',
                 'class': 'form-control mb-2',
+                'placeholder': _('Country'),
+                'title': _('Select a country'),
                 'list': 'countries',
             }),
 
@@ -36,8 +38,8 @@ class HouseForm(forms.ModelForm):
             'city': forms.TextInput(attrs={
                 'name': 'city',
                 'class': 'form-control mb-2',
-                'placeholder': 'City',
-                'title': 'Enter city: only alphabet character valid',
+                'placeholder': _('City'),
+                'title': _('Enter city: only alphabet character valid'),
                 'maxlength': 40,
                 # 'pattern': '[A-Za-zА-ЯЙйЁёЫыъьІіЄєЇї]*[ -`][A-Za-zА-ЯЙйЁёЫыъьІіЄєЇї]*',
 
@@ -45,10 +47,10 @@ class HouseForm(forms.ModelForm):
             'address': forms.TextInput(attrs={
                 'name': 'Address',
                 'class': 'form-control mb-2',
-                'placeholder': 'Street, 1, 1',
-                'full_title': 'Enter address: Street name, House number, Apartment number',
-                'short_title': 'Enter address: Street name, House number',
-                'title': 'Enter address: Street name, House number',
+                'placeholder': _('Street, 1, 1'),
+                'full_title': _('Enter address: Street name, House number, Apartment number'),
+                'short_title': _('Enter address: Street name, House number'),
+                'title': _('Enter address: Street name, House number'),
                 'maxlength': 100,
 
             }),
@@ -61,7 +63,7 @@ class HouseForm(forms.ModelForm):
             'rooms': forms.NumberInput(attrs={
                 'name': 'rooms',
                 'class': 'form-control mb-2',
-                'title': 'Enter rooms count',
+                'title': _('Enter rooms count'),
                 'min': 1,
                 'max': MAX_ROOMS,
             }),
@@ -69,7 +71,7 @@ class HouseForm(forms.ModelForm):
             'price': forms.NumberInput(attrs={
                 'name': 'price',
                 'class': 'form-control',
-                'title': 'Enter maximum price',
+                'title': _('Enter rental price per day'),
                 'value': 10,
                 'min': 1,
                 'max': MAX_PRICE,
@@ -79,7 +81,7 @@ class HouseForm(forms.ModelForm):
                 'name': 'sleeper',
                 'class': 'form-control mb-2',
                 'required': False,
-                'title': 'Enter sleeper count',
+                'title': _('Enter sleeper count'),
                 'min': 1,
                 'max': MAX_SLEEPER,
 
@@ -88,8 +90,8 @@ class HouseForm(forms.ModelForm):
             'about': forms.Textarea(attrs={
                 'name': 'about',
                 'class': 'form-control mb-2',
-                'title': 'Tell about house',
-                'placeholder': 'Tell about house...',
+                'title': _('Tell about house'),
+                'placeholder': _('Tell about house...'),
             }),
 
             'activity': forms.CheckboxInput(attrs={

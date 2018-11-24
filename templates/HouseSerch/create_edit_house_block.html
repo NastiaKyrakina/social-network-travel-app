@@ -3,7 +3,16 @@
     {% csrf_token %}
 
     <div class="house-edit-header block block-header">
-        <h4 class="pl-3 mb-1">House edit</h4>
+        <h4 class="pl-3 mb-1">
+            {% if is_creating %}
+                {% trans "Сreate" %}
+            {% else %}
+                {% trans "Edit" %}
+            {% endif %}
+
+            {% trans 'announcement' %}
+
+        </h4>
     </div> <!-- house-edit-header -->
 
     <div class="house-edit-body block p-3">
@@ -24,7 +33,7 @@
         {% endfor %}
 
 
-        <label class="pl-2 mb-0" for="id_title">Title</label>
+        <label class="pl-2 mb-0" for="id_title">{% trans 'Title' %}</label>
         {{ form_house.title }}
 
         <!--Error messages-->
@@ -46,12 +55,12 @@
 
         <div class="row">
             <div class="col-6">
-                <label class="pl-2 mb-0" id="id_country">Country</label>
+                <label class="pl-2 mb-0" id="id_country">{% trans 'Country' %}</label>
                 {{ form_house.country }}
             </div>
             <datalist id="countries"></datalist>
             <div class="col-6">
-                <label class="pl-2 mb-0" for="id_city">City</label>
+                <label class="pl-2 mb-0" for="id_city">{% trans 'City' %}</label>
                 {{ form_house.city }}
             </div>
         </div>
@@ -63,7 +72,7 @@
             </div>
             <div class="col-6">
                 <div hidden class="alert alert-danger pl-2 p-0 js-city-error">
-                    <small>{% trans "Uncorrect city name" %}</small>
+                    <small>{% trans "Please, don't mix alphabets" %}</small>
                 </div>
             </div>
         </div>
@@ -74,10 +83,12 @@
         {% endfor %}
         <!--End-->
 
-        <label class="pl-2 mb-0" for="id_address">Address</label>
+        <label class="pl-2 mb-0" for="id_address">{% trans 'Address' %}</label>
         {{ form_house.address }}
-        <div hidden class="alert alert-danger pl-2 p-0 js-city-error">
-            <small>{% trans "Uncorrect Address" %}</small>
+        <div hidden class="alert alert-danger pl-2 p-0 js-address-error">
+            <small>{% trans "Uncorrect Address. Pleace, enter address by pattern: " %}
+                <span id="address-pattern"></span>
+            </small>
         </div>
 
         <!--Error messages-->
@@ -95,17 +106,17 @@
 
             <div class="col-4">
                 {{ form_house.type.errors }}
-                <label class="pl-2 mb-0" for="id_type">Type of house</label>
+                <label class="pl-2 mb-0" for="id_type">{% trans 'Type of house' %}</label>
                 {{ form_house.type }}
             </div>
             <div class="col-4">
 
-                <label class="pl-2 mb-0" for="id_rooms">Rooms</label>
+                <label class="pl-2 mb-0" for="id_rooms">{% trans 'Rooms' %}</label>
                 {{ form_house.rooms }}
             </div>
             <div class="col-4">
                 {{ form_house.sleeper.errors }}
-                <label class="pl- mb-0" for="id_sleeper">Sleeper place</label>
+                <label class="pl- mb-0" for="id_sleeper">{% trans 'Sleeper place' %}</label>
                 {{ form_house.sleeper }}
             </div>
         </div>
@@ -113,7 +124,7 @@
         <div class="row align-items-center justify-content-between">
             <div class="col-5">
                 {{ form_house.price.errors }}
-                <label class="pl-2 mb-0" for="id_price">Price</label>
+                <label class="pl-2 mb-0" for="id_price">{% trans 'Rental price per day' %}</label>
                 <div class="input-group mb-2 ">
                     <div class="input-group-prepend">
                         <span class="input-group-text">$</span>
@@ -125,7 +136,7 @@
             {% if not is_creating %}
             <div class="custom-checkbox col-5">
                 {{ form_house.activity }}
-                <label class="custom-control-label" for="id_activity">Active</label>
+                <label class="custom-control-label" for="id_activity">{% trans 'Active' %}</label>
             </div>
             {% endif %}
 
@@ -137,22 +148,27 @@
         {% endfor %}
         <!--End-->
 
-        <label class="pl-2 mb-0" for="id_about">About*</label>
+        <label class="pl-2 mb-0" for="id_about">{% trans 'About' %}*</label>
         {{ form_house.about }}
+
+        <div hidden class="alert alert-danger pl-2 p-0 js-about-error">
+            <small>{% trans "Please, enter at least 100 symbols" %}</small>
+        </div>
 
         <div class="mb-4 text-info">
             <small>
             <span class="info-about">
-                *the description must contain at least 100 characters
+                {% trans '*the description must contain at least 100 symbols' %}
             </span>
                 <span class="character-counter">
-                (<b id="counter">100</b> characrers left...)
+                (<b id="counter">100</b> {% trans 'symbols left' %}...)
             </span>
                 <span class="text-success sucs-show">
-                (implemented)
+                ({% trans 'implemented' %})
             </span>
             </small>
         </div>
+
 
         <!--Error messages-->
         {% for error in form_photo.image.errors %}
@@ -165,7 +181,7 @@
             <div class="file-upload col-3 pr-1">
                 {{ form_photo.image }}
                 {{ form_photo.image_file }}
-                <label class="btn m-0 btn-warning" for="id_image">Set images</label>
+                <label class="btn m-0 btn-warning" for="id_image">{% trans 'Set images' %}</label>
             </div>
 
             <div id="house-images-board" class="col-9 pl-1">
@@ -181,9 +197,9 @@
 
     <div class="house-edit-footer block block-footer d-flex justify-content-center">
         {% if is_creating %}
-            <input type="submit" class="btn btn-primary py-1" value="Create"/>
+            <input type="submit" class="btn btn-primary py-1" value="{% trans 'Create' %}"/>
         {% else %}
-            <input type="submit" class="btn btn-warning py-1" value="Edit"/>
+            <input type="submit" class="btn btn-warning py-1" value="{% trans 'Save' %}"/>
         {% endif %}
     </div> <!-- house-edit-footer -->
 
@@ -191,8 +207,5 @@
         {{ error }} <br/>
     {% endfor %}
 </form>
-<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
-    Launch demo modal
-</button>
 
 

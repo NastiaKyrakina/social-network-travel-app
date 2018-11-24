@@ -6,6 +6,13 @@ class MessageForm(forms.ModelForm):
         model = Message
         fields = ['text']
 
+        widgets = {
+            'text': forms.Textarea(attrs={
+                'class': 'form-control mb-2',
+                'rows': 3,
+            }),
+        }
+
     def save(self, user, chat, *args, **kwargs):
         message = super(MessageForm, self).save(commit=False)
         message.user = user
@@ -15,10 +22,19 @@ class MessageForm(forms.ModelForm):
 
 
 class ChatForm(forms.Form):
-    name = forms.CharField()
+    name = forms.CharField(widget=forms.TextInput(attrs={
+        'class': 'form-control mb-2'
+    }),
+    )
     chat_type = forms.ChoiceField(choices=Chat.TYPE_CHATS[1:],
                                   widget=forms.RadioSelect)
-    image = forms.FileField()
+    image = forms.FileField(widget=forms.FileInput(attrs=
+    {
+        'class': 'invisible position-absolute',
+        'required': False,
+        'accept': 'image/*'
+    }),
+    )
 
     def save(self, exs_chat=None):
         chat_name = self.cleaned_data['name']
@@ -37,6 +53,7 @@ class ChatForm(forms.Form):
 class ChatMember(forms.Form):
     members = forms.CharField(widget=forms.TextInput(attrs={
         'list': 'members_list',
+        'class': 'form-control mb-2'
     }))
 
     def members_list(self):

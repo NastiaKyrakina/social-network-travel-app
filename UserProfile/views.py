@@ -163,7 +163,6 @@ def note_create_page(request):
                     new_marker.note = new_note
                     new_marker.save()
 
-
                 if request.is_ajax():
                     return render(request,
                                   'UserProfile/note_block.html',
@@ -198,6 +197,7 @@ def note_create_page(request):
 
 @login_required
 def note_edit_page(request, note_id):
+    print('in')
     note = get_object_or_404(Note, id=note_id)
     if request.user != note.user:
         return Http404
@@ -220,11 +220,12 @@ def note_edit_page(request, note_id):
     else:
         form_note = NoteForm(instance=note)
 
-    data = {'form_note': form_note,
+    data = {
+        'form_note': form_note,
             'note': note,
             }
 
-    template = 'UserProfile/includes/create_note.html'
+    template = 'UserProfile/create_edit_note_block.html'
 
     return render(request, template, data)
 

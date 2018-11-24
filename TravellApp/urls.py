@@ -22,15 +22,15 @@ from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from django.conf.urls.i18n import i18n_patterns
 
 from Authentication.views import ajax_load_countries
+from HouseSearch.views import house_search_page
 
 urlpatterns = i18n_patterns(
-
+    path('', house_search_page),
     path('admin/', admin.site.urls),
     path('user/', include('UserProfile.urls')),
     path('reg/', include('Authentication.urls')),
     path('chat/', include('Chat.urls')),
     path('house/', include('HouseSearch.urls')),
-
     path('load_countries/', ajax_load_countries, name='load_countries'),
     path('i18n/', include('django.conf.urls.i18n')),
 )

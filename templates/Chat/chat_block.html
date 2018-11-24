@@ -1,34 +1,37 @@
 <div class="Chat" id="{{ chat.slug }}">
-    <h3>{{ chat.name }}</h3>
 
-    <div class="header">
-
-        {{ chat.name }}
+    <div class="header justify-content-end block shadow rounded mb-2">
+        <h3 class="pl-2">{{ chat.name }}</h3>
         {% if creator %}
-            <button id="add-member-{{ chat.slug }}">
+            <button class="mr-1 btn btn-primary btn-sm" id="add-member-{{ chat.slug }}">
                 Add members
             </button>
-            <div class="add-member-block">
-            </div>
         {% endif %}
 
         {% if chat.is_multi_chat %}
-            <button class="chat-users">
+            <button class="mr-3 chat-users btn btn-primary btn-sm">
                 Chat users
             </button>
+        {% endif %}
+        <div class="col-12">
+            <div class="add-member-block">
+            </div>
             <div hidden>
                 {% for member in chat.members %}
-                    <a href="{% url 'home' member.user.id %}">@{{ member.user.username }}</a>
+                    <a class="text-muted" href="{% url 'home' member.user.id %}">@{{ member.user.username }} </a>
                 {% endfor %}
-
             </div>
-        {% endif %}
+        </div>
+
 
     </div>
 
     <div class="scroll-area">
         {% if messages %}
-            <button type="button" class="load_href_1 btn btn-primary">Load prevision messages</button>
+            <div class="d-flex justify-content-center block shadow rounded mb-2">
+                <button type="button" class="load_href_1 btn btn-primary btn-sm">Load prevision messages</button>
+            </div>
+
         {% endif %}
 
         <div class="content">

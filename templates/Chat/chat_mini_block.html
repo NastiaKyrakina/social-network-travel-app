@@ -1,24 +1,35 @@
-<div class="chat-mini-block">
-<div class="chat-title" id='block-{{ chat.slug }}'>
-    <div class="col-4 p-0">
-        {% comment Блок фото%}
-{% if chat.image %}
-    <img src="{{ chat.image.url }}" class="img-fluid">
-{% else %}
-    {% load staticfiles %}
-    <img src="{% static 'images/DefaultChat.png' %}" class="img-fluid">
-{% endif %}
- {% endcomment %}
+{% load i18n %}
+<div class="chat-mini-block p-0">
+    <div class="chat-title" id='block-{{ chat.slug }}'>
+        <div class="block shadow rounded mb-2 row d-flex align-items-start py-1" style="cursor: pointer;">
+            <div class="col-4 px-1">
+                {% if chat.image %}
+                    <img src="{{ chat.image.url }}" class="img-fluid">
+                {% else %}
+                    {% load staticfiles %}
+                    <img src="{% static 'images/DefaultChat.png' %}" class="img-fluid">
+                {% endif %}
+            </div>
+
+            <div class="col-8 px-2">
+                <div>
+                    <strong>{{ chat.title }} {% if chat.user_new_message %}
+                        <span class="badge badge-primary">New</span> {% endif %} </strong>
+                </div>
+                <button class="delete-button btn btn-danger px-1 py-0" id="delete-{{ chat.slug }}" hidden>
+                    <small>{% trans 'Delete' %}</small>
+                </button>
+                {% if request.user.id == chat.creator %}
+                    <button class="edit-button btn btn-warning px-1 py-0" id="edit-{{ chat.slug }}" hidden>
+                        <small>{% trans 'Edit' %}</small>
+                    </button>
+                {% endif %}
+
+                {% if chat.last_message %}
+                    <p class="m-0">{{ chat.last_message | truncatechars:30 }}</p>
+                {% endif %}
+
+            </div>
+        </div>
     </div>
-    {{ chat.title }}
-    {% if chat.last_message %}
-        <p>{{ chat.last_message }}</p>
-    {% endif %}
-
-</div>
-
-    <button class="delete-button" id="delete-{{ chat.slug }}" hidden>Del</button>
-    {% if request.user.id == chat.creator %}
-        <button class="edit-button" id="edit-{{ chat.slug }}" hidden>Edit</button>
-    {% endif %}
 </div>

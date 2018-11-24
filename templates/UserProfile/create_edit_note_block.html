@@ -1,0 +1,15 @@
+{% load i18n %}
+<form action="{% url 'user_profile.note_create' %}" enctype="multipart/form-data" method="post"
+      class="form-post-edit">
+    {% csrf_token %}
+
+    <div class="">
+        <!--поле форми NoteForm-->
+        {{ form_note.text }}
+    </div>
+    <div class="col-3 pl-1">
+
+        <input class="btn btn-primary mb-2 w-100" type="submit" value="Save"/>
+    </div>
+
+</form>

@@ -1,4 +1,5 @@
-<form method="post" id="form-message" enctype='multipart/form-data' action="{% url 'create_message' %}">
+<form class="block shadow rounded mb-2" method="post" id="form-message" enctype='multipart/form-data'
+      action="{% url 'create_message' %}">
     {% csrf_token %}
 
     {% for error in errors_type %}
@@ -8,54 +9,56 @@
 
     {{ form_message.non_field_errors }}
 
-
-    <div class="fieldWrapper">
-            {{ form_message.text.errors }}
-            <label for="{{ form_message.text.id_for_label }}">Text:</label>
+    <div class="row">
+        <div class="col-9 pr-1">
             {{ form_message.text }}
-    </div>
-
-    <button class="btn btn-primary btn-sm dropdown-toggle w-100" type="button" data-toggle="dropdown"
+            {{ form_message.text.errors }}
+        </div>
+        <div class="col-3 pl-1">
+            <input class="btn btn-primary btn-sm w-100 mb-2" type="submit" value="Send"/>
+            <button class="btn btn-primary btn-sm dropdown-toggle w-100" type="button" data-toggle="dropdown"
             aria-haspopup="true" aria-expanded="false">
-        <i class="fas fa-plus"></i>
-        Add file
-    </button>
+                <i class="fas fa-plus"></i>
+                Add file
+            </button>
 
-    <div class="dropdown-menu p-0">
-        <!-- Image -->
-        <div class="file-upload">
-            <!--поле форми AttachmentForm-->
-            {{ form_attach.images }}
-            {{ form_attach.images_file }}
-            <label class="m-0 pl-3 bg-primary" for="id_images">Image</label>
-        </div>
-        <!-- Video -->
-        <div class="file-upload">
-            {{ form_attach.video }}
-            {{ form_attach.video_file }}
-            <label class="m-0 pl-3 bg-primary" for="id_video">Video</label>
-        </div>
-        <!-- Audio -->
-        <div class="file-upload">
-            {{ form_attach.audio }}
-            {{ form_attach.audio_file }}
-            <label class="m-0 pl-3 bg-primary" for="id_audio">Audio</label>
-        </div>
-        <!-- File -->
-        <div class="file-upload">
-            <!--поле форми AttachmentForm-->
-            {{ form_attach.files }}
-            {{ form_attach.files_file }}
-            <label class="m-0 pl-3 bg-primary" for="id_files">Another file</label>
+            <div class="dropdown-menu p-0">
+                <!-- Image -->
+                <div class="file-upload">
+                    <!--поле форми AttachmentForm-->
+                    {{ form_attach.images }}
+                    {{ form_attach.images_file }}
+                    <label class="m-0 pl-3 bg-primary" for="id_images">Image</label>
+                </div>
+                <!-- Video -->
+                <div class="file-upload">
+                    {{ form_attach.video }}
+                    {{ form_attach.video_file }}
+                    <label class="m-0 pl-3 bg-primary" for="id_video">Video</label>
+                </div>
+                <!-- Audio -->
+                <div class="file-upload">
+                    {{ form_attach.audio }}
+                    {{ form_attach.audio_file }}
+                    <label class="m-0 pl-3 bg-primary" for="id_audio">Audio</label>
+                </div>
+                <!-- File -->
+                <div class="file-upload">
+                    <!--поле форми AttachmentForm-->
+                    {{ form_attach.files }}
+                    {{ form_attach.files_file }}
+                    <label class="m-0 pl-3 bg-primary" for="id_files">Another file</label>
+                </div>
+            </div>
+
+            <div>
+                <label class="file-label file-list-image w-100 m-0"></label>
+                <label class="file-label file-list-video w-100 m-0"></label>
+                <label class="file-label file-list-audio w-100 m-0"></label>
+                <label class="file-label file-list-file w-100 m-0"></label>
+            </div>
+
         </div>
     </div>
 
-    <div>
-        <label class="file-label file-list-image w-100 m-0"></label>
-        <label class="file-label file-list-video w-100 m-0"></label>
-        <label class="file-label file-list-audio w-100 m-0"></label>
-        <label class="file-label file-list-file w-100 m-0"></label>
-    </div>
-
-    <input type="submit" value="Send"/>
 </form>

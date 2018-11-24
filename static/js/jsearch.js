@@ -126,7 +126,7 @@ $(document).ready(function () {
     CorrectDate();
 
     $('#form-multi-search').on('submit', function (e) {
-        console.log('submit');
+
         let urlParams = new URLSearchParams(window.location.search);
         $('#hide-text').attr('value', urlParams.get('text'));
         return;

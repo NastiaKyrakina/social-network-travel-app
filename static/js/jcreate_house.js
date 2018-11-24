@@ -32,6 +32,7 @@ function TextAreaCountChar() {
             $(".character-counter").show();
             $('#counter').text(100 - count);
         } else {
+            $('.js-about-error').attr('hidden', true);
             $(".character-counter").hide();
             $(".sucs-show").show();
         }
@@ -99,62 +100,89 @@ function OnlyLatOrKir(input_selector) {
 
         if (lat !== -1 && kir !== -1) {
             correct = false;
+            $('.js-city-error').attr('hidden', false);
+        } else {
+            $('.js-city-error').attr('hidden', true);
         }
+
 
     });
 
     return correct;
 }
 
+function get_selected_type() {
+    let type = $('#id_type option:selected').attr('value');
+    return type;
+}
+
+
 function AddressValidation() {
+    let error;
     $("input[name=address]").on('change', function (e) {
+        error = false;
+
         text = $(this).val();
         text_arr = text.split(',');
-        if (text_arr.length > 3) {
-            error = "Uncr";
-            console.log('err');
+
+        if (text_arr.length > 3 || text_arr.length < 2) {
+            error = true;
         } else {
 
             if (text_arr[0].length == 0) {
-                console.log('err0');
+                error = true;
             } else {
                 text_arr[0].trim();
                 reg = new RegExp('^[0-9A-Za-zА-Яа-яЇїІієЄЁё]+[\0-9A-Za-zА-Яа-яЇїІієЄЁё`ʼ-]*$');
-                console.log(text_arr[0].search(/[A-Za-zА-Яа-яіІєЄйЙїЇ]/));
-                if (reg.test(text_arr[0]) && text_arr[0].search(/[A-Za-zА-Яа-яіІєЄйЙїЇ]/) > -1) {
-                    console.log('val1');
+
+                if (reg.test(text_arr[0]) && text_arr[0].search(/[A-Za-zА-Яа-яіІєЄйЙїЇ]/) == -1) {
+                    error = true;
                 }
 
             }
             if (text_arr[1].length == 0) {
-                console.log('err1');
+                error = true;
             } else {
                 text_arr[1].trim();
                 reg = new RegExp('[0-9]{1,4}-*[0-9A-Za-zА-Яа-яЇїІієЄЁё]');
-                console.log('ww');
-                if (reg.test(text_arr[1])) {
-                    console.log('val2');
+
+                if (!reg.test(text_arr[1])) {
+                    error = true;
                 }
             }
-            if (text_arr[2] && text_arr[2].length == 0) {
-                console.log('del2');
+            if (get_selected_type() === 'AP' && !text_arr[2]) {
+                error = true;
+            } else {
+                if (text_arr[2]) {
+                    text_arr[2].trim();
+                    reg = new RegExp('[0-9]{1,4}-*[0-9A-Za-zА-Яа-яЇїІієЄЁё]');
+
+                    if (!reg.test(text_arr[2])) {
+                        error = true;
+                    }
+                }
+
             }
-
-
         }
 
+        if (error) {
+            $('.js-address-error').attr('hidden', false);
+            $('#address-pattern').text($(this).attr('title'));
+        } else {
+            $('.js-address-error').attr('hidden', true);
+        }
 
     });
 }
+
 
 function AddresTitle() {
     var address_input = $('#id_address');
 
     $('#id_type').on('click', function () {
 
-        let type = $(this).find('option:selected').attr('value');
-        console.log(type);
-        set_title();
+        let type = get_selected_type();
+
         if (type == 'AP') {
             address_input.attr('title', address_input.attr('full_title'));
         } else {
@@ -199,13 +227,24 @@ $(document).ready(function () {
 
     $('.house-form').submit(function (e) {
 
+
         id_country = GetIdCountry();
-        if (id_country !== undefined) {
-            $("input#id_country").val(id_country);
-            return;
+        if (id_country === undefined) {
+
+            e.preventDefault();
+            return false;
+        } else {
+            if ($(this).find('#id_about').val().length < 100) {
+                $(this).find('.js-about-error').attr('hidden', false);
+                return false;
+            } else if (!OnlyLatOrKir) {
+                return false;
+            }
         }
-        e.preventDefault();
-        return false;
+        $("input#id_country").val(id_country);
+        return;
+
+
     });
 
 

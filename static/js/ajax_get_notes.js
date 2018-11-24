@@ -66,12 +66,16 @@ $(document).ready(function () {
 
         });
 
-    $(document).on('submit', '.note-form',
-        function SendFormAjax() {
-            var post_primary_key = $(this).attr('id').split('-')[1];
+    $(document).on('submit', '.form-post-edit',
+        function (e) {
+            console.log('in');
+            e.preventDefault();
+
+            var post_primary_key = $(this).closest('.note').attr('id').split('-')[1];
+            locate = location.pathname.split('/')[1];
             $.ajax({
                 type: $(this).attr('method'),
-                url: '/user/note/edit/' + post_primary_key + '/',
+                url: '/' + locate + '/user/note/edit/' + post_primary_key + '/',
                 data: $(this).serialize(),
                 context: this,
                 success: function (data) {

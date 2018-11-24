@@ -28,11 +28,15 @@ input.UncorrectValue {
 }
 
 .new-message {
-    background-color: #007bff;
-    color: #9fcdff;
+    background-color: #99caff;
+    color: #007bff;
     font-weight: bold;
 }
 
 .sucs-show {
     display: none;
+}
+
+.message-img img {
+    border-radius: 3px;
 }

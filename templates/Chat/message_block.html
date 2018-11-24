@@ -1,50 +1,66 @@
-<div class="message-block" id="message-{{ message.id }}">
-    <p class="message-date text-muted mx-2">
-        <small>{{ message.date| date:"d-m-Y H:i" }}</small>
-    </p>
-    {% if message.user == request.user or request.user.id == message.chat.creator %}
-        <button class="delete-mess-button" id="delete-mess-{{ message.id }}" hidden>Del</button>
-    {% endif %}
-    {% comment Фото пользователя%}
-    <div>
-        {% if message.user.userinfo.big_photo %}
-            <img src="{{ message.user.userinfo.big_photo.url }}" class="img-fluid">
-        {% else %}
-            {% load staticfiles %}
-        <img src="{% static 'images/DefaultAvatar.png' %}" class="img-fluid">
-        {% endif %}
-    </div>
-    {% endcomment %}
-    <p> From: {{ message.user.username }} </p>
-    <p> {{ message.text }} </p>
-    {% if message.has_files %}
-        <div class="message_img">
-        {% for image in message.get_images %}
-            <img src="{{ image.file.url }}" class="note-image col-12 img-fluid p-0"/>
-        {% endfor %}
-        </div>
-        <div class="message_video">
-            {% for video in message.get_video %}
-                <div class="embed-responsive embed-responsive-16by9">
-                    <video controls="controls" class="embed-responsive-item">
-                        <source src="{{ video.file.url }}">
-                    </video>
-                </div>
-            {% endfor %}
-    </div>
-        <div class="message_audio">
-            {% for audio in message.get_audio %}
-                <audio controls="controls" class="my-2">
-                    <source src="{{ audio.file.url }}">
-                </audio>
-            {% endfor %}
-        </div>
-        <div class="message_files">
-            {% for file in message.get_files %}
-                <a download="file.file.url" class="mx-2">{{ file.file.url }}</a>
-            {% endfor %}
-        </div>
+<div class="block message-block mb-2 shadow rounded" id="message-{{ message.id }}">
 
-    {% endif %}
+    <div class="row {% if message.user == request.user %} flex-row-reverse {% endif %}">
+        <div class="col-2 px-3">
+            <div class="message-img">
+                {% if message.user.userinfo.big_photo %}
+                    <img src="{{ message.user.userinfo.big_photo.url }}" class="img-fluid rounded px-1">
+                {% else %}
+                    {% load staticfiles %}
+                    <img src="{% static 'images/DefaultAvatar.png' %}" class="img-fluid rounded px-1">
+                {% endif %}
+            </div>
+        </div>
+        <div class="col-8 message px-0 row">
+            <div class="col-12">
+                {% if message.user == request.user or request.user.id == message.chat.creator %}
+                    <button class="delete-mess-button btn btn-sm btn-danger px-1 py-0" id="delete-mess-{{ message.id }}"
+                            hidden>
+                        <small>Delete</small>
+                    </button>
+                {% endif %}
+                <a class="{% if message.user == request.user %} float-right {% else %} float-left {% endif %}"
+                   href="{% url 'home' message.user.id %}">
+                    <strong>{{ message.user.first_name }} {{ message.user.last_name }}</strong>
+                    <small class="text-muted"> @{{ message.user.username }}</small>
+                </a>
+            </div>
+            <p class="col-12"> {{ message.text }} </p>
+            <div class="col-12">
+                {% if message.has_files %}
+                    <div class="message_img">
+                        {% for image in message.get_images %}
+                            <img src="{{ image.file.url }}" class="note-image col-12 img-fluid p-0"/>
+                        {% endfor %}
+                    </div>
+                    <div class="message_video">
+                        {% for video in message.get_video %}
+                            <div class="embed-responsive embed-responsive-16by9">
+                                <video controls="controls" class="embed-responsive-item">
+                                    <source src="{{ video.file.url }}">
+                                </video>
+                            </div>
+                        {% endfor %}
+                    </div>
+                    <div class="message_audio">
+                        {% for audio in message.get_audio %}
+                            <audio controls="controls" class="my-2">
+                                <source src="{{ audio.file.url }}">
+                            </audio>
+                        {% endfor %}
+                    </div>
+                    <div class="message_files">
+                        {% for file in message.get_files %}
+                            <a download="file.file.url" class="mx-2">{{ file.file.url }}</a>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+            <div class="col-12">
+                <small class="{% if message.user == request.user %} float-right {% else %} float-left {% endif %}"> {{ message.date| date:"d-m-Y H:i" }} </small>
+            </div>
+
+        </div>
+    </div>
 
 </div>

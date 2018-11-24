@@ -50,6 +50,7 @@ def create_conversation(request):
     from_house = path.find('/house/')
     from_user = path.find('/user/')
 
+    redirect = False
     if from_house > 0 or from_user > 0:
         redirect = True
     print(redirect)

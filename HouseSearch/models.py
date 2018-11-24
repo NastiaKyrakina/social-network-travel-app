@@ -76,8 +76,6 @@ class HouseManager(models.Manager):
             houses = houses.filter(date_public__gt=kwargs['public'])
         if 'active' in kwargs:
             houses = houses.filter(activity=True)
-        else:
-            houses = houses.filter(activity=False)
 
         return houses
 

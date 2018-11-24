@@ -6,7 +6,7 @@
     <div class="col-9"><h5>New note</h5></div>
     <div class="col-3 pl-1">
         <!--Якщо ведеться дневник-->
-        {% if current_diary %}
+        {% if current_diary and is_creating %}
             <button id="select-location-btn" class="locate-btn btn btn-primary w-100 py-0" type="button"
                     data-toggle="modal"
                     data-target="#locate-modal">

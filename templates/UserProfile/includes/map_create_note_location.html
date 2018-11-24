@@ -3,8 +3,22 @@
 {% block js %}
     <script type="text/javascript">
 
+        var lat, lng;
+        navigator.geolocation.getCurrentPosition(function (position) {
+            // Текущие координаты.
+            window.lat = position.coords.latitude;
+            window.lng = position.coords.longitude;
+
+        });
+
         $('#select-location-btn').click(function () {
-            var centerOfMap = new google.maps.LatLng(52.357971, -6.516758);
+
+            if (lat === undefined || lng === undefined) {
+                lat = 52.357971;
+                lng = -6.516758;
+
+            }
+            var centerOfMap = new google.maps.LatLng(lat, lng);
             map = new google.maps.Map(document.getElementById('create_map'), {
                 center: centerOfMap,
                 zoom: 7

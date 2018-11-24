@@ -1,12 +1,13 @@
 {% extends "base.html" %}
-
+{% load i18n %}
 {% block title %}User Registration{% endblock %}
 
 {% block head %}User Registration{% endblock %}
 
 {% block content %}
+
     <div class="row justify-content-center">
-        <form method="post" class="col-5 form-group" action="">
+        <form method="post" class="col-5 form-group reg-form" action="">
 
             <div class="auth-header block block-header">
                 <h4 class="pl-3 mb-1">Registration</h4>
@@ -15,39 +16,96 @@
             <div class="auth-body block p-3">
                 {% csrf_token %}
 
+                {% for error in form.non_field_errors %}
+                    <div class="alert alert-danger pl-2 p-0">
+                        <small>
+                            { error }}
+                        </small>
+                    </div>
+                {% endfor %}
                 <div class="row">
                     <div class="col-5 pr-1">
                         <label for="id_first_name">First name</label>
-                        <input id="id_first_name" type="text" name="first_name" class="form-control mb-2"
-                               placeholder="First name">
+                        {{ form.first_name }}
                     </div>
 
                     <div class="col-7 pl-1">
                         <label for="id_last_name">Last name</label>
-                        <input id="id_last_name" type="text" name="last_name" class="form-control mb-2"
-                               placeholder="Last name">
+                        {{ form.last_name }}
                     </div>
                 </div>
+                <div class="row">
+                    <div class="col-5 pr-1">
+                        {% for error in form.first_name.errors %}
+                            <div class="alert alert-danger pl-2 p-0">
+                                <small>
+                                    {{ error }}
+                                </small>
+                            </div>
+                        {% endfor %}
+                    </div>
+
+                    <div class="col-7 pl-1">
+                        {% for error in form.last_name.errors %}
+                            <div class="alert alert-danger pl-2 p-0">
+                                <small>
+                                    {{ error }}
+                                </small>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+
 
                 <label for="id_username">Username</label>
                 <div class="input-group mb-2">
                     <div class="input-group-prepend">
                         <div class="input-group-text">@</div>
                     </div>
-                    <input id="id_username" type="text" name="username" class="form-control" placeholder="Username">
+                    {{ form.username }}
                 </div>
+                {% for error in form.username.errors %}
+                    <div class="alert alert-danger pl-2 p-0">
+                        <small>
+                            {{ error }}
+                        </small>
+                </div>
+                {% endfor %}
 
 
                 <label for="id_email">Email</label>
-                <input id="id_email" type="email" name="email" class="form-control mb-2" placeholder="Email">
+                {{ form.email }}
+                {% for error in form.email.errors %}
+                    <div class="alert alert-danger pl-2 p-0">
+                        <small>
+                            {{ error }}
+                        </small>
+                    </div>
+                {% endfor %}
+
 
                 <label for="id_password1">Password</label>
-                <input id="id_password1" type="password" name="password1" class="form-control mb-2"
-                       placeholder="Password">
+                {{ form.password1 }}
+                {% for error in form.password1.errors %}
+                    <div class="alert alert-danger pl-2 p-0">
+                        <small>
+                            {{ error }}
+                        </small>
+                    </div>
+                {% endfor %}
 
                 <label for="id_password2">Confirm password</label>
-                <input id="id_password2" type="password" name="password2" class="form-control mb-2"
-                       placeholder="Confirm password">
+                {{ form.password2 }}
+                {% for error in form.password2.errors %}
+                    <div class="alert alert-danger pl-2 p-0">
+                        <small>
+                            {{ error }}
+                        </small>
+                    </div>
+                {% endfor %}
+
+
+
 
             </div> <!-- auth-body -->
 
@@ -57,4 +115,10 @@
 
         </form>
     </div> <!-- row -->
+{% endblock %}
+
+{% block script %}
+    {% load staticfiles %}
+    <script src="{% static 'js/correct_library.js' %}"></script>
+    <script src="{% static 'js/jregistration.js' %}"></script>
 {% endblock %}

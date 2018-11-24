@@ -1,7 +1,7 @@
 from django import forms
 import re
 from UserProfile.models import User, UserInfo, UserExt
-
+from django.utils.translation import ugettext_lazy as _
 
 class AuthorizationForm(forms.Form):
     username = forms.CharField(label='Username', max_length=30)
@@ -12,17 +12,47 @@ class AuthorizationForm(forms.Form):
 
 
 class RegistrationForm(forms.Form):
-    first_name = forms.CharField(label='Last name', max_length=30)
-    last_name = forms.CharField(label='First name', max_length=30)
-    username = forms.CharField(label='Username', max_length=30)
-    email = forms.EmailField(label='Email')
+    first_name = forms.CharField(label='First name',
+                                 max_length=30,
+                                 widget=forms.TextInput(attrs={
+                                     'class': "form-control mb-2",
+                                     'placeholder': "First name",
+                                 })
+
+                                 )
+    last_name = forms.CharField(label='Last name', max_length=30,
+                                widget=forms.TextInput(attrs={
+                                    'class': "form-control mb-2",
+                                    'placeholder': "Last name",
+                                }
+                                ))
+
+    username = forms.CharField(label='Username', max_length=30,
+                               widget=forms.TextInput(attrs={
+                                   'class': "form-control",
+                                   'placeholder': "Username",
+                               }
+                               )
+                               )
+    email = forms.EmailField(label='Email',
+                             widget=forms.EmailInput(attrs={
+                                 'class': "form-control mb-2",
+                                 'placeholder': "Email",
+                             })
+                             )
     password1 = forms.CharField(
         label='Passport',
-        widget=forms.PasswordInput()
+        widget=forms.PasswordInput(attrs={
+            'class': "form-control mb-2",
+            'placeholder': "Password",
+        })
     )
     password2 = forms.CharField(
         label='Passport (again)',
-        widget=forms.PasswordInput()
+        widget=forms.PasswordInput(attrs={
+            'class': "form-control mb-2",
+            'placeholder': "Confirm password",
+        })
     )
 
     def clean_password2(self):
@@ -31,17 +61,21 @@ class RegistrationForm(forms.Form):
             password2 = self.cleaned_data['password2']
             if password1 == password2:
                 return password2
-        return forms.ValidationError('Passwords do not match')
+        raise forms.ValidationError('Passwords do not match')
 
-    def clear_username(self):
+    def clean_username(self):
         username = self.cleaned_data['username']
-        if not re.search(r'^\w+$', username):
+        print(username)
+        if not re.search(r'^\w+[\w_-]*$', username):
             raise forms.ValidationError('Username can only contain alphanumeric characters and the underscore.')
         try:
             User.objects.get(username=username)
+
         except User.DoesNotExist:
+            print('get')
             return username
-        return forms.ValidationError('Username is already taken.')
+        print('under')
+        raise forms.ValidationError('Username is already taken.', code='invalid')
 
     def save(self):
 
@@ -70,39 +104,49 @@ class InformationForm(forms.ModelForm):
         widgets = {
             'gender': forms.RadioSelect(choices=GENDER_SELECT, attrs={
                 'class': 'custom-control-input',
+                'title': _('choice gender'),
             }),
             'birthday': forms.DateInput(attrs={
-                'class': 'form-control mb-2'
+                'class': 'form-control mb-2',
+                'title': _('enter your birthday: day.month.year'),
+                'placeholder': 'dd.mm.yyyy',
             }),
             'status': forms.Select(choices=UserInfo.STATUS_TYPE, attrs={
                 'class': 'custom-select',
+                'title': _("select you's status"),
             }),
             'phone_num': forms.TextInput(attrs={
-                'class': 'form-control mb-2'
+                'class': 'form-control mb-2',
+                'title': _("enter a phone number"),
             }),
             'country': forms.TextInput(attrs={
                 'name': 'country',
                 'required': True,
                 'class': 'form-control mb-2',
-                'placeholder': 'Country',
-                'title': 'Enter country for search',
+                'placeholder': _('Country'),
+                'title': _('Select country'),
                 'maxlength': 30,
                 'list': 'countries'
             }),
             'city': forms.TextInput(attrs={
                 'class': 'form-control mb-2',
+                'title': _('Select city'),
+                'placeholder': _('City'),
             }),
             'info': forms.Textarea(attrs=
             {
                 'maxlength': 1000,
                 'class': 'form-control mb-2',
                 'rows': '4',
+                'title': _('tell about yourself'),
+                'placeholder': _('Hello everyone!'),
             }),
             'big_photo': forms.FileInput(attrs=
             {
                 'class': 'invisible position-absolute',
                 'required': False,
-                'accept': 'image/*'
+                'accept': 'image/*',
+                'title': _('set main photo for you profile'),
             }),
        }
 

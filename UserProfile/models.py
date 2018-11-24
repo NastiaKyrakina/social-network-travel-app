@@ -42,10 +42,12 @@ class UserInfo(models.Model):
     TRAVEL = 'TR'
     SEARCH = 'SH'
     RENT_HOUSE = 'HH'
+    UNDF = 'UF'
     STATUS_TYPE = Choices(
         (TRAVEL, 'Travelling'),
         (SEARCH, 'Find house'),
         (RENT_HOUSE, 'Rent a house'),
+        (UNDF, 'Undefined'),
     )
 
     user = models.OneToOneField(User,
@@ -55,8 +57,7 @@ class UserInfo(models.Model):
     birthday = models.DateField(blank=True)
     status = models.CharField(max_length=2,
                               choices=STATUS_TYPE,
-                              blank=True,
-                              default=TRAVEL)
+                              default=UNDF)
 
     phone_num = models.CharField(max_length=12,
                                  blank=True)

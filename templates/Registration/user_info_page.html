@@ -52,28 +52,48 @@
                 </div>
                 <div class="col-4 px-1">
                     <label for="{{ form.phone_num.id_for_label }}">Phone number </label>
-                    (<span id="phone-code">000</span>) {{ form.phone_num }}
+                    (+<span id="phone-code">000</span>) {{ form.phone_num }}
                 </div>
 
                 {{ form.country.errors }}
                 {{ form.city.errors }}
                 {{ form.phone_num.errors }}
             </div>
+            <div class="row">
+                <div class="col-4">
+                    <div hidden class="alert alert-danger pl-2 p-0 js-country-error">
+                        <small>{% trans "Please, select a valid country" %}</small>
+                    </div>
+                </div>
+                <div class="col-4">
+                    <div hidden class="alert alert-danger pl-2 p-0 js-city-error">
+                        <small>{% trans "Please, don't mix alphabets" %}</small>
+                    </div>
+                </div>
+            </div>
+
 
             <div class="row px-3">
                 <div class="col-4 px-1">
                     <label for="{{ form.birthday.id_for_label }}">Birthday</label>
                     {{ form.birthday }}
                 </div>
-                {{ form.birthday.errors }}
             </div>
-
+            <div hidden class="alert alert-danger pl-2 p-0 js-birth-error">
+                <small>{% trans "Please, enter a valid date: dd.mm.yyyy" %}</small>
+            </div>
+            <div hidden class="alert alert-danger pl-2 p-0 js-birth-error-diap">
+                <small>
+                    {% trans "Please, enter a date between 01.01.1900 and today" %}
+                </small>
+            </div>
 
             <div class="col-12 px-1">
                 {{ form.info.errors }}
                 <label for="{{ form.info.id_for_label }}">Info:</label>
                 {{ form.info }}
             </div>
+
 
             <div class="row">
                 <div class="col-3 file-upload col-3">
@@ -83,7 +103,7 @@
                            for="{{ form.big_photo.id_for_label }}">{% trans 'Set preview' %}</label>
                 </div>
                 <div class="col-4">
-                    <span id="output"><img class="img-fluid" title="ttt"
+                    <span id="output"><img class="img-fluid" title="you image"
                                            src="{{ user.userinfo.get_photo }}"></span>
                 </div>
                 {{ form.big_photo.errors }}
@@ -105,5 +125,7 @@
     {% load staticfiles %}
     <script type="text/javascript" src="{% static "js/load_image.js" %}"></script>
     <script src="{% static 'js/ajax_load_countries.js' %}"></script>
+    <script src="{% static 'js/correct_library.js' %}"></script>
     <script src="{% static 'js/jcreate_info.js' %}"></script>
+
 {% endblock %}

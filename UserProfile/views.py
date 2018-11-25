@@ -246,3 +246,64 @@ def delete_note(request):
 
 def about_page(request):
     return render(request, 'UserProfile/about_page.html')
+
+
+def edit_diary(request, diary_id):
+    diary = get_object_or_404(Diary, id=diary_id)
+    user = UserExt.objects.get(pk=request.user.pk)
+
+    if user != diary.user:
+        return Http404
+
+    if request.method == 'POST':
+        form_diary = DiaryForm(request.POST, request.FILES, instance=diary)
+
+        if form_diary.is_valid():
+            diary.title = form_diary.cleaned_data['title']
+            diary.about = form_diary.cleaned_data['about']
+            diary.date_finish = form_diary.cleaned_data['date_finish']
+            diary.photo = form_diary.cleaned_data['photo']
+            diary.save()
+
+            return HttpResponseRedirect('/user/diary/%s/' % diary.id)
+
+    else:
+        form_diary = DiaryForm(instance=diary)
+
+    return render(request,
+                  'UserProfile/create_diary.html',
+                  {'form_diary': form_diary,
+                   })
+
+
+def delete_diary(request):
+    if request.method == 'POST':
+        diary = Diary.objects.get(pk=int(QueryDict(request.body).get('diarypk')))
+
+        if request.user == diary.user:
+            diary.delete()
+            return JsonResponse({"locate": request.user.id})
+
+    return JsonResponse({"msg": "this isn't happening"})
+
+
+def change_diary(request):
+    status = 'fail'
+
+    if request.method == 'POST':
+        diary_id = request.POST['diarypk']
+        try:
+            diary = Diary.objects.get(id=diary_id)
+            if request.user == diary.user and not diary.is_finish():
+                if diary.is_active():
+                    diary.status = Diary.FROZEN
+                else:
+                    diary.status = Diary.ACTIVE
+
+                status = diary.status
+
+                diary.save()
+
+        except Diary.DoesNotExist:
+            status = 'fail'
+    return JsonResponse({'status': status})

@@ -4,6 +4,9 @@ from UserProfile import views
 urlpatterns = [
 
     path('diary/create/', views.create_diary, name='user_profile.diary_create'),
+    path('diary/edit/<int:diary_id>/', views.edit_diary, name='user_profile.diary_edit'),
+    path('diary/delete/', views.delete_diary, name='user_profile.diary_delete'),
+    path('diary/change/status/', views.change_diary, name='user_profile.diary_change'),
     path('diary/<int:diary_id>/', views.diary_page, name='user_profile.diary_page'),
     path('diary/<int:diary_id>/diary_markers', views.diary_markers, name='user_profile.diary_markers'),
     path('note/create/', views.note_create_page, name='user_profile.note_create'),

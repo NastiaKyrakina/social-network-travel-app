@@ -9,7 +9,7 @@
         <span class="text-right -pull-right rate-stars text-primary" count="{{ house.rating|floatformat:0 }}"></span>
         <span>{{ house.rating|floatformat }}</span>
         <small class="text-muted">{% trans 'by' %} <a
-                href="{% url 'home' house.owner.id %}">@ {{ house.owner.username }}</small>
+                href="{% url 'home' house.owner.id %}">@{{ house.owner.username }}</a></small>
     </div>
 
     {% if house.main_image %}

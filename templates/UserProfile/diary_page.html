@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-
+{% load i18n %}
 {% block title %}{{ diary.title }}{% endblock %}
 
 {% block content %}
@@ -43,13 +43,18 @@
                     <p class="m-1"><strong>Date start:</strong> {{ diary.date_start }} </p>
                     <p class="m-1"><strong>Date finish:</strong> {{ diary.date_finish }} </p>
                     <p class="m-1"><strong>Status:</strong>
-                        {% if diary.is_active %}
-                            <span class="text-success">Active</span>
-                        {% elif diary.is_frozen %}
-                            <span class="text-info">Frozen</span>
-                        {% else %}
-                            <span class="text-secondary">Finished</span>
-                        {% endif %}
+                        <span class="diary-status">
+                            {% if diary.is_active %}
+                                <span class="text-success">Active</span>
+                                <span hidden class="text-info">Frozen</span>
+
+                            {% elif diary.is_frozen %}
+                                <span class="text-info">Frozen</span>
+                                <span hidden class="text-success">Active</span>
+                            {% else %}
+                                <span class="text-secondary">Finished</span>
+                            {% endif %}
+                        </span>
                     </p>
 
                 </div>
@@ -63,6 +68,38 @@
 
             <div class="map-block block">
                 {% include 'UserProfile/includes/map_diary_page.html' %}
+            </div>
+
+            <div class="block block-footer d-flex justify-content-center">
+                {% if request.user == diary.user %}
+                    <form>
+                        <button type="button"
+                                class="delete-element btn btn-danger ml-2" id="delete-element-{{ diary.pk }}"
+                                formaction="{% url 'user_profile.diary_delete' %}">
+                            {% trans 'Delete' %}
+                        </button>
+                        <button type="button" formaction="{% url 'user_profile.diary_edit' diary.id %}"
+                                class="btn btn-warning ml-2" id="edit-element-{{ diary.pk }}">
+                            {% trans 'Edit' %}
+                        </button>
+
+                        {% if not diary.is_finish %}
+                            <button type="button" formaction="{% url 'user_profile.diary_change' %}"
+                                    class="btn btn-info ml-2" id="change-element-{{ diary.pk }}">
+                                {% trans 'Change Status to' %}
+                                <span class="button-status">
+                        {% if diary.is_active %} {% trans 'frozen' %}
+                        {% else %}
+                            {% trans 'active' %}
+                        {% endif %}
+                    </span>
+                            </button>
+                        {% endif %}
+
+                    </form>
+
+
+                {% endif %}
             </div>
 
             <div class="row d-flex justify-content-center p-0">
@@ -113,6 +150,7 @@
     {% load staticfiles %}
     <script src="{% static '/js/js.cookie.js' %}"></script>
     <script src="{% static '/js/ajax_csrf.js' %}"></script>
+    <script src="{% static '/js/jdiary.js' %}"></script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCJPcRk7BvJ-3SzCmd_culJXrMUJJn7xBY&callback=initMap"
             async defer></script>
 

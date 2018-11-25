@@ -189,6 +189,9 @@ class Diary(models.Model):
     def is_frozen(self):
         return self.status == Diary.FROZEN
 
+    def is_finish(self):
+        return self.status == Diary.FINISH
+
     def get_absolute_url(self):
         return reverse('user_profile.diary_page', args=[str(self.id)])
 

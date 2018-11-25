@@ -1,3 +1,5 @@
+{% load i18n %}
+<div class="notes-list">
 {% if notes %}
 
     {% for note in notes %}
@@ -5,9 +7,9 @@
     {% endfor %}
 
 {% else %}
-    <div class="block text-center">You have any note yet :(</div>
+    <div class="block text-center">{% trans 'You have any note yet' %} :(</div>
 {% endif %}
-
+</div>
 {% block js %}
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCJPcRk7BvJ-3SzCmd_culJXrMUJJn7xBY&callback=initMap"
             async defer></script>

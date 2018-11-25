@@ -39,7 +39,7 @@ function RateSend(house_id) {
 function LoadRateForm() {
     var house_primary_key = $('[id^=house-element-]').attr('id').split('-')[2];
     $('#rate-add').load('/house/rate/', function () {
-        //робота з додаванням постів тількі після завантаження блока
+
         RateSend(house_primary_key);
     });
     return false;

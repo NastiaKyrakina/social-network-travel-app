@@ -1,3 +1,4 @@
+{% load i18n %}
 <div class="house" id="house_element-{{ house.pk }}">
 </div> <!-- house-header -->
 
@@ -7,11 +8,13 @@
         <h3 class="mb-0"><strong>{{ house.title }}</strong></h3>
         <span class="text-right -pull-right rate-stars text-primary" count="{{ house.rating|floatformat:0 }}"></span>
         <span>{{ house.rating|floatformat }}</span>
-        <small class="text-muted">by @ {{ house.owner.username }}</small>
+        <small class="text-muted">{% trans 'by' %} <a
+                href="{% url 'home' house.owner.id %}">@ {{ house.owner.username }}</small>
     </div>
 
     {% if house.main_image %}
-        <img src="{{ house.main_image }}" class="house-image card-img pr-1 col-4 h-100 align-self-center"/>
+        <img src="{{ house.main_image }}" alt='house photo'
+             class="house-image card-img pr-1 col-4 h-100 align-self-center"/>
     {% else %}
         {% load staticfiles %}
         <img src="{% static 'images/DefaultHouse.png' %}"
@@ -20,15 +23,17 @@
 
     <div class="card-body col-8 row p-1">
         <div class="col-9">
-            <p class="m-1"><strong>Type:</strong> {{ house.get_type_display }}</p>
-            <p class="m-1"><strong>Price:</strong> {{ house.price }} $ / day</p>
-            <p class="m-1"><strong>Address:</strong> {{ house.country.name }}, {{ house.city }}, {{ house.address }}</p>
-            <p class="m-1"><strong>Rooms:</strong> {{ house.rooms }}</p>
-            <p class="m-1"><strong>Sleeper place:</strong> {{ house.sleeper }}</p>
-            <p class="m-1"><strong>Published:</strong> {{ house.date_public| date:"d-m-Y" }}</p>
+            <p class="m-1"><strong>{% trans 'Type' %}:</strong> {{ house.get_type_display }}</p>
+            <p class="m-1"><strong>{% trans 'Price' %}:</strong> {{ house.price }} $ / day</p>
+            <p class="m-1">
+                <strong>{% trans 'Address' %}:</strong> {{ house.country.name }}, {{ house.city }}, {{ house.address }}
+            </p>
+            <p class="m-1"><strong>{% trans 'Rooms' %}:</strong> {{ house.rooms }}</p>
+            <p class="m-1"><strong>{% trans 'Sleeper place' %}:</strong> {{ house.sleeper }}</p>
+            <p class="m-1"><strong>{% trans 'Published' %}:</strong> {{ house.date_public| date:"d-m-Y" }}</p>
         </div>
         <div class="col-3 d-flex align-items-end justify-content-end">
-            <a href="/house/{{ house.pk }}" class="btn btn-primary">Open</a>
+            <a href="/house/{{ house.pk }}" class="btn btn-primary">{% trans 'Open' %}</a>
         </div>
     </div>
 </div>

@@ -4,7 +4,7 @@
     {% csrf_token %}
     {% load i18n %}
     <div class="chat-edit-header block block rounded">
-        <h4 class="pl-3 mb-1">New Chat</h4>
+        <h4 class="pl-3 mb-1">{% trans 'New Chat' %}</h4>
     </div> <!-- house-edit-header -->
 
     <div class="chat-edit-body block rounded p-3">
@@ -17,7 +17,7 @@
             <div class="ErrorMessage">{{ error }}</div>
         {% endfor %}
 
-        <label class="pl-2 mb-0" for="id_name">Title</label>
+        <label class="pl-2 mb-0" for="id_name">{% trans 'Title' %}</label>
         {{ chat_form.name }}
 
         {% for error in chat_form.type.errors %}
@@ -53,9 +53,9 @@
 
     <div class="chat-edit-footer block rounded d-flex justify-content-center">
         {% if is_creating %}
-            <input type="submit" class="btn btn-primary py-1" value="Create"/>
+            <input type="submit" class="btn btn-primary py-1" value="{% trans 'Create' %}"/>
         {% else %}
-            <input type="submit" class="btn btn-warning py-1" value="Edit"/>
+            <input type="submit" class="btn btn-warning py-1" value="{% trans 'Edit' %}"/>
         {% endif %}
     </div> <!-- house-edit-footer -->
 

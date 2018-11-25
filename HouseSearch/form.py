@@ -128,17 +128,6 @@ class HouseForm(forms.ModelForm):
         return house
 
 
-'''  def clean_country(self):
-        country_name = self.cleaned_data['country']
-        print(country_name)
-        try:
-            country = Country.objects.get(name=country_name)
-            return country.id
-        except Country.DoesNotExist:
-            raise forms.ValidationError("Noname country")
-        return country.id
-'''
-
 class PhotoForm(forms.ModelForm):
     class Meta:
         model = HousePhoto
@@ -162,8 +151,8 @@ class SearchHousesForm(forms.Form):
         widget=forms.TextInput(attrs={
             'name': 'country',
             'required': False,
-            'placeholder': 'Country',
-            'title': 'Choice country for search',
+            'placeholder': _('Country'),
+            'title': _('Choice country for search'),
             'maxlength': 30,
             'list': 'countries',
             'class': 'form-control mb-2'
@@ -175,8 +164,8 @@ class SearchHousesForm(forms.Form):
         widget=forms.TextInput(attrs={
             'name': 'city',
             'required': False,
-            'placeholder': 'City',
-            'title': 'Enter city name for search',
+            'placeholder': _('City'),
+            'title': _('Enter city name for search'),
             'maxlength': 40,
             'class': 'form-control mb-2'
         })
@@ -189,7 +178,7 @@ class SearchHousesForm(forms.Form):
             'name': 'type',
             'required': False,
             'checked': True,
-            'title': 'Choice house-types for search',
+            'title': _('Choice house-types for search'),
         })
     )
 
@@ -202,7 +191,7 @@ class SearchHousesForm(forms.Form):
         widget=forms.NumberInput(attrs={
             'name': 'min_price',
             'required': False,
-            'title': 'Enter minimum price',
+            'title': _('Enter minimum price'),
             'min': 0,
             'max': req_max_price,
             'class': 'form-control'
@@ -215,7 +204,7 @@ class SearchHousesForm(forms.Form):
         widget=forms.NumberInput(attrs={
             'name': 'max_price',
             'required': False,
-            'title': 'Enter maximum price',
+            'title': _('Enter maximum price'),
             'min': 0,
             'max': req_max_price,
             'class': 'form-control'
@@ -227,7 +216,7 @@ class SearchHousesForm(forms.Form):
             'name': 'rooms',
             'required': False,
             'placeholder': '1',
-            'title': 'Enter rooms count',
+            'title': _('Enter rooms count'),
             'min': 1,
             'max': House.objects.aggregate(Max('rooms'))['rooms__max'],
             'class': 'form-control'
@@ -240,7 +229,7 @@ class SearchHousesForm(forms.Form):
             'name': 'sleeper',
             'required': False,
             'placeholder': '1',
-            'title': 'Enter sleeper count',
+            'title': _('Enter sleeper count'),
             'min': 1,
             'max': House.objects.aggregate(Max('sleeper'))['sleeper__max'],
             'class': 'form-control'
@@ -254,7 +243,7 @@ class SearchHousesForm(forms.Form):
         widget=forms.CheckboxInput(attrs={
             'name': 'active',
             'required': False,
-            'title': 'Search only acrive advertisement'
+            'title': _('Search only active advertisement')
         })
     )
     #
@@ -267,7 +256,7 @@ class SearchHousesForm(forms.Form):
 
             'name': 'public',
             'required': False,
-            'title': 'Search advertisement',
+                'title': _('Search advertisement populated after this date'),
             'class': 'custom-select col-3'
         })
 
@@ -289,7 +278,8 @@ class SearchHousesForm(forms.Form):
         widget=forms.Select(attrs={
             'name': 'sort',
             'required': False,
-            'class': 'select_sort pull-right text-right'
+            'class': 'select_sort pull-right text-right',
+            'title': _('Select sorting option'),
         })
     )
 
@@ -310,7 +300,7 @@ class RateForm(forms.ModelForm):
         widgets = {
             'comment': forms.Textarea(attrs={
                 'class': 'form-control mb-1',
-                'placeholder': 'Leave your comment here',
+                'placeholder': _('Leave your comment here'),
                 'rows': '3'
             }),
             'value': forms.NumberInput(attrs={

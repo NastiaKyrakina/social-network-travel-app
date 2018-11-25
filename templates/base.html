@@ -40,7 +40,7 @@
         <!-- Navbar -->
         <nav class="navbar navbar-expand navbar-dark bg-primary position-fixed w-100">
             <!-- Logo -->
-            <a class="navbar-brand ml-2" href="">
+            <a class="navbar-brand ml-2" href="{% url 'about_page' %}">
                 <i class="fas fa-map-marked-alt"></i>
                 Travel App
             </a>
@@ -129,8 +129,30 @@
         {% endblock %}
     </div> <!-- container-fluid -->
 
-{% block modal %}
-{% endblock %}
+<div class="main-footer text-secondary py-3 mt-5 mb-0 d-flex justify-content-start" style="background-color: #d1d7e0">
+    <div class="col-3">
+        <small>
+            {% blocktrans %}
+                <strong>© Travel App 2018</strong>
+                <br>
+                This web application is a project for the KRKM DNU College.
+            {% endblocktrans %}
+        </small>
+    </div>
+    <div class="col-3">
+        <small>
+            {% blocktrans %}
+                <strong>Creators</strong>
+                <br>
+                Nastya Kurakina - https://github.com/NastiaKyrakina
+                <br>
+                Maxim Sedykh - https://github.com/Steldev
+            {% endblocktrans %}
+        </small>
+
+    </div>
+
+</div>
 
 </body>
 

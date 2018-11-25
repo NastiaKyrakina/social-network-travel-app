@@ -24,6 +24,8 @@ from django.conf.urls.i18n import i18n_patterns
 from Authentication.views import ajax_load_countries
 from HouseSearch.views import house_search_page
 
+from UserProfile.views import about_page
+
 urlpatterns = i18n_patterns(
     path('', house_search_page),
     path('admin/', admin.site.urls),
@@ -33,6 +35,7 @@ urlpatterns = i18n_patterns(
     path('house/', include('HouseSearch.urls')),
     path('load_countries/', ajax_load_countries, name='load_countries'),
     path('i18n/', include('django.conf.urls.i18n')),
+    path('about/', about_page, name='about_page'),
 )
 
 

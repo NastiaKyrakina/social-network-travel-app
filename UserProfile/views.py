@@ -105,6 +105,7 @@ def load_notes(request, user_id):
 
         since = None
         if 'since' in request.GET:
+            print(request.GET['since'])
             since = datetime.strptime(request.GET['since'], '%d-%m-%Y %H:%M')
 
         notes = user.get_new_note_portion(since)
@@ -241,3 +242,7 @@ def delete_note(request):
             return JsonResponse(response_data)
 
     return JsonResponse({"msg": "this isn't happening"})
+
+
+def about_page(request):
+    return render(request, 'UserProfile/about_page.html')

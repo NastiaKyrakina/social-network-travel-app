@@ -86,7 +86,9 @@ class RegistrationForm(forms.Form):
             email=self.cleaned_data['email'],
             password=self.cleaned_data['password1']
         )
-
+        new_user.save()
+        new_user_info = UserInfo(user=new_user)
+        new_user_info.save()
         return new_user
 
 

@@ -1,6 +1,6 @@
 {% extends "base.html" %}
-
-{% block title %}{{ user.username }} | Profile{% endblock %}
+{% load i18n %}
+{% block title %}{{ user.username }} | {% trans 'Profile' %}{% endblock %}
 
 
 {% block content %}
@@ -29,8 +29,9 @@
                 {% include "UserProfile/includes/notes_list.html" %}
             </div>
 
+
             <div class="block block-footer d-flex justify-content-center">
-                <button type="button" class="load_href_1 btn btn-primary">Load prevision notes</button>
+                <button type="button" class="load_href_1 btn btn-primary">{% trans 'Load prevision notes' %}</button>
             </div>
 
 
@@ -41,6 +42,7 @@
         </div>
     </div> <!-- row -->
 {% endblock %}
+
 
 {% block script %}
 

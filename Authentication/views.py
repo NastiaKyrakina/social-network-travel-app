@@ -46,9 +46,8 @@ def registration_page(request):
     """регистрация"""
     if request.method == 'POST':
         form = RegistrationForm(request.POST)
-        print(form)
+
         if form.is_valid():
-            print('save')
             form.save()
             return HttpResponseRedirect('/reg/login/')
         else:

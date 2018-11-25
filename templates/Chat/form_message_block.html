@@ -1,3 +1,4 @@
+{% load i18n %}
 <form class="block shadow rounded mb-2" method="post" id="form-message" enctype='multipart/form-data'
       action="{% url 'create_message' %}">
     {% csrf_token %}
@@ -19,7 +20,7 @@
             <button class="btn btn-primary btn-sm dropdown-toggle w-100" type="button" data-toggle="dropdown"
             aria-haspopup="true" aria-expanded="false">
                 <i class="fas fa-plus"></i>
-                Add file
+                {% trans 'Add file' %}
             </button>
 
             <div class="dropdown-menu p-0">
@@ -28,26 +29,26 @@
                     <!--поле форми AttachmentForm-->
                     {{ form_attach.images }}
                     {{ form_attach.images_file }}
-                    <label class="m-0 pl-3 bg-primary" for="id_images">Image</label>
+                    <label class="m-0 pl-3 bg-primary" for="id_images">{% trans 'Image' %}</label>
                 </div>
                 <!-- Video -->
                 <div class="file-upload">
                     {{ form_attach.video }}
                     {{ form_attach.video_file }}
-                    <label class="m-0 pl-3 bg-primary" for="id_video">Video</label>
+                    <label class="m-0 pl-3 bg-primary" for="id_video">{% trans 'Video' %}</label>
                 </div>
                 <!-- Audio -->
                 <div class="file-upload">
                     {{ form_attach.audio }}
                     {{ form_attach.audio_file }}
-                    <label class="m-0 pl-3 bg-primary" for="id_audio">Audio</label>
+                    <label class="m-0 pl-3 bg-primary" for="id_audio">{% trans 'Audio' %}</label>
                 </div>
                 <!-- File -->
                 <div class="file-upload">
                     <!--поле форми AttachmentForm-->
                     {{ form_attach.files }}
                     {{ form_attach.files_file }}
-                    <label class="m-0 pl-3 bg-primary" for="id_files">Another file</label>
+                    <label class="m-0 pl-3 bg-primary" for="id_files">{% trans 'Another file' %}</label>
                 </div>
             </div>
 

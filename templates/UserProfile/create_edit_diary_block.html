@@ -26,36 +26,27 @@
             </div>
         {% endif %}
 
-        {% for error in form_diary.non_field_errors %}
-            <div class="alert alert-danger pl-2 p-0">
-                <small>
-                    {{ error }}
-                </small>
-            </div>
-        {% endfor %}
-
-        {% for error in form_diary.title.errors %}
-            <div class="alert alert-danger pl-2 p-0">
-                <small>
-                    {{ error }}
-                </small>
-            </div>
-        {% endfor %}
-
-
         <div class="row align-items-end">
             <div class="col-12">
                 <label class="pl-2 mb-0" for="id_title"> {% trans 'Title' %}</label>
                 {{ form_diary.title }}
+                {% for error in form_diary.title.errors %}
+                    <div class="alert alert-danger pl-2 p-0">
+                        <small>{{ error }}</small>
+                    </div>
+                {% endfor %}
             </div>
             <div class="col-12">
-                {{ form_diary.about.errors }}
                 <label class="pl-2 mb-0" for="id_about">{% trans 'Tell about this diary' %}</label>
                 {{ form_diary.about }}
+                {% for error in form_diary.about.errors %}
+                    <div class="alert alert-danger pl-2 p-0">
+                        <small>{{ error }}</small>
+                    </div>
+                {% endfor %}
             </div>
 
             <div class="col-6">
-                {{ form_diary.about.errors }}
                 <label class="pl-2 mb-0" for="id_date_finish">{% trans 'Diary finish date' %}</label>
                 {{ form_diary.date_finish }}
             </div>
@@ -70,9 +61,7 @@
             <div class="col-12">
                 {% for error in form_diary.date_finish.errors %}
                     <div class="alert alert-danger pl-2 p-0">
-                        <small>
-                            {{ error }}
-                        </small>
+                        <small>{{ error }}</small>
                     </div>
                 {% endfor %}
             </div>

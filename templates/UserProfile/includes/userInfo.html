@@ -1,18 +1,18 @@
 {% block content %}
-
+    {% load i18n %}
     <!-- Information block -->
     <div class="information-block">
         <h5 class="block block-header">
             {% if request.user == user %}
-                <a href="{% url 'info' %}">Information</a>
+                <a href="{% url 'info' %}">{% trans 'Information' %}</a>
             {% else %}
-                Information
+                {% trans 'Information' %}
             {% endif %}
         </h5>
         <div class="block block-footer">
 
             {% if user.userinfo.status %}
-                <p><i class="fas fa-user-tag"></i> Status: {{ user.userinfo.get_status_display }} </p>
+                <p><i class="fas fa-user-tag"></i> {% trans 'Status' %}: {{ user.userinfo.get_status_display }} </p>
             {% endif %}
 
             {% if user.userinfo.country %}
@@ -24,7 +24,7 @@
             {% endif %}
 
             {% if user.userinfo.birthday %}
-                <p><i class="fas fa-user"></i> Birthday: {{ user.userinfo.birthday|date:'j E' }}</p>
+                <p><i class="fas fa-user"></i> {% trans 'Birthday' %}: {{ user.userinfo.birthday|date:'j E' }}</p>
             {% endif %}
 
             {% if user.userinfo.phone_num %}

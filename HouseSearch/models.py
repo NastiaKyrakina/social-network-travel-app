@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from model_utils import Choices
 from UserProfile.models import Country
+from os import path
 
 
 from django.urls import reverse
@@ -166,6 +167,9 @@ class HousePhoto(models.Model):
 
     def __str__(self):
         return self.image.path
+
+    def get_filename(self):
+        return path.basename(self.image.name)
 
 
 class Rate(models.Model):

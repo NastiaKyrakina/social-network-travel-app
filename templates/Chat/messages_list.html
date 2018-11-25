@@ -1,7 +1,8 @@
+{% load i18n %}
 {% for message in messages reversed %}
     {% include 'Chat/message_block.html' %}
 {% empty %}
     <div class="text-muted m-2">
-        Empty Chat :(
+        {% trans 'Empty Chat ' %}:(
     </div>
 {% endfor %}

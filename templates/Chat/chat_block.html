@@ -1,16 +1,17 @@
+{% load i18n %}
 <div class="Chat" id="{{ chat.slug }}">
 
     <div class="header justify-content-end block shadow rounded mb-2">
         <h3 class="pl-2">{{ chat.name }}</h3>
         {% if creator %}
             <button class="mr-1 btn btn-primary btn-sm" id="add-member-{{ chat.slug }}">
-                Add members
+                {% trans 'Add members' %}
             </button>
         {% endif %}
 
         {% if chat.is_multi_chat %}
             <button class="mr-3 chat-users btn btn-primary btn-sm">
-                Chat users
+                {% trans 'Chat users' %}
             </button>
         {% endif %}
         <div class="col-12">
@@ -29,7 +30,8 @@
     <div class="scroll-area">
         {% if messages %}
             <div class="d-flex justify-content-center block shadow rounded mb-2">
-                <button type="button" class="load_href_1 btn btn-primary btn-sm">Load prevision messages</button>
+                <button type="button"
+                        class="load_href_1 btn btn-primary btn-sm">{% trans 'Load prevision messages' %}</button>
             </div>
 
         {% endif %}

@@ -1,7 +1,8 @@
+{% load i18n %}
 <span class="step-links d-flex justify-content-center">
     {% if houses.has_previous %}
         <a id='Back' href="?{{ request.META.QUERY_STRING }}&page={{ houses.previous_page_number }}">
-            <button class="btn btn-primary"><i class="fas fa-chevron-left"></i> Previous</button>
+            <button class="btn btn-primary"><i class="fas fa-chevron-left"></i> {% trans 'Previous' %}</button>
         </a>
     {% endif %}
     {% if houses.has_previous or houses.has_next %}
@@ -11,7 +12,7 @@
     {% endif %}
     {% if houses.has_next %}
         <a id='Next' href="?{{ request.META.QUERY_STRING }}&page={{ houses.next_page_number }}">
-            <button class="btn btn-primary">Next <i class="fas fa-chevron-right"></i></button>
+            <button class="btn btn-primary">{% trans 'Next' %} <i class="fas fa-chevron-right"></i></button>
         </a>
     {% endif %}
 </span>

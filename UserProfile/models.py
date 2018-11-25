@@ -54,7 +54,7 @@ class UserInfo(models.Model):
                                 unique=True,
                                 on_delete=models.CASCADE)
     gender = models.BooleanField(default=False)
-    birthday = models.DateField(blank=True)
+    birthday = models.DateField(blank=True, null=True)
     status = models.CharField(max_length=2,
                               choices=STATUS_TYPE,
                               default=UNDF)

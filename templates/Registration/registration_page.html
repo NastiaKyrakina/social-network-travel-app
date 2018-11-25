@@ -1,8 +1,8 @@
 {% extends "base.html" %}
 {% load i18n %}
-{% block title %}User Registration{% endblock %}
+{% block title %}{% trans 'User Registration' %}{% endblock %}
 
-{% block head %}User Registration{% endblock %}
+{% block head %}{% trans 'User Registration' %}{% endblock %}
 
 {% block content %}
 
@@ -10,7 +10,7 @@
         <form method="post" class="col-5 form-group reg-form" action="">
 
             <div class="auth-header block block-header">
-                <h4 class="pl-3 mb-1">Registration</h4>
+                <h4 class="pl-3 mb-1">{% trans 'Registration' %}</h4>
             </div> <!-- auth-header -->
 
             <div class="auth-body block p-3">
@@ -25,12 +25,12 @@
                 {% endfor %}
                 <div class="row">
                     <div class="col-5 pr-1">
-                        <label for="id_first_name">First name</label>
+                        <label for="id_first_name">{% trans 'First name' %}</label>
                         {{ form.first_name }}
                     </div>
 
                     <div class="col-7 pl-1">
-                        <label for="id_last_name">Last name</label>
+                        <label for="id_last_name">{% trans 'Last name' %}</label>
                         {{ form.last_name }}
                     </div>
                 </div>
@@ -57,7 +57,7 @@
                 </div>
 
 
-                <label for="id_username">Username</label>
+                <label for="id_username">{% trans 'Username' %}</label>
                 <div class="input-group mb-2">
                     <div class="input-group-prepend">
                         <div class="input-group-text">@</div>
@@ -73,7 +73,7 @@
                 {% endfor %}
 
 
-                <label for="id_email">Email</label>
+                <label for="id_email">{% trans 'Email' %}</label>
                 {{ form.email }}
                 {% for error in form.email.errors %}
                     <div class="alert alert-danger pl-2 p-0">
@@ -84,7 +84,7 @@
                 {% endfor %}
 
 
-                <label for="id_password1">Password</label>
+                <label for="id_password1">{% trans 'Password' %}</label>
                 {{ form.password1 }}
                 {% for error in form.password1.errors %}
                     <div class="alert alert-danger pl-2 p-0">
@@ -94,7 +94,7 @@
                     </div>
                 {% endfor %}
 
-                <label for="id_password2">Confirm password</label>
+                <label for="id_password2">{% trans 'Confirm password' %}</label>
                 {{ form.password2 }}
                 {% for error in form.password2.errors %}
                     <div class="alert alert-danger pl-2 p-0">
@@ -104,13 +104,10 @@
                     </div>
                 {% endfor %}
 
-
-
-
             </div> <!-- auth-body -->
 
             <div class="auth-footer block block-footer d-flex justify-content-center">
-                <input type="submit" class="btn btn-primary py-1" value="Sign in"/>
+                <input type="submit" class="btn btn-primary py-1" value="{% trans 'Sign in' %}"/>
             </div> <!-- auth-footer -->
 
         </form>

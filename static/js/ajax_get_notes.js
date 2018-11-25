@@ -125,8 +125,8 @@ $(document).ready(function () {
 
     $(".load_href_1").click(function () {
 
-        var qr = $(".user-posts >:last-child .note_date small").text();
-
+        var qr = $(".notes-list:last >:last-child .note_date small").text();
+        console.log(qr);
         $.ajax({
             type: 'GET',
             async: true,

@@ -16,42 +16,42 @@ class RegistrationForm(forms.Form):
                                  max_length=30,
                                  widget=forms.TextInput(attrs={
                                      'class': "form-control mb-2",
-                                     'placeholder': "First name",
+                                     'placeholder': _("First name")
                                  })
 
                                  )
     last_name = forms.CharField(label='Last name', max_length=30,
                                 widget=forms.TextInput(attrs={
                                     'class': "form-control mb-2",
-                                    'placeholder': "Last name",
+                                    'placeholder': _("Last name"),
                                 }
                                 ))
 
     username = forms.CharField(label='Username', max_length=30,
                                widget=forms.TextInput(attrs={
                                    'class': "form-control",
-                                   'placeholder': "Username",
+                                   'placeholder': _("Username"),
                                }
                                )
                                )
     email = forms.EmailField(label='Email',
                              widget=forms.EmailInput(attrs={
                                  'class': "form-control mb-2",
-                                 'placeholder': "Email",
+                                 'placeholder': _("Email"),
                              })
                              )
     password1 = forms.CharField(
         label='Passport',
         widget=forms.PasswordInput(attrs={
             'class': "form-control mb-2",
-            'placeholder': "Password",
+            'placeholder': _("Password"),
         })
     )
     password2 = forms.CharField(
         label='Passport (again)',
         widget=forms.PasswordInput(attrs={
             'class': "form-control mb-2",
-            'placeholder': "Confirm password",
+            'placeholder': _("Confirm password"),
         })
     )
 
@@ -61,13 +61,13 @@ class RegistrationForm(forms.Form):
             password2 = self.cleaned_data['password2']
             if password1 == password2:
                 return password2
-        raise forms.ValidationError('Passwords do not match')
+        raise forms.ValidationError(_('Passwords do not match'))
 
     def clean_username(self):
         username = self.cleaned_data['username']
         print(username)
         if not re.search(r'^\w+[\w_-]*$', username):
-            raise forms.ValidationError('Username can only contain alphanumeric characters and the underscore.')
+            raise forms.ValidationError(_('Username can only contain alphanumeric characters and the underscore.'))
         try:
             User.objects.get(username=username)
 
@@ -75,7 +75,7 @@ class RegistrationForm(forms.Form):
             print('get')
             return username
         print('under')
-        raise forms.ValidationError('Username is already taken.', code='invalid')
+        raise forms.ValidationError(_('Username is already taken.'), code='invalid')
 
     def save(self):
 

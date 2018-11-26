@@ -7,7 +7,7 @@
         <div class="col-10">
 
             <div class="search-header block block-header col-12">
-                <h3>{% trans 'Rental advertisement from' %}<a href="{% url 'home' user.id %}">{{ user }}</a></h3>
+                <h3>{% trans 'Rental advertisement from' %} <a href="{% url 'home' user.id %}">{{ user }}</a></h3>
             </div>
 
             {% include 'HouseSerch/includes/houses_list.html' %}

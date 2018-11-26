@@ -23,7 +23,7 @@
 
             <p class="pl-2 text-muted m-0">
                 <small>{% trans 'by' %} @{{ house.owner.username }}</small>
-                {% if request.user.username != house.owner.username %}
+                {% if request.user.username != house.owner.username and request.user.is_authenticated %}
                     <button class="btn-contact btn btn-info ml-2">{% trans 'Contact with owner' %}</button>
                     <div hidden>
                         {% include 'Chat/chat_member_form.html' %}

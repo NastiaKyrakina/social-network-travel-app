@@ -3,7 +3,7 @@ from django.urls import reverse
 from django.contrib.auth.models import User
 from model_utils import Choices
 from Lib import FFD
-
+from django.utils.translation import ugettext_lazy as _
 
 class UserExt(User):
     class Meta:
@@ -29,6 +29,9 @@ class UserExt(User):
     def has_diary(self):
         return self.diary_set.all().exists()
 
+    def has_adv(self):
+        return self.house_set.all().exists()
+
 
 class Country(models.Model):
     name = models.CharField(max_length=30)
@@ -37,6 +40,7 @@ class Country(models.Model):
     def __str__(self):
         return self.name
 
+
 class UserInfo(models.Model):
 
     TRAVEL = 'TR'
@@ -44,10 +48,10 @@ class UserInfo(models.Model):
     RENT_HOUSE = 'HH'
     UNDF = 'UF'
     STATUS_TYPE = Choices(
-        (TRAVEL, 'Travelling'),
-        (SEARCH, 'Find house'),
-        (RENT_HOUSE, 'Rent a house'),
-        (UNDF, 'Undefined'),
+        (TRAVEL, _('Travelling')),
+        (SEARCH, _('Find house')),
+        (RENT_HOUSE, _('Rent a house')),
+        (UNDF, _('Undefined')),
     )
 
     user = models.OneToOneField(User,

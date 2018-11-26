@@ -6,7 +6,7 @@ from UserProfile.models import UserExt, Country
 
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
-
+from django.utils.translation import ugettext as _
 
 
 def login_page(request):
@@ -23,9 +23,9 @@ def login_page(request):
                     login(request, user)
                     return HttpResponseRedirect('/user/%s' % user.pk)
                 else:
-                    errors += ["disabled account!"]
+                    errors += [_("disabled account!")]
             else:
-                errors += ["Invalid username or password!"]
+                errors += [_("Invalid username or password!")]
     else:
         form = AuthorizationForm()
 

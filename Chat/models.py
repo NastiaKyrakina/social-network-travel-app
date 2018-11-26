@@ -1,7 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from Lib import FFD
-
+from django.utils.translation import ugettext_lazy as _
 
 class ChatManager(models.Manager):
 
@@ -36,9 +36,9 @@ class Chat(models.Model):
     PUBLIC = 2
 
     TYPE_CHATS = [
-        (P2P, 'Talk'),
-        (PRIVATE, 'Private'),
-        (PUBLIC, 'Public'),
+        (P2P, _('Talk')),
+        (PRIVATE, _('Private')),
+        (PUBLIC, _('Public')),
     ]
 
     name = models.CharField(max_length=25, blank=True)
@@ -71,6 +71,7 @@ class Chat(models.Model):
             return self.image
         if self.chat_type == Chat.P2P:
             opponent = self.member_set.exclude(user=user).first()
+
             if opponent and opponent.user.userinfo:
                 return opponent.user.userinfo.big_photo
         return None

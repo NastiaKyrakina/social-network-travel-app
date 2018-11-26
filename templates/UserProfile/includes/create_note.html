@@ -10,7 +10,7 @@
             <button id="select-location-btn" class="locate-btn btn btn-primary w-100 py-0" type="button"
                     data-toggle="modal"
                     data-target="#locate-modal">
-                <i class="fas fa-map-marker-alt"></i> Locate
+                <i class="fas fa-map-marker-alt"></i> {% trans 'Locate' %}
             </button>
             <div class="map-modal modal fade" id="locate-modal" tabindex="-1" role="dialog" aria-hidden="true">
                 <div class="modal-dialog m-0" role="document">
@@ -51,7 +51,7 @@
 
     <div class="col-3 pl-1">
 
-        <input class="btn btn-primary mb-2 w-100" type="submit" value="Post"/>
+        <input class="btn btn-primary mb-2 w-100" type="submit" value="{% trans 'Post' %}"/>
 
         <div class="btn-group w-100">
 
@@ -70,7 +70,7 @@
                     <!--<input class="file invisible position-absolute" type="file" accept="image/*" id="id_images"
                                 multiple>
                 -->
-                    <label class="m-0 pl-3 bg-primary" for="id_images">Image</label>
+                    <label class="m-0 pl-3 bg-primary" for="id_images">{% trans 'Image' %}</label>
                 </div>
                 <!-- Video -->
                 <div class="file-upload">
@@ -78,7 +78,7 @@
                     <!--поле форми AttachmentForm-->
                     {{ form_attach.video }}
                     {{ form_attach.video_file }}
-                    <label class="m-0 pl-3 bg-primary" for="id_video">Video</label>
+                    <label class="m-0 pl-3 bg-primary" for="id_video">{% trans 'Video' %}</label>
                 </div>
                 <!-- Audio -->
                 <div class="file-upload">
@@ -90,7 +90,7 @@
                     <!--
                     <input class="file invisible position-absolute" type="file" accept="audio/*" id="id_audio" multiple>
                     -->
-                    <label class="m-0 pl-3 bg-primary" for="id_audio">Audio</label>
+                    <label class="m-0 pl-3 bg-primary" for="id_audio">{% trans 'Audio' %}</label>
 
                 </div>
                 <!-- File -->
@@ -99,7 +99,7 @@
                     {{ form_attach.files }}
                     {{ form_attach.files_file }}
 
-                    <label class="m-0 pl-3 bg-primary" for="id_files">Another file</label>
+                    <label class="m-0 pl-3 bg-primary" for="id_files">{% trans 'Another file' %}</label>
                 </div>
             </div>
         </div>

@@ -1,4 +1,5 @@
 from django import forms
+from django.utils.translation import ugettext_lazy as _
 
 from UserProfile.models import *
 
@@ -91,24 +92,24 @@ class DiaryForm(forms.ModelForm):
     def clean_title(self):
         title = self.cleaned_data['title']
         if len(title) > 100:
-            raise forms.ValidationError(('Title must be no longer than 100 characters'))
+            raise forms.ValidationError(_('Title must be no longer than 100 characters'))
         elif len(title) < 10:
-            raise forms.ValidationError(('Title must be longer than 10 characters.'))
+            raise forms.ValidationError(_('Title must be longer than 10 characters.'))
         return title
 
     def clean_date_finish(self):
         date_finish = self.cleaned_data['date_finish']
         if date_finish <= datetime.now().date():
-            raise forms.ValidationError(('Uncorrected diary finish date. Finish date must be later than start date.'),
+            raise forms.ValidationError(_('Uncorrected diary finish date. Finish date must be later than start date.'),
                                         code='uncorrect_diapazone')
         return date_finish
 
     def clean_about(self):
         about = self.cleaned_data['about']
         if len(about) > 1000:
-            raise forms.ValidationError(('Description must be no longer than 1000 characters'))
+            raise forms.ValidationError(_('Description must be no longer than 1000 characters'))
         elif len(about) < 100:
-            raise forms.ValidationError(('Description must be longer than 100 characters.'))
+            raise forms.ValidationError(_('Description must be longer than 100 characters.'))
         return about
 
     def save(self, user, *args, **kwargs):

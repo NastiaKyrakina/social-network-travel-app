@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-
+{% load i18n %}
 {% block title %}{{ user.username }} | Create post{% endblock %}
 {% block external %}
 
@@ -15,7 +15,7 @@
             {{ error }} <br/>
         {% endfor %}
         {{ form_note.as_p }}
-        <input type="submit" value="Edit"/>
+        <input type="submit" value="{% trans 'Edit' %}"/>
     </form>
 
 

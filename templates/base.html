@@ -61,14 +61,10 @@
                             {% endif %}
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{% url 'search_house' %}">{% trans 'Advert' %}</a>
-                        </li>
-                        <li class="nav-item">
                             <a class="nav-link" href="{% url 'add_house' %}">{% trans 'New advert' %}</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link"
-                               href="{% url 'users_house' request.user.id %}">{% trans 'My advert' %}</a>
+                            <a class="nav-link" href="{% url 'search_house' %}">{% trans 'Search house' %}</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="{% url 'chat.page' %}">{% trans 'Chats' %}</a>
@@ -88,14 +84,14 @@
                 <ul class="navbar-nav ml-auto">
                     {% if user.is_authenticated %}
                         <li class="nav-item">
-                            <a class="nav-link" href="/reg/logout/">Logout</a>
+                            <a class="nav-link" href="/reg/logout/">{% trans 'Logout' %}</a>
                         </li>
                     {% else %}
                         <li class="nav-item">
-                            <a class="nav-link" href="/reg/login/">Login</a>
+                            <a class="nav-link" href="/reg/login/">{% trans 'Login' %}</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="/reg/registration/">Sign in</a>
+                            <a class="nav-link" href="/reg/registration/">{% trans 'Sign in' %}</a>
                         </li>
                     {% endif %}
                     <li class="nav-item">
@@ -132,22 +128,22 @@
 <div class="main-footer text-secondary py-3 mt-5 mb-0 d-flex justify-content-start" style="background-color: #d1d7e0">
     <div class="col-3">
         <small>
-            {% blocktrans %}
+
                 <strong>© Travel App 2018</strong>
                 <br>
-                This web application is a project for the KRKM DNU College.
-            {% endblocktrans %}
+            {% trans 'This web application is a project for the KRKM DNU College.' %}
+
         </small>
     </div>
     <div class="col-3">
         <small>
-            {% blocktrans %}
-                <strong>Creators</strong>
+
+            <strong>{% trans 'Creators' %}</strong>
                 <br>
-                Nastya Kurakina - https://github.com/NastiaKyrakina
+            {% trans 'Nastya Kurakina' %} - https://github.com/NastiaKyrakina
                 <br>
-                Maxim Sedykh - https://github.com/Steldev
-            {% endblocktrans %}
+            {% trans 'Maxim Sedykh' %} - https://github.com/Steldev
+
         </small>
 
     </div>

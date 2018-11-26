@@ -146,12 +146,12 @@ function RemoveMember() {
 
 
 function RequaerUsers() {
-    console.log('rnp');
+
 
     $("button[id^=add-member-]").on('click', function () {
         slug = $(this).attr('id').split('-')[2];
         $(".add-member-block").load("add/members/" + slug, function () {
-            console.log('inp');
+
             LoadUsers();
             AddUsers();
 
@@ -177,14 +177,13 @@ function RequaerUsers() {
                         url: 'add/members/' + slug + "/",
                         data: form_memb,
                         success: function (data) {
+
+                            console.log(data);
                             if (data['status'] == 'success') {
-                                console.log(data);
-                                $(".chat-list").prepend(data['mini_chat']);
-                                $(".chat-title#block-" + data['slug']).click();
+
+                                $('.add-member-block').empty();
                             }
-
                         }
-
                     });
 
                 return false;

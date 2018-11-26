@@ -40,26 +40,26 @@
             </div>
             <div class="row justify-content-around">
                 <div class="shadow p-2 bg-white rounded col-4">
-                    <p class="m-1"><strong>Date start:</strong> {{ diary.date_start }} </p>
-                    <p class="m-1"><strong>Date finish:</strong> {{ diary.date_finish }} </p>
-                    <p class="m-1"><strong>Status:</strong>
+                    <p class="m-1"><strong>{% trans 'Date start' %}:</strong> {{ diary.date_start }} </p>
+                    <p class="m-1"><strong>{% trans 'Date finish' %}:</strong> {{ diary.date_finish }} </p>
+                    <p class="m-1"><strong>{% trans 'Status' %}:</strong>
                         <span class="diary-status">
                             {% if diary.is_active %}
-                                <span class="text-success">Active</span>
-                                <span hidden class="text-info">Frozen</span>
+                                <span class="text-success">{% trans 'Active' %}</span>
+                                <span hidden class="text-info">{% trans 'Frozen' %}</span>
 
                             {% elif diary.is_frozen %}
-                                <span class="text-info">Frozen</span>
-                                <span hidden class="text-success">Active</span>
+                                <span class="text-info">{% trans 'Frozen' %}</span>
+                                <span hidden class="text-success">{% trans 'Active' %}</span>
                             {% else %}
-                                <span class="text-secondary">Finished</span>
+                                <span class="text-secondary">{% trans 'Finished' %}</span>
                             {% endif %}
                         </span>
                     </p>
 
                 </div>
                 <div class="shadow p-2 bg-white rounded col-7">
-                    <h5>About</h5>
+                    <h5>{% trans 'About' %}</h5>
                     <p>{{ diary.about }}</p>
                 </div>
             </div>
@@ -114,22 +114,22 @@
                     <form>
                         <button type="button"
                                 class="delete-element btn btn-danger ml-2" id="delete-element-{{ diary.pk }}">
-                            Delete
+                            {% trans 'Delete' %}
                         </button>
                         <button type="button" formaction="/diary/edit/{{ diary.pk }}/"
                                 class="btn btn-warning ml-2" id="edit-element-{{ diary.pk }}">
-                            Edit
+                            {% trans 'Edit' %}
                         </button>
                     </form>
                     {% if diary.is_active or diary.is_frozen %}
                         <button id="finish-diary" class="btn btn-warning ml-2" data-toggle="modal"
                                 data-target="#myModal">
-                            Finish
+                            {% trans 'Finish' %}
                         </button>
                         {% if diary.is_active %}
-                            <span class="text-success">Active</span>
+                            <span class="text-success">{% trans 'Active' %}</span>
                         {% elif diary.is_frozen %}
-                            <button id="frozen-diary">Activate</button>
+                            <button id="frozen-diary">{% trans 'Activate' %}</button>
                         {% endif %}
                     {% endif %}
                 {% endif %}

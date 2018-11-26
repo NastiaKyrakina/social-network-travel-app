@@ -6,7 +6,7 @@
 {% block head %}{{ user.username }} | House{% endblock %}
 
 {% block content %}
-
-    <h2>Sorry, but you can't public more that 5 house advertisement</h2>
+    {% load i18n %}
+    <h2>{% trans "Sorry, but you can't public more that 5 house advertisement" %}</h2>
 
 {% endblock %}

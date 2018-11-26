@@ -2,7 +2,7 @@ from django.shortcuts import render, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect, Http404, JsonResponse, QueryDict, HttpRequest, HttpResponse
 from django.template.loader import render_to_string
-
+from django.utils.translation import ugettext as _
 from UserProfile.forms import *
 from UserProfile.models import UserExt, save_attach, Diary
 
@@ -149,7 +149,7 @@ def note_create_page(request):
         if form_note.is_valid():
             errors_file_type = (handle_uploaded_file(request.FILES))
             if not len(form_note.cleaned_data['text']) and not (len(request.FILES)):
-                errors_file_type.append('Empty post!')
+                errors_file_type.append(_('Empty post!'))
 
             if not errors_file_type:
                 new_note = form_note.save(commit=False)
@@ -179,12 +179,11 @@ def note_create_page(request):
                 return JsonResponse({'errors': errors_file_type})
 
     else:
-        print('nore')
+
         form_note = NoteForm()
         form_attach = AttachmentForm()
         form_marker = MarkerForm()
 
-    print('render')
     return render(request,
                   'UserProfile/includes/create_note.html',
                   {'form_note': form_note,
@@ -198,7 +197,6 @@ def note_create_page(request):
 
 @login_required
 def note_edit_page(request, note_id):
-    print('in')
     note = get_object_or_404(Note, id=note_id)
     if request.user != note.user:
         return Http404
@@ -223,7 +221,7 @@ def note_edit_page(request, note_id):
 
     data = {
         'form_note': form_note,
-            'note': note,
+        'note': note,
             }
 
     template = 'UserProfile/create_edit_note_block.html'

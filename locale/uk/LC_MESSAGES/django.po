@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-11-24 07:53+0000\n"
+"POT-Creation-Date: 2018-11-25 20:22+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -20,8 +20,121 @@ msgstr ""
 "100 > 14) ? 1 : n % 1 == 0 && (n % 10 ==0 || (n % 10 >=5 && n % 10 <=9) || "
 "(n % 100 >=11 && n % 100 <=14 )) ? 2: 3);\n"
 
-#: HouseSearch/form.py:23 templates/HouseSerch/create_edit_house_block.html:36
-#: templates/UserProfile/create_edit_diary_block.html:48
+#: Authentication/forms.py:19 templates/Registration/registration_page.html:28
+msgid "First name"
+msgstr "Ім'я"
+
+#: Authentication/forms.py:26 templates/Registration/registration_page.html:33
+msgid "Last name"
+msgstr "Прізвище"
+
+#: Authentication/forms.py:33 templates/Registration/authorization_page.html:19
+#: templates/Registration/authorization_page.html:25
+#: templates/Registration/registration_page.html:60
+msgid "Username"
+msgstr "Нікнейм"
+
+#: Authentication/forms.py:40 templates/Registration/registration_page.html:76
+msgid "Email"
+msgstr ""
+
+#: Authentication/forms.py:47 templates/Registration/authorization_page.html:28
+#: templates/Registration/authorization_page.html:30
+#: templates/Registration/registration_page.html:87
+msgid "Password"
+msgstr "Пароль"
+
+#: Authentication/forms.py:54 templates/Registration/registration_page.html:97
+msgid "Confirm password"
+msgstr "Півторіть пароль"
+
+#: Authentication/forms.py:64
+msgid "Passwords do not match"
+msgstr "Паролі не співпадають"
+
+#: Authentication/forms.py:70
+msgid "Username can only contain alphanumeric characters and the underscore."
+msgstr ""
+"Нікнейм може складатися тільки з символів англійского алфавіту, дефісу та "
+"нижнього підкреслення"
+
+#: Authentication/forms.py:78
+msgid "Username is already taken."
+msgstr "Цей нікнейм вже використовується"
+
+#: Authentication/forms.py:109
+msgid "choice gender"
+msgstr "оберіть стать"
+
+#: Authentication/forms.py:113
+msgid "enter your birthday: day.month.year"
+msgstr "введіть дату народження: день.місяць.рік"
+
+#: Authentication/forms.py:118
+msgid "select you's status"
+msgstr "оберіть свій статус"
+
+#: Authentication/forms.py:122
+msgid "enter a phone number"
+msgstr "введіть номер телефону"
+
+#: Authentication/forms.py:128 HouseSearch/form.py:32 HouseSearch/form.py:154
+#: templates/HouseSerch/create_edit_house_block.html:58
+#: templates/HouseSerch/multi_search_form.html:17
+#: templates/Registration/user_info_page.html:46
+msgid "Country"
+msgstr "Країна"
+
+#: Authentication/forms.py:129
+msgid "Select country"
+msgstr "Оберіть країну"
+
+#: Authentication/forms.py:135
+msgid "Select city"
+msgstr "Введіть місто"
+
+#: Authentication/forms.py:136 HouseSearch/form.py:41 HouseSearch/form.py:167
+#: templates/HouseSerch/create_edit_house_block.html:63
+#: templates/HouseSerch/multi_search_form.html:26
+#: templates/Registration/user_info_page.html:51
+msgid "City"
+msgstr "Місто"
+
+#: Authentication/forms.py:143
+msgid "tell about yourself"
+msgstr "Розкажить про себе"
+
+#: Authentication/forms.py:144
+msgid "Hello everyone!"
+msgstr "Привіт всім!"
+
+#: Authentication/forms.py:151
+msgid "set main photo for you profile"
+msgstr "встановіть фото профіля"
+
+#: Authentication/views.py:26
+msgid "disabled account!"
+msgstr "аккаунт не знайдено"
+
+#: Authentication/views.py:28
+msgid "Invalid username or password!"
+msgstr "Невірний нікнейм та/або пароль"
+
+#: Chat/models.py:39
+msgid "Talk"
+msgstr "Бесіда"
+
+#: Chat/models.py:40
+msgid "Private"
+msgstr "Приватний"
+
+#: Chat/models.py:41
+msgid "Public"
+msgstr "Публічний"
+
+#: HouseSearch/form.py:23 templates/Chat/chat_create_form.html:20
+#: templates/HouseSerch/create_edit_house_block.html:36
+#: templates/UserProfile/create_edit_diary_block.html:31
 msgid "Title"
 msgstr "Заголовок"
 
@@ -29,17 +142,9 @@ msgstr "Заголовок"
 msgid "Enter title of advertisement"
 msgstr "Введіть заголовок оголошення"
 
-#: HouseSearch/form.py:32 templates/HouseSerch/create_edit_house_block.html:58
-msgid "Country"
-msgstr "Країна"
-
 #: HouseSearch/form.py:33
 msgid "Select a country"
 msgstr "Оберіть країну"
-
-#: HouseSearch/form.py:41 templates/HouseSerch/create_edit_house_block.html:63
-msgid "City"
-msgstr "Місто"
 
 #: HouseSearch/form.py:42
 msgid "Enter city: only alphabet character valid"
@@ -57,7 +162,7 @@ msgstr "Введіть адресу: Назва вулиці, Номер дом�
 msgid "Enter address: Street name, House number"
 msgstr "Введіть адресу: Назва вулиці, Номер дому"
 
-#: HouseSearch/form.py:66
+#: HouseSearch/form.py:66 HouseSearch/form.py:219
 msgid "Enter rooms count"
 msgstr "Введіть кількість кімнат"
 
@@ -65,7 +170,7 @@ msgstr "Введіть кількість кімнат"
 msgid "Enter rental price per day"
 msgstr "Введіть вартість оренди за день"
 
-#: HouseSearch/form.py:84
+#: HouseSearch/form.py:84 HouseSearch/form.py:232
 msgid "Enter sleeper count"
 msgstr "Введіть кількість спальних місць"
 
@@ -74,8 +179,8 @@ msgid "Tell about house"
 msgstr "Розкажить про будинок"
 
 #: HouseSearch/form.py:94
-msgid "Розкажить про будинок..."
-msgstr ""
+msgid "Tell about house..."
+msgstr "Розкажить про житло..."
 
 #: HouseSearch/form.py:105
 #, python-format
@@ -92,71 +197,259 @@ msgstr "Некоректна кількість спальних місць. П�
 msgid "Uncorrected PRICE. Must be value from 1 to %s"
 msgstr "Некоректна вартість оренди. Повинно бути значення від 1 до %s"
 
-#: HouseSearch/models.py:14
+#: HouseSearch/form.py:155
+msgid "Choice country for search"
+msgstr "Оберіть країну для пошуку"
+
+#: HouseSearch/form.py:168
+msgid "Enter city name for search"
+msgstr "Введіть назву міста для пошуку"
+
+#: HouseSearch/form.py:181
+msgid "Choice house-types for search"
+msgstr "Оберіть тип бутинку для пошуку"
+
+#: HouseSearch/form.py:194
+msgid "Enter minimum price"
+msgstr "Введіть мінімальну вартість оренди"
+
+#: HouseSearch/form.py:207
+msgid "Enter maximum price"
+msgstr "Введіть максимальну вартість оренди"
+
+#: HouseSearch/form.py:246
+msgid "Search only active advertisement"
+msgstr "Шукати тільки активні оголошення"
+
+#: HouseSearch/form.py:259
+msgid "Search advertisement populated after this date"
+msgstr "Шукати оголошення, опубліковані після цієї дати"
+
+#: HouseSearch/form.py:282
+msgid "Select sorting option"
+msgstr "Обреріть тип сортування"
+
+#: HouseSearch/form.py:303
+msgid "Leave your comment here"
+msgstr "Опишить ваші враження щодо житла"
+
+#: HouseSearch/models.py:15
 msgid "Newest"
 msgstr "Новизною"
 
-#: HouseSearch/models.py:15
+#: HouseSearch/models.py:16
 msgid "Highest rated"
 msgstr "Рейтінгом"
 
-#: HouseSearch/models.py:16
+#: HouseSearch/models.py:17
 msgid "Price High-Low"
 msgstr "Спаданням вартості"
 
-#: HouseSearch/models.py:17
+#: HouseSearch/models.py:18
 msgid "Price Low-High"
 msgstr "Зростанням вартості"
 
-#: HouseSearch/models.py:111
+#: HouseSearch/models.py:110
 msgid "Private house"
 msgstr "Приватний будинок"
 
-#: HouseSearch/models.py:112
+#: HouseSearch/models.py:111
 msgid "Apartment"
 msgstr "Квартира"
 
-#: HouseSearch/models.py:113
+#: HouseSearch/models.py:112
 msgid "Villa"
 msgstr "Вілла"
 
-#: HouseSearch/models.py:114
+#: HouseSearch/models.py:113
 msgid "Bungalow"
 msgstr "Бунгало"
 
-#: HouseSearch/models.py:115
+#: HouseSearch/models.py:114
 msgid "Cottage"
 msgstr "Котедж"
 
-#: templates/Chat/chats_page.html:9
-msgid "Chats list"
-msgstr "Чати"
+#: HouseSearch/views.py:84
+msgid "Result: "
+msgstr "Результатів: "
 
-#: templates/Chat/chats_page.html:23
+#: HouseSearch/views.py:104
+msgid "No result :("
+msgstr "Не знайдено оголошеннь, що відповідають параметрам пошуку "
+
+#: Lib/FileFormats.py:43
+msgid "To many files"
+msgstr "Забагато файлов! Додавати можно не більше 10 файлів"
+
+#: Lib/FileFormats.py:47
+msgid "don`t support this file extension for image file"
+msgstr "непідтримуємий формат файлу"
+
+#: UserProfile/forms.py:95
+msgid "Title must be no longer than 100 characters"
+msgstr "Заголовок повинен буди не більше ніж 100 символів"
+
+#: UserProfile/forms.py:97
+msgid "Title must be longer than 10 characters."
+msgstr "Заголовок повинен містити як мінімум 10 символів"
+
+#: UserProfile/forms.py:103
+msgid ""
+"Uncorrected diary finish date. Finish date must be later than start date."
+msgstr ""
+"Некоректна дата завершення щоденника. Введіть дату більшу ніж дата початку"
+
+#: UserProfile/forms.py:110
+msgid "Description must be no longer than 1000 characters"
+msgstr "Опис щоденника повинен містити не більше ніж 1000 символів"
+
+#: UserProfile/forms.py:112
+msgid "Description must be longer than 100 characters."
+msgstr "Опис щоденника повинен містити як мінімум 10 символів"
+
+#: UserProfile/models.py:51
+msgid "Travelling"
+msgstr "У мандрах"
+
+#: UserProfile/models.py:52
+msgid "Find house"
+msgstr "Шукаю житло"
+
+#: UserProfile/models.py:53
+#, fuzzy
+#| msgid "Rate house"
+msgid "Rent a house"
+msgstr "Здаю житло"
+
+#: UserProfile/models.py:54
+msgid "Undefined"
+msgstr "Невизначений"
+
+#: UserProfile/views.py:152
+msgid "Empty post!"
+msgstr "Порожній пост!"
+
+#: templates/Chat/chat_block.html:8
+msgid "Add members"
+msgstr "Додати учасників"
+
+#: templates/Chat/chat_block.html:14
+msgid "Chat users"
+msgstr "Учасники чату"
+
+#: templates/Chat/chat_block.html:34
+msgid "Load prevision messages"
+msgstr "Завантажити попередні повідомлення"
+
+#: templates/Chat/chat_create_form.html:7 templates/Chat/chats_page.html:15
+msgid "New Chat"
+msgstr "Новий чат"
+
+#: templates/Chat/chat_create_form.html:42
+msgid "Chat image"
+msgstr "Зображення"
+
+#: templates/Chat/chat_create_form.html:56
+#: templates/HouseSerch/create_edit_house_block.html:200
+msgid "Create"
+msgstr "Додати"
+
+#: templates/Chat/chat_create_form.html:58
+#: templates/Chat/chat_mini_block.html:24
+#: templates/HouseSerch/create_edit_house_block.html:10
+#: templates/HouseSerch/house_page.html:101
+#: templates/UserProfile/diary_page.html:83
+#: templates/UserProfile/diary_page.html:121
+#: templates/UserProfile/edit_note.html:18
+msgid "Edit"
+msgstr "Редагувати"
+
+#: templates/Chat/chat_member_form.html:3
+msgid "Add members to chat"
+msgstr "Додати учасників до чату"
+
+#: templates/Chat/chat_member_form.html:14
+msgid "Memder(s)"
+msgstr "Учасник(и)"
+
+#: templates/Chat/chat_member_form.html:17
+msgid "Start conversation"
+msgstr "Почати приватну бесіду"
+
+#: templates/Chat/chat_member_form.html:20
+msgid "Add"
+msgstr "Додати"
+
+#: templates/Chat/chat_member_form.html:21
+msgid "Request"
+msgstr "Запросити"
+
+#: templates/Chat/chat_mini_block.html:20
+#: templates/HouseSerch/house_page.html:97
+#: templates/UserProfile/diary_page.html:79
+#: templates/UserProfile/diary_page.html:117
+#: venv/Lib/site-packages/django/forms/formsets.py:375
+msgid "Delete"
+msgstr "Видалити"
+
+#: templates/Chat/chats_page.html:18
+msgid "New conversation"
+msgstr "Почати приватну бесіду"
+
+#: templates/Chat/chats_page.html:25
 msgid "You haven't any chats"
 msgstr "Ви не маєте жодного чату"
 
+#: templates/Chat/form_message_block.html:23
+msgid "Add file"
+msgstr "Додати файли"
+
+#: templates/Chat/form_message_block.html:32
+#: templates/UserProfile/includes/create_note.html:73
+#: venv/Lib/site-packages/django/db/models/fields/files.py:360
+msgid "Image"
+msgstr "Зображення"
+
+#: templates/Chat/form_message_block.html:38
+#: templates/UserProfile/includes/create_note.html:81
+msgid "Video"
+msgstr "Відео"
+
+#: templates/Chat/form_message_block.html:44
+#: templates/UserProfile/includes/create_note.html:93
+msgid "Audio"
+msgstr "Аудіо"
+
+#: templates/Chat/form_message_block.html:51
+#: templates/UserProfile/includes/create_note.html:102
+msgid "Another file"
+msgstr "Інше"
+
+#: templates/Chat/messages_list.html:6
+msgid "Empty Chat "
+msgstr "Порожній чат"
+
 #: templates/HouseSerch/create_edit_house_block.html:8
 msgid "Сreate"
-msgstr "Створення"
-
-#: templates/HouseSerch/create_edit_house_block.html:10
-msgid "Edit"
-msgstr "Редагування"
+msgstr "Створити"
 
 #: templates/HouseSerch/create_edit_house_block.html:13
 msgid "announcement"
 msgstr "оголошення"
 
 #: templates/HouseSerch/create_edit_house_block.html:70
+#: templates/Registration/user_info_page.html:66
 msgid "Please, select a valid country"
 msgstr "Будь-ласка, оберіть існуючу країну"
 
 #: templates/HouseSerch/create_edit_house_block.html:75
+#: templates/Registration/user_info_page.html:71
 msgid "Please, don't mix alphabets"
 msgstr "Будь-ласка, не змішуйте алфавіти"
 
 #: templates/HouseSerch/create_edit_house_block.html:86
+#: templates/HouseSerch/house_page.html:52
+#: templates/HouseSerch/includes/home_block.html:29
 msgid "Address"
 msgstr "Адреса"
 
@@ -169,10 +462,15 @@ msgid "Type of house"
 msgstr "Тип будинку"
 
 #: templates/HouseSerch/create_edit_house_block.html:114
+#: templates/HouseSerch/house_page.html:54
+#: templates/HouseSerch/includes/home_block.html:31
+#: templates/HouseSerch/multi_search_form.html:86
 msgid "Rooms"
 msgstr "Кімнат"
 
 #: templates/HouseSerch/create_edit_house_block.html:119
+#: templates/HouseSerch/house_page.html:55
+#: templates/HouseSerch/includes/home_block.html:32
 msgid "Sleeper place"
 msgstr "Спальних місць"
 
@@ -181,10 +479,17 @@ msgid "Rental price per day"
 msgstr "Вартість оренди за день"
 
 #: templates/HouseSerch/create_edit_house_block.html:139
+#: templates/HouseSerch/house_page.html:45
+#: templates/UserProfile/diary_page.html:48
+#: templates/UserProfile/diary_page.html:53
+#: templates/UserProfile/diary_page.html:130
+#: templates/UserProfile/includes/diary_block.html:26
 msgid "Active"
 msgstr "Активне"
 
 #: templates/HouseSerch/create_edit_house_block.html:151
+#: templates/HouseSerch/house_page.html:58
+#: templates/UserProfile/diary_page.html:62
 msgid "About"
 msgstr "Опис"
 
@@ -208,22 +513,269 @@ msgstr "виконано"
 msgid "Set images"
 msgstr "Зображення"
 
-#: templates/HouseSerch/create_edit_house_block.html:200
-msgid "Create"
-msgstr "Створити"
-
 #: templates/HouseSerch/create_edit_house_block.html:202
 msgid "Save"
 msgstr "Зберегти"
 
-#: templates/Registration/user_info_page.html:12
+#: templates/HouseSerch/house_page.html:25
+#: templates/HouseSerch/includes/home_block.html:11
+msgid "by"
+msgstr "за"
+
+#: templates/HouseSerch/house_page.html:27
+msgid "Contact with owner"
+msgstr "Зв'язатися з власником"
+
+#: templates/HouseSerch/house_page.html:39
+#: templates/HouseSerch/includes/home_block.html:26
+msgid "Type"
+msgstr "Тип"
+
+#: templates/HouseSerch/house_page.html:40
+#: templates/HouseSerch/includes/home_block.html:27
+msgid "Price"
+msgstr "Вартість"
+
+#: templates/HouseSerch/house_page.html:40
+msgid "day"
+msgstr "день"
+
+#: templates/HouseSerch/house_page.html:41
+#: templates/HouseSerch/includes/home_block.html:33
+msgid "Published"
+msgstr "Опубліковано"
+
+#: templates/HouseSerch/house_page.html:42
+#: templates/Registration/user_info_page.html:36
+#: templates/UserProfile/diary_page.html:45
+#: templates/UserProfile/includes/diary_block.html:24
+#: templates/UserProfile/includes/userInfo.html:15
+#: templates/UserProfile/includes/userStatus.html:5
+msgid "Status"
+msgstr "Статус"
+
+#: templates/HouseSerch/house_page.html:47
+#: templates/UserProfile/diary_page.html:49
+#: templates/UserProfile/diary_page.html:52
+#: templates/UserProfile/includes/diary_block.html:28
+msgid "Frozen"
+msgstr "Заморожено"
+
+#: templates/HouseSerch/house_page.html:81
+#: templates/HouseSerch/includes/paginatin_block.html:5
+msgid "Previous"
+msgstr "Попередня"
+
+#: templates/HouseSerch/house_page.html:85
+#: templates/HouseSerch/includes/paginatin_block.html:15
+msgid "Next"
+msgstr "Наступна"
+
+#: templates/HouseSerch/house_page.html:106
+#: templates/UserProfile/diary_page.html:89
+msgid "Change Status to"
+msgstr "Змінити статус на"
+
+#: templates/HouseSerch/house_page.html:108
+#: templates/UserProfile/diary_page.html:91
+msgid "frozen"
+msgstr "заморожений"
+
+#: templates/HouseSerch/house_page.html:110
+#: templates/UserProfile/diary_page.html:93
+msgid "active"
+msgstr "активний"
+
+#: templates/HouseSerch/house_page.html:125
+msgid "Rate can only authenticated user"
+msgstr "Оцінювати оголошення можуть лише зареєстровані користувачі"
+
+#: templates/HouseSerch/includes/form_rate_block.html:5
+msgid "Rate house"
+msgstr "Рейтинг житла"
+
+#: templates/HouseSerch/includes/form_rate_block.html:12
+msgid "Rate"
+msgstr "Оцінити"
+
+#: templates/HouseSerch/includes/form_rate_block.html:16
+msgid "Comment"
+msgstr "Коментар"
+
+#: templates/HouseSerch/includes/home_block.html:36
+#: templates/UserProfile/includes/diary_block.html:36
+msgid "Open"
+msgstr "Відкрити"
+
+#: templates/HouseSerch/limit_house.html:10
+msgid "Sorry, but you can't public more that 5 house advertisement"
+msgstr "Вибачте, але Ви не можете опубліковати більше 5 оголошень"
+
+#: templates/HouseSerch/multi_search_form.html:10
+msgid "Sort by"
+msgstr "Сортувати за"
+
+#: templates/HouseSerch/multi_search_form.html:34 templates/base.html:79
+msgid "Search"
+msgstr "Шукати"
+
+#: templates/HouseSerch/multi_search_form.html:35
+msgid "Reset all result"
+msgstr "Скинути всі результати"
+
+#: templates/HouseSerch/multi_search_form.html:41
+msgid "More options"
+msgstr "Більше опцій"
+
+#: templates/HouseSerch/multi_search_form.html:73
+msgid "From"
+msgstr "Від"
+
+#: templates/HouseSerch/multi_search_form.html:77
+msgid "To"
+msgstr "До"
+
+#: templates/HouseSerch/multi_search_form.html:90
+msgid "Sleeper"
+msgstr "Спальних місць"
+
+#: templates/HouseSerch/multi_search_form.html:100
+msgid "Only active:"
+msgstr "Тільки активні"
+
+#: templates/HouseSerch/multi_search_form.html:105
+msgid "After date:"
+msgstr "Після дати: "
+
+#: templates/HouseSerch/user_houses.html:3
+#: templates/UserProfile/includes/userInfo.html:36
+msgid "Advert"
+msgstr "Оголошення"
+
+#: templates/HouseSerch/user_houses.html:10
+msgid "Rental advertisement from"
+msgstr "Оголошення користувача"
+
+#: templates/Registration/authorization_page.html:3
+#: templates/Registration/authorization_page.html:5
+msgid "User Login"
+msgstr "Вхід"
+
+#: templates/Registration/authorization_page.html:14 templates/base.html:91
+msgid "Login"
+msgstr "Вхід"
+
+#: templates/Registration/authorization_page.html:44
+msgid "login"
+msgstr "вхід"
+
+#: templates/Registration/registration_page.html:3
+#: templates/Registration/registration_page.html:5
+msgid "User Registration"
+msgstr "Реєстрація користувача"
+
+#: templates/Registration/registration_page.html:13
+msgid "Registration"
+msgstr "Реєстрація"
+
+#: templates/Registration/registration_page.html:110 templates/base.html:94
+msgid "Sign in"
+msgstr "Зареєструватися"
+
+#: templates/Registration/user_info_page.html:3
+#: templates/Registration/user_info_page.html:13
 msgid "User Information"
 msgstr "Інформація о користуваче"
 
-#: templates/Registration/user_info_page.html:83
-#: templates/UserProfile/create_edit_diary_block.html:67
+#: templates/Registration/user_info_page.html:20
+msgid "Gender"
+msgstr "Стать"
+
+#: templates/Registration/user_info_page.html:23
+msgid "Male"
+msgstr "чоловіча"
+
+#: templates/Registration/user_info_page.html:27
+msgid "Female"
+msgstr "жіноча"
+
+#: templates/Registration/user_info_page.html:55
+msgid "Phone number"
+msgstr "Номер телефона"
+
+#: templates/Registration/user_info_page.html:79
+#: templates/UserProfile/includes/userInfo.html:27
+msgid "Birthday"
+msgstr "День народження"
+
+#: templates/Registration/user_info_page.html:84
+msgid "Please, enter a valid date: dd.mm.yyyy"
+msgstr "Будь ласка, введіть коректну дату у форматі: dd.mm.yyyy  "
+
+#: templates/Registration/user_info_page.html:88
+msgid "Please, enter a date between 01.01.1900 and today"
+msgstr "Будь ласка, введіть дату між 01.01.1900 та поточною"
+
+#: templates/Registration/user_info_page.html:94
+msgid "Info"
+msgstr "Про себе"
+
+#: templates/Registration/user_info_page.html:104
+#: templates/UserProfile/create_edit_diary_block.html:58
 msgid "Set preview"
-msgstr "Встановити обкладинку"
+msgstr "Обкладинка"
+
+#: templates/Registration/user_info_page.html:121
+msgid "Submit"
+msgstr "Відправити"
+
+#: templates/UserProfile/about_page.html:3
+#: templates/UserProfile/about_page.html:9
+msgid "About Travel App"
+msgstr "Про 'Travel App'"
+
+#: templates/UserProfile/about_page.html:11
+msgid ""
+"Travel App is a web application for finding places for tourism in other "
+"countries. Also Travel App provides\n"
+"            the ability to share activity with other users of the "
+"application."
+msgstr ""
+
+#: templates/UserProfile/about_page.html:13
+msgid "This is a project for the KRKM DNU College."
+msgstr ""
+
+#: templates/UserProfile/about_page.html:16
+msgid "Security"
+msgstr ""
+
+#: templates/UserProfile/about_page.html:17
+msgid ""
+"Travel App is not responsible for user provided geolocation data. The user "
+"himself provides the\n"
+"                application with the data of his location."
+msgstr ""
+
+#: templates/UserProfile/about_page.html:19
+msgid ""
+"Travel App does not check the users of the application and is not "
+"responsible for the safety of tourists.\n"
+"                Each tourist is advised to check the information about the "
+"landlord before the trip."
+msgstr ""
+
+#: templates/UserProfile/about_page.html:24 templates/base.html:141
+msgid "Creators"
+msgstr "Автори"
+
+#: templates/UserProfile/about_page.html:25 templates/base.html:143
+msgid "Nastya Kurakina"
+msgstr ""
+
+#: templates/UserProfile/about_page.html:28 templates/base.html:145
+msgid "Maxim Sedykh"
+msgstr ""
 
 #: templates/UserProfile/create_edit_diary_block.html:9 templates/base.html:60
 msgid "New diary"
@@ -247,66 +799,106 @@ msgstr ""
 "                    'заморожений'.\n"
 "                "
 
-#: templates/UserProfile/create_edit_diary_block.html:53
+#: templates/UserProfile/create_edit_diary_block.html:40
 msgid "Tell about this diary"
 msgstr "Розкажить про цей щоденник"
 
-#: templates/UserProfile/create_edit_diary_block.html:59
+#: templates/UserProfile/create_edit_diary_block.html:50
 msgid "Diary finish date"
-msgstr ""
+msgstr "Дата завершення щоденника"
 
-#: templates/UserProfile/create_edit_diary_block.html:94
+#: templates/UserProfile/create_edit_diary_block.html:83
 msgid "Create new diary"
-msgstr ""
+msgstr "Створити новий щоденник"
 
-#: templates/UserProfile/create_edit_diary_block.html:96
+#: templates/UserProfile/create_edit_diary_block.html:85
 msgid "Save change"
-msgstr ""
+msgstr "Зберегти зміни"
+
+#: templates/UserProfile/diary_page.html:43
+msgid "Date start"
+msgstr "Дата початку"
+
+#: templates/UserProfile/diary_page.html:44
+msgid "Date finish"
+msgstr "Дата кінця"
+
+#: templates/UserProfile/diary_page.html:55
+#: templates/UserProfile/includes/diary_block.html:30
+msgid "Finished"
+msgstr "Завершен"
+
+#: templates/UserProfile/diary_page.html:127
+msgid "Finish"
+msgstr "Завершен"
+
+#: templates/UserProfile/diary_page.html:132
+msgid "Activate"
+msgstr "Активне"
+
+#: templates/UserProfile/home.html:3
+msgid "Profile"
+msgstr "Профіль"
+
+#: templates/UserProfile/home.html:34
+msgid "Load prevision notes"
+msgstr "Завантажити попередні пости"
+
+#: templates/UserProfile/includes/create_note.html:13
+msgid "Locate"
+msgstr "Локація"
 
 #: templates/UserProfile/includes/create_note.html:22
 msgid "Latitude(Lat)"
-msgstr ""
+msgstr "Широта"
 
 #: templates/UserProfile/includes/create_note.html:26
 msgid "Longitude(Lng)"
-msgstr ""
+msgstr "Довгота"
 
-#: templates/UserProfile/includes/diary_block.html:36
-msgid "Open"
-msgstr ""
+#: templates/UserProfile/includes/create_note.html:54
+msgid "Post"
+msgstr "Публіковати"
+
+#: templates/UserProfile/includes/diary_block.html:21
+msgid "Date"
+msgstr "Період"
+
+#: templates/UserProfile/includes/notes_list.html:10
+msgid "You have any note yet"
+msgstr "Ви ще не опубліковали жодного поста "
+
+#: templates/UserProfile/includes/userInfo.html:7
+#: templates/UserProfile/includes/userInfo.html:9
+msgid "Information"
+msgstr "Інформація користувача"
 
 #: templates/base.html:52
 msgid "Home page"
-msgstr "Домашня сторінка"
+msgstr "Профіль"
 
 #: templates/base.html:57
 msgid "Diary"
-msgstr ""
+msgstr "Щоденники"
 
 #: templates/base.html:64
-msgid "Advert"
-msgstr ""
-
-#: templates/base.html:67
 msgid "New advert"
-msgstr ""
+msgstr "Нове оголошення"
 
-#: templates/base.html:71
-msgid "My advert"
-msgstr ""
+#: templates/base.html:67 templates/base.html:76
+msgid "Search house"
+msgstr "Шукати житло"
 
-#: templates/base.html:74
-#, fuzzy
-#| msgid "Chats list"
+#: templates/base.html:70
 msgid "Chats"
 msgstr "Чати"
 
-#: templates/base.html:80
-msgid "Search house"
-msgstr ""
+#: templates/base.html:87
+msgid "Logout"
+msgstr "Вихід"
 
-#: templates/base.html:83
-msgid "Search"
+#: templates/base.html:134
+msgid "This web application is a project for the KRKM DNU College."
 msgstr ""
 
 #: venv/Lib/site-packages/django/contrib/messages/apps.py:7
@@ -315,7 +907,7 @@ msgstr "Повідомлення"
 
 #: venv/Lib/site-packages/django/contrib/sitemaps/apps.py:7
 msgid "Site Maps"
-msgstr ""
+msgstr "Карта сайту"
 
 #: venv/Lib/site-packages/django/contrib/staticfiles/apps.py:9
 msgid "Static Files"
@@ -690,10 +1282,6 @@ msgstr ""
 msgid "File"
 msgstr ""
 
-#: venv/Lib/site-packages/django/db/models/fields/files.py:360
-msgid "Image"
-msgstr ""
-
 #: venv/Lib/site-packages/django/db/models/fields/related.py:778
 #, python-format
 msgid "%(model)s instance with %(field)s %(value)r does not exist."
@@ -840,10 +1428,6 @@ msgstr[1] ""
 #: venv/Lib/site-packages/django/forms/formsets.py:371
 #: venv/Lib/site-packages/django/forms/formsets.py:373
 msgid "Order"
-msgstr ""
-
-#: venv/Lib/site-packages/django/forms/formsets.py:375
-msgid "Delete"
 msgstr ""
 
 #: venv/Lib/site-packages/django/forms/models.py:747
@@ -1480,5 +2064,8 @@ msgstr ""
 msgid "Connect, get help, or contribute"
 msgstr ""
 
-#~ msgid "New note"
-#~ msgstr "Новий запис"
+#~ msgid "My advert"
+#~ msgstr "Мої оголошення"
+
+#~ msgid "Chats list"
+#~ msgstr "Чати"

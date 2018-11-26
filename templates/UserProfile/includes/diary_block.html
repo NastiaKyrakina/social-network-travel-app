@@ -18,16 +18,16 @@
             </div>
         </div>
 
-        <p class="m-1"><strong>Date: </strong>
+        <p class="m-1"><strong>{% trans 'Date' %}: </strong>
             <small>{{ diary.date_start }} - {{ diary.date_finish }}</small>
         </p>
-        <p class="m-1"><strong>Status:</strong>
+        <p class="m-1"><strong>{% trans 'Status' %}:</strong>
             {% if diary.is_active %}
-                <span class="text-success">Active</span>
+                <span class="text-success">{% trans 'Active' %}</span>
             {% elif diary.is_frozen %}
-                <span class="text-info">Frozen</span>
+                <span class="text-info">{% trans 'Frozen' %}</span>
             {% else %}
-                <span class="text-secondary">Finished</span>
+                <span class="text-secondary">{% trans 'Finished' %}</span>
             {% endif %}
         </p>
     </div> <!-- diary-content -->

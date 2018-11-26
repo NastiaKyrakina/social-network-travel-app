@@ -2,6 +2,7 @@ from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponseRedirect, HttpResponse, Http404, JsonResponse, QueryDict, HttpRequest
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.contrib.auth.decorators import login_required
+from django.utils.translation import ugettext as _
 
 from UserProfile.models import UserExt, Country
 from .models import House, HousePhoto, MAX_USER_HOUSES
@@ -65,29 +66,28 @@ def house_search_page(request):
         houses = House.objects.ft_search(request.GET.dict()['text'])
 
     if 'country' in request.GET:
+
         form_search = SearchHousesForm(request.GET)
 
         if form_search.is_valid():
-            print(form_search.cleaned_data)
             dict = form_search.get_only_full()
 
             if len(dict):
                 houses = House.objects.multi_search(houses, dict)
+
 
     context = {
         'form_search': form_search,
     }
 
     if houses:
-        print('Has result')
-        message = "Result: " + str(houses.count())
+
+        message = _("Result: ") + str(houses.count())
 
         if 'sort' in request.GET:
-            print(request.GET['sort'])
             houses = House.objects.sorting(houses, request.GET['sort'])
 
-
-        paginator = Paginator(houses, 2)
+        paginator = Paginator(houses, 4)
         page = request.GET.get('page')
 
         try:
@@ -100,7 +100,7 @@ def house_search_page(request):
         context['houses'] = houses_page
 
     else:
-        message = "No result :("
+        message = _("No result :(")
 
     context['message'] = message
 

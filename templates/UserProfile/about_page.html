@@ -1,31 +1,35 @@
 {% extends "base.html" %}
-
-{% block title %}About Travel App{% endblock %}
+{% load i18n %}
+{% block title %}{% trans 'About Travel App' %}{% endblock %}
 
 {% block content %}
 
-
     <div>
         <div class="about"></div>
-        <h3>About Travel App</h3>
-        <p>Travel App is a web application for finding places for tourism in other countries. Also Travel App provides
-            the ability to share activity with other users of the application.</p>
-        <p>This is a project for the KRKM DNU College.</p>
+        <h3>{% trans 'About Travel App' %}</h3>
+
+        <p>{% blocktrans %}Travel App is a web application for finding places for tourism in other countries. Also
+            Travel App provides
+            the ability to share activity with other users of the application.{% endblocktrans %}</p>
+        <p>{% blocktrans %}This is a project for the KRKM DNU College.{% endblocktrans %}</p>
 
         <div class="security">
-            <h3>Security</h3>
-            <p>Travel App is not responsible for user provided geolocation data. The user himself provides the
-                application with the data of his location.</p>
-            <p>Travel App does not check the users of the application and is not responsible for the safety of tourists.
-                Each tourist is advised to check the information about the landlord before the trip.</p>
+            <h3>{% trans 'Security' %}</h3>
+            <p>{% blocktrans %}Travel App is not responsible for user provided geolocation data. The user himself
+                provides the
+                application with the data of his location.{% endblocktrans %}</p>
+            <p>{% blocktrans %}Travel App does not check the users of the application and is not responsible for the
+                safety of tourists.
+                Each tourist is advised to check the information about the landlord before the
+                trip.{% endblocktrans %}</p>
         </div>
 
         <div class="creators">
-            <h3>Creators</h3>
-            <p class="m-0"><strong>Nastya Kurakina</strong></p>
+            <h3>{% trans 'Creators' %}</h3>
+            <p class="m-0"><strong>{% trans 'Nastya Kurakina' %}</strong></p>
             <p class="m-0">Github - https://github.com/NastiaKyrakina</p>
             <p>Email - nastia.kyrakina@gmail.com</p>
-            <p class="m-0"><strong>Maxim Sedykh</strong></p>
+            <p class="m-0"><strong>{% trans 'Maxim Sedykh' %}</strong></p>
             <p class="m-0">Github - https://github.com/Steldev</p>
             <p>Email - sedyhm2211@gmail.com</p>
         </div>

@@ -1,5 +1,6 @@
 """valid file formats"""
 from Lib import FFD
+from django.utils.translation import ugettext as _
 
 formats_files = {
 
@@ -39,10 +40,10 @@ def handle_uploaded_file(files_dict):
     for elem in FFD.FILE_TYPE:
         files = files_dict.getlist(elem[1], None)
         if len(files) > MAX_FILES_COUNT:
-            errors_file_type.append("To many files")
+            errors_file_type.append(_("To many files"))
         else:
             for file in files:
                 if not check_file_formats(file.name, elem[0]):
-                    errors_file_type.append("don`t support this file extension for image file")
+                    errors_file_type.append(_("don`t support this file extension for image file"))
 
     return errors_file_type

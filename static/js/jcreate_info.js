@@ -4,7 +4,7 @@ $(document).ready(function () {
     DelUncorrectSimvol('input[name=city],input[name=country]');
     TrimInput();
     TextAreaTrim();
-    CorrectRegistr('input[name=city],input[name=country]');
+    CorrectRegistr('input[name=city]');
     OnlyLatOrKir('input[name=city]');
     OnlyNumber('input[name=phone_num]');
     OnlyNumber('input[name=birthday]', '.');

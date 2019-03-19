@@ -4,10 +4,10 @@ from django.utils.translation import ugettext as _
 
 formats_files = {
 
-    FFD.IMAGE: ['jpg', 'jpeg', 'png', 'gif', ],
-    FFD.VIDEO: ['mp4', ],
-    FFD.AUDIO: ['mp3', ],
-    FFD.FILES: ['txt', 'doc', 'docx', ],
+    FFD.IMAGE: ['jpg', 'jpeg', 'png', 'gif', 'webp', 'svg'],
+    FFD.VIDEO: ['mp4', 'ogv'],
+    FFD.AUDIO: ['mp3', 'ogg', 'wav'],
+    FFD.FILES: ['txt', 'doc', 'docx'],
 }
 
 MAX_FILES_SIZE = 10 ** 8

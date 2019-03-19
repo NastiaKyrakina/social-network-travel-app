@@ -133,7 +133,7 @@ class House(models.Model):
 
     activity = models.BooleanField(default=True)
     date_public = models.DateField(auto_now_add=True)
-    rating = models.DecimalField(decimal_places=1, max_digits=3, null=True)
+    rating = models.DecimalField(decimal_places=1, max_digits=3, default=0)
     deleted = models.DateField(null=True, blank=True, db_index=True)
 
     objects = HouseManager()

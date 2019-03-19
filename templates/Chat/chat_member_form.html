@@ -13,6 +13,7 @@
         <div class="members-error"></div>
         <label class="" for="id_members">{% trans 'Memder(s)' %} </label>
         {{ members_form.members }}
+        <datalist id="members_list"></datalist>
         {% if conversation %}
             <button class="btn btn-primary" id="start-cnv" type="submit">{% trans 'Start conversation' %}</button>
         {% else %}

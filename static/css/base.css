@@ -38,5 +38,11 @@ input.UncorrectValue {
 }
 
 .message-img img {
-    border-radius: 3px;
+    border-radius: 15px !important;
+
+}
+
+.btn {
+    word-wrap: break-word;
+    overflow-x: hidden;
 }

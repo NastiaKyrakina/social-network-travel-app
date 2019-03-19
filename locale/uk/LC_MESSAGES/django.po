@@ -316,8 +316,6 @@ msgid "Find house"
 msgstr "Шукаю житло"
 
 #: UserProfile/models.py:53
-#, fuzzy
-#| msgid "Rate house"
 msgid "Rent a house"
 msgstr "Здаю житло"
 

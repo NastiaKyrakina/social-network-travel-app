@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
-    <data-source source="LOCAL" name="travell_app@localhost" uuid="b8130975-9d1f-467c-a3f2-9bf33379cadd">
+    <data-source source="LOCAL" name="travel_app@localhost" uuid="b8130975-9d1f-467c-a3f2-9bf33379cadd">
       <driver-ref>postgresql</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>org.postgresql.Driver</jdbc-driver>
-      <jdbc-url>jdbc:postgresql://localhost:5432/travell_app</jdbc-url>
+      <jdbc-url>jdbc:postgresql://localhost:5432/travel_app</jdbc-url>
     </data-source>
   </component>
 </project>

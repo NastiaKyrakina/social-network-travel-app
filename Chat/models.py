@@ -113,10 +113,9 @@ class Chat(models.Model):
             return creator['user']
         return None
 
-
-
     def is_creator(self, user):
-        return self.member_set.filter(status=Member.CREATOR, user=user).first()
+        return True
+        # return self.filter(status=Member.CREATOR, user=user).first()
 
     def is_multi_chat(self):
         return self.chat_type != Chat.P2P

@@ -12,7 +12,7 @@
                     {% load staticfiles %}
                     <img class="avatar-small" src="{% static 'images/DefaultAvatar.png' %}" class="img-fluid">
                 {% endif %}
-                <span class="name mx-2"><strong>{{ user.first_name }} {{ user.last_name }}</strong></span>
+                <span class="name mx-2"><strong>{{ user.username }}</strong></span>
             </a>
         </div>
 
@@ -84,7 +84,7 @@
 
         <div class="note-file">
             {% for file in note.get_files %}
-                <a download="file.file.url" class="mx-2">{{ file.file.url }}</a>
+                <a href="file.file.url" download class="mx-2">{{ file.file.url }}</a>
             {% endfor %}
         </div>
 
@@ -99,3 +99,4 @@
     </div> <!-- note-content -->
 
 </div> <!-- note -->
+

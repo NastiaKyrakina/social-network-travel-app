@@ -21,8 +21,7 @@ function LoadMessages() {
 
 //Завантаження списку користувачів
 function LoadUsers() {
-    console.log('inp');
-    dataList = $("#members_list");
+    let dataList = $("#members_list");
     $('input#id_members').on('input', function () {
         $('.members-error').empty();
         q = $(this).val();
@@ -84,7 +83,7 @@ function AddUsers() {
                             RemoveMember();
                         }
                         else {
-                            $('.members-error').text('user not found');
+                            $('.members-error').text('Користувача з даним іменем не знайдено');
                         }
                     }
 

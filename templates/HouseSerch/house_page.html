@@ -117,23 +117,27 @@
 
         {% endif %}
         </div>
-        <!--Блок комментариев-->
+
+
         {% if request.user.is_authenticated %}
-            <div id="rate-add"></div>
-        {% else %}
-            <div id="mes-for-no-auth">
-                <p>{% trans 'Rate can only authenticated user' %}</p>
-            </div>
-        {% endif %}
+            {% if not is_owner %}
+
+                <div id="rate-add"></div>
+
+            {% endif %}
 
         <div class="rate-block">
-            {% for rate in house.rate_set.all %}
+            {% for rate in house.rate_set.all reversed %}
                 {% include "HouseSerch/includes/rate-block.html" %}
             {% endfor %}
 
             <div class="rate-footer block block-footer"></div>
         </div>
-
+        {% else %}
+            <div id="mes-for-no-auth">
+                <p>{% trans 'Rate can only authenticated user' %}</p>
+            </div>
+        {% endif %}
     </div> <!-- house-element -->
 
 {% endblock %}

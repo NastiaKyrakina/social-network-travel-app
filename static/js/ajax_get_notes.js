@@ -96,7 +96,7 @@ $(document).ready(function () {
         });
 
     function delete_post(post_primary_key) {
-        if (confirm('are you sure you want to remove this post?') == true) {
+        if (confirm('Ви впевнені, що бажаєте видалити цей пост?') == true) {
             locate = location.pathname.split('/')[1];
             $.ajax({
                 url: "/" + locate + "/user/note/delete/", // the endpoint

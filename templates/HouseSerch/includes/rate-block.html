@@ -1,7 +1,7 @@
 <div class="block rate" id="rate-{{ rate.pk }}">
     <div class="rate-user p-0">
         {% if user.userinfo.big_photo %}
-            <img class="avatar-small" src="{{ user.userinfo.big_photo.url }}" class="img-fluid">
+            <img class="avatar-small" src="{{ rate.user.userinfo.big_photo.url }}" class="img-fluid">
         {% else %}
             {% load staticfiles %}
             <img class="avatar-small" src="{% static 'images/DefaultAvatar.png' %}" class="img-fluid">
@@ -18,7 +18,7 @@
     </div>
     <div class="row col-12 pt-2">
         <p class="col-12">Rate:
-            <span class="rate-stars text-primary" count="{{ rate.value }}"></span>
+            <span class="rate-stars text-primary" count="{{ rate.value }}">{{ rate.value }}</span>
         </p>
         <p class="px-2">{{ rate.comment }}</p>
     </div>
